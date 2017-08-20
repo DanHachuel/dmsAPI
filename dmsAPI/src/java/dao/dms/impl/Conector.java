@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dslam.impl.login;
-
-import dao.dslam.impl.ConsultaDslam;
+package dao.dms.impl;
 
 /**
  *
  * @author G0042204
  */
-public interface LoginDslamStrategy {
+public interface Conector {
 
-    public void conectar(ConsultaDslam cs);
+    public void conectar() throws Exception;
+
+    public void close() throws Exception;
 
 }

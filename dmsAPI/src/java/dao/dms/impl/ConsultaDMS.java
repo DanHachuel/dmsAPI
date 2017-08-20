@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.log;
+package dao.dms.impl;
+
+import model.dms.ConfiguracaoDMS;
 
 /**
  *
  * @author G0042204
  */
-public interface InterfaceLogged {
-
-    public String getExecutor();
-
-    public String getCustomer();
-
+interface ConsultaDMS {
+    
+    public ConfiguracaoDMS consultar(String instancia) throws Exception;
+    
 }

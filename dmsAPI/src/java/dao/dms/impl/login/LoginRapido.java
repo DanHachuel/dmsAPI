@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dslam.impl.login;
+package dao.dms.impl.login;
 
-import dao.dslam.impl.Conector;
-import dao.dslam.impl.ConsultaDslam;
+import dao.dms.impl.Conector;
+import dao.dms.impl.ConsultaDslam;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,7 +16,7 @@ import java.net.Socket;
  *
  * @author G0042204
  */
-public class LoginRapido implements LoginDslamStrategy {
+public class LoginRapido implements LoginTelnetStrategy {
 
     @Override
     public void conectar(ConsultaDslam cs) {

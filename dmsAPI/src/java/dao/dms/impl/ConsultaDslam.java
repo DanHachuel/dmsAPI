@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dslam.impl;
+package dao.dms.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import dao.dslam.impl.login.LoginDslamStrategy;
+import dao.dms.impl.login.LoginTelnetStrategy;
 
 /**
  *
@@ -23,11 +23,11 @@ public class ConsultaDslam implements Conector {
     public PrintWriter out;
     public BufferedReader in;
 
-    public AbstractDslam dslam;
+    public AbstractTelnetHost dslam;
 
-    public LoginDslamStrategy styLogin;
+    public LoginTelnetStrategy styLogin;
 
-    public ConsultaDslam(AbstractDslam dslam) {
+    public ConsultaDslam(AbstractTelnetHost dslam) {
         this.dslam = dslam;
 
     }
@@ -60,7 +60,7 @@ public class ConsultaDslam implements Conector {
         }
     }
 
-    public ComandoDslam consulta(ComandoDslam comando) throws Exception {
+    public ComandoDMS consulta(ComandoDMS comando) throws Exception {
 
         try {
 

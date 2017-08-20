@@ -13,16 +13,14 @@ import javax.ws.rs.core.Application;
  *
  * @author G0041775
  */
-public class FullTestApplication extends Application {
+public class DmsApplication extends Application {
 
     private Set<Object> singletons = new HashSet<Object>();
 
     private Set<Class<?>> empty = new HashSet<Class<?>>();
 
-    public FullTestApplication() {
-        singletons.add(new FullTestController());
-        singletons.add(new CrmController());
-        singletons.add(new ManobraController());
+    public DmsApplication() {
+        singletons.add(new DMSController());
     }
 
     public Set<Object> getSingletons() {

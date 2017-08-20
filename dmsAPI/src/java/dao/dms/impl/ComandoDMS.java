@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dslam.impl;
+package dao.dms.impl;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author G0042204
  */
-public class ComandoDslam {
+public class ComandoDMS {
 
     private String sintax;
 
@@ -25,29 +25,29 @@ public class ComandoDslam {
 
     private List<String> retorno;
 
-    public ComandoDslam(String sintax) {
+    public ComandoDMS(String sintax) {
         this.sintax = sintax;
     }
 
-    public ComandoDslam(String sintax, Integer sleep) {
+    public ComandoDMS(String sintax, Integer sleep) {
         this.sintax = sintax;
         this.sleep = sleep;
     }
 
-    public ComandoDslam(String sintax, Integer sleep, String sintaxAux) {
+    public ComandoDMS(String sintax, Integer sleep, String sintaxAux) {
         this.sintax = sintax;
         this.sleep = sleep;
         this.sintaxAux = sintaxAux;
     }
 
-    public ComandoDslam(String sintax, Integer sleep, String sintaxAux, Integer sleepAux) {
+    public ComandoDMS(String sintax, Integer sleep, String sintaxAux, Integer sleepAux) {
         this.sintax = sintax;
         this.sleep = sleep;
         this.sintaxAux = sintaxAux;
         this.sleepAux = sleepAux;
     }
 
-    public ComandoDslam(String sintax, Integer sleep, String sintaxAux, Integer sleepAux, String sintaxAux2) {
+    public ComandoDMS(String sintax, Integer sleep, String sintaxAux, Integer sleepAux, String sintaxAux2) {
         this.sintax = sintax;
         this.sleep = sleep;
         this.sintaxAux = sintaxAux;

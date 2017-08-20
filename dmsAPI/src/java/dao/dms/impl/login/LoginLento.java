@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dslam.impl.login;
+package dao.dms.impl.login;
 
-import dao.dslam.impl.ConsultaDslam;
+import dao.dms.impl.ConsultaDslam;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  *
  * @author G0042204
  */
-public class LoginLento implements LoginDslamStrategy {
+public class LoginLento implements LoginTelnetStrategy {
 
     @Override
     public void conectar(ConsultaDslam cs) {
