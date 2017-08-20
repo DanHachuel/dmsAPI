@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dms;
+package dao.dms.impl.tratativa;
 
 /**
  *
  * @author G0042204
+ * @param <T>
  */
-public enum LineStatus {
-    
-    CREATED, NOT_CREATED, INVALID_OFFICE;
-    
+public interface Tratativa<T> {
+
+    public T parse(String blob) throws Exception;
+
 }

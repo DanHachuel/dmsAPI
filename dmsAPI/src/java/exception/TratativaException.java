@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dms;
+package exception;
 
 /**
  *
  * @author G0042204
  */
-public enum LineStatus {
-    
-    CREATED, NOT_CREATED, INVALID_OFFICE;
-    
+public class TratativaException extends Exception {
+
+    public TratativaException() {
+        super("Falha ao realizar tratativa.");
+    }
+
 }

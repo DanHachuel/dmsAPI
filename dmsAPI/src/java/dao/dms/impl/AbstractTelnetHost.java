@@ -31,7 +31,7 @@ public abstract class AbstractTelnetHost implements ConsultaDMS {
     }
 
     public void conectar() {
-        this.loginStrategy.conectar(this.getCd());
+        this.loginStrategy.conectar(this.command());
     }
 
     public void desconectar() {
@@ -62,7 +62,7 @@ public abstract class AbstractTelnetHost implements ConsultaDMS {
         this.loginStrategy = loginStrategy;
     }
 
-    public ConsultaDslam getCd() {
+    public ConsultaDslam command() {
         return cd;
     }
 

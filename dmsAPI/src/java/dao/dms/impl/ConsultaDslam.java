@@ -44,6 +44,7 @@ public class ConsultaDslam implements Conector {
         try {
             while ((line = in.readLine()) != null) {
                 list.add(line);
+                System.out.println(line);
             }
         } catch (Exception e) {
             return list;
@@ -63,7 +64,6 @@ public class ConsultaDslam implements Conector {
     public ComandoDMS consulta(ComandoDMS comando) throws Exception {
 
         try {
-
             if (pingSocket == null) {
                 this.conectar();
             }

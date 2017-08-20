@@ -5,6 +5,9 @@
  */
 package model.dms;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author G0042204
@@ -23,6 +26,8 @@ public class ConfiguracaoDMS {
 
     private LineStatus status;
 
+    private List<LineService> servicos;
+
     public ConfiguracaoDMS() {
     }
 
@@ -40,6 +45,12 @@ public class ConfiguracaoDMS {
 
     public void setLen(String len) {
         this.len = len;
+        if (len.isEmpty()) {
+            this.setStatus(LineStatus.NOT_CREATED);
+
+        } else {
+            this.setStatus(LineStatus.CREATED);
+        }
     }
 
     public String getCustGrp() {
@@ -72,6 +83,22 @@ public class ConfiguracaoDMS {
 
     public void setStatus(LineStatus status) {
         this.status = status;
+    }
+
+    public List<LineService> getServicos() {
+        if (servicos == null) {
+            servicos = new ArrayList<>();
+
+        }
+        return servicos;
+    }
+
+    public void setServicos(List<LineService> servicos) {
+        this.servicos = servicos;
+    }
+
+    public void add(LineService s) {
+        getServicos().add(s);
     }
 
 }
