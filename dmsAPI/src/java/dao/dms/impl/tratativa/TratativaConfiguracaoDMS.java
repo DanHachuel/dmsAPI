@@ -20,8 +20,9 @@ public class TratativaConfiguracaoDMS implements Tratativa<ConfiguracaoDMS> {
         String custGrpPattern = "(?:STATIONCUSTGRP:\\s{0,5}(.{5,12}))";
         String ncosPattern = "(?:NCOS:\\s{0,1}(\\d{1,5}))";
         String servPattern = "(?:OPTIONS:)(.{0,50})[^-]";
-
-        conf.setLen(Regex.capture(blob, linePattern).trim());
+        
+        String len = Regex.capture(blob, linePattern).trim();
+        conf.setLen(len.replaceAll("   ", " "));
         conf.setCustGrp(Regex.capture(blob, custGrpPattern).trim());
         conf.setNcos(new Integer(Regex.capture(blob, ncosPattern)));
 
