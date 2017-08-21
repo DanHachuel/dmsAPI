@@ -7,7 +7,8 @@ package dao.dms.impl;
 
 import dao.dms.AbstractDMS;
 import dao.dms.impl.tratativa.Tratativa;
-import dao.dms.impl.tratativa.TratativaConfiguracaoDMS;
+import dao.dms.impl.tratativa.TratativaQdnDMS;
+import dao.dms.impl.tratativa.TratativaQlenDMS;
 import exception.LoginSwitchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,11 +26,18 @@ public class NortelImpl extends AbstractDMS implements ConsultaDMS {
     }
 
     @Override
-    public ConfiguracaoDMS consultar(String instancia) throws Exception {
+    public ConfiguracaoDMS consultarPorInstancia(String instancia) throws Exception {
         ConfiguracaoDMS c = new ConfiguracaoDMS();
         ComandoDMS cmd = command().consulta(qdn(instancia));
+        Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
+        return t.parse(cmd.getBlob());
+    }
 
-        Tratativa<ConfiguracaoDMS> t = new TratativaConfiguracaoDMS();
+    @Override
+    public ConfiguracaoDMS consultarPorLen(String len) throws Exception {
+        ConfiguracaoDMS c = new ConfiguracaoDMS();
+        ComandoDMS cmd = command().consulta(qlen(len));
+        Tratativa<ConfiguracaoDMS> t = new TratativaQlenDMS();
         return t.parse(cmd.getBlob());
     }
 
@@ -76,17 +84,13 @@ public class NortelImpl extends AbstractDMS implements ConsultaDMS {
     @Override
     public void conectar() throws Exception {
         super.conectar();
-        try {
-            ComandoDMS cmd = command().consulta(servord());
-            if(!isLogged(cmd.getBlob())){
-                throw new LoginSwitchException();
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
+        ComandoDMS cmd = command().consulta(servord());
+        if (!isLogged(cmd.getBlob())) {
+            throw new LoginSwitchException();
         }
     }
-    
-    protected boolean isLogged(String param){
+
+    protected boolean isLogged(String param) {
         return param.contains(">SO:");
     }
 

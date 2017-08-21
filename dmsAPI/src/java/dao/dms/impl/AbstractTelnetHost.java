@@ -19,15 +19,14 @@ public abstract class AbstractTelnetHost implements ConsultaDMS {
 
     private final String ipDslam;
     private Credencial credencial;
-    public LoginTelnetStrategy loginStrategy;
-
-    private ConsultaDslam cd;
+    private LoginTelnetStrategy loginStrategy;
+    private ConsultaSocket cd;
 
     public AbstractTelnetHost(String ipDslam, Credencial credencial, LoginTelnetStrategy loginStrategy) {
         this.ipDslam = ipDslam;
         this.credencial = credencial;
         this.loginStrategy = loginStrategy;
-        this.cd = new ConsultaDslam(this);
+        this.cd = new ConsultaSocket(this);
     }
 
     public void conectar() throws Exception {
@@ -62,11 +61,11 @@ public abstract class AbstractTelnetHost implements ConsultaDMS {
         this.loginStrategy = loginStrategy;
     }
 
-    public ConsultaDslam command() {
+    public ConsultaSocket command() {
         return cd;
     }
 
-    public void setCd(ConsultaDslam cd) {
+    public void setCd(ConsultaSocket cd) {
         this.cd = cd;
     }
 

@@ -13,6 +13,8 @@ import model.dms.ConfiguracaoDMS;
  */
 interface ConsultaDMS {
     
-    public ConfiguracaoDMS consultar(String instancia) throws Exception;
+    public ConfiguracaoDMS consultarPorInstancia(String instancia) throws Exception;
+    
+    public ConfiguracaoDMS consultarPorLen(String len) throws Exception;
     
 }

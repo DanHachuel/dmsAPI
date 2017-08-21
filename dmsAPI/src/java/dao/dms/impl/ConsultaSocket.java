@@ -17,7 +17,7 @@ import dao.dms.impl.login.LoginTelnetStrategy;
  *
  * @author G0042204
  */
-public class ConsultaDslam implements Conector {
+public class ConsultaSocket implements Conector {
 
     public Socket pingSocket;
     public PrintWriter out;
@@ -27,7 +27,7 @@ public class ConsultaDslam implements Conector {
 
     public LoginTelnetStrategy styLogin;
 
-    public ConsultaDslam(AbstractTelnetHost dslam) {
+    public ConsultaSocket(AbstractTelnetHost dslam) {
         this.dslam = dslam;
 
     }

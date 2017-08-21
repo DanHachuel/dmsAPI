@@ -5,7 +5,7 @@
  */
 package dao.dms.impl.login;
 
-import dao.dms.impl.ConsultaDslam;
+import dao.dms.impl.ConsultaSocket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -17,10 +17,10 @@ import java.net.Socket;
  */
 public class LoginCustomDMS implements LoginTelnetStrategy {
 
-    private ConsultaDslam cs;
+    private ConsultaSocket cs;
 
     @Override
-    public void conectar(ConsultaDslam cs) throws Exception {
+    public void conectar(ConsultaSocket cs) throws Exception {
 
         this.cs = cs;
         this.cs.pingSocket = new Socket(this.cs.dslam.getIpDslam(), 23);

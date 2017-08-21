@@ -53,10 +53,11 @@ public class NortelImplIT {
             NortelImpl instance = new NortelImpl(ip);
             instance.conectar();
 
-            ConfiguracaoDMS result = instance.consultar(instancia);
+            ConfiguracaoDMS result = instance.consultarPorInstancia(instancia);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
+            assertTrue("qdn", result != null);
+            assertTrue("qlen", instance.consultarPorLen(result.getLen()) != null);
             instance.desconectar();
-            assertTrue(result != null);
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
