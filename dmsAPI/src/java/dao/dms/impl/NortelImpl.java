@@ -8,6 +8,7 @@ package dao.dms.impl;
 import dao.dms.AbstractDMS;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaConfiguracaoDMS;
+import exception.LoginSwitchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
@@ -73,13 +74,20 @@ public class NortelImpl extends AbstractDMS implements ConsultaDMS {
     }
 
     @Override
-    public void conectar() {
+    public void conectar() throws Exception {
         super.conectar();
         try {
-            command().consulta(servord());
+            ComandoDMS cmd = command().consulta(servord());
+            if(!isLogged(cmd.getBlob())){
+                throw new LoginSwitchException();
+            }
         } catch (Exception ex) {
             Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    protected boolean isLogged(String param){
+        return param.contains(">SO:");
     }
 
     @Override
