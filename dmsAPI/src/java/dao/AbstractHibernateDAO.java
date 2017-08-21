@@ -27,7 +27,7 @@ public class AbstractHibernateDAO {
 
     public EntityManager getEm() {
         if (emf == null) {
-            emf = Persistence.createEntityManagerFactory("fulltestAPIPU");
+            emf = Persistence.createEntityManagerFactory("dmsAPIPU");
 //            emf = Persistence.createEntityManagerFactory("localPU");
             em = emf.createEntityManager();
         }

@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dms.impl.login;
-
-import dao.dms.impl.ConsultaDslam;
+package exception;
 
 /**
  *
  * @author G0042204
  */
-public interface LoginTelnetStrategy {
+public class SwitchLotadaException extends Exception {
 
-    public void conectar(ConsultaDslam cs) throws Exception;
+    public SwitchLotadaException() {
+        super("Central Lotada.");
+    }
 
 }

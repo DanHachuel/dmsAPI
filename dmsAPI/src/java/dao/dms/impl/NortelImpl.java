@@ -5,8 +5,7 @@
  */
 package dao.dms.impl;
 
-import dao.dms.credencial.Credencial;
-import dao.dms.impl.login.LoginCustomDMS;
+import dao.dms.AbstractDMS;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaConfiguracaoDMS;
 import java.util.logging.Level;
@@ -18,16 +17,15 @@ import model.dms.LineService;
  *
  * @author G0042204
  */
-public class NortelImpl extends AbstractTelnetHost implements ConsultaDMS {
+public class NortelImpl extends AbstractDMS implements ConsultaDMS {
 
     public NortelImpl(String ipDslam) {
-        super(ipDslam, Credencial.UM, new LoginCustomDMS());
+        super(ipDslam);
     }
 
     @Override
     public ConfiguracaoDMS consultar(String instancia) throws Exception {
         ConfiguracaoDMS c = new ConfiguracaoDMS();
-
         ComandoDMS cmd = command().consulta(qdn(instancia));
 
         Tratativa<ConfiguracaoDMS> t = new TratativaConfiguracaoDMS();

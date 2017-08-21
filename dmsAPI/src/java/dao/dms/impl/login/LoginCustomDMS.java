@@ -6,7 +6,9 @@
 package dao.dms.impl.login;
 
 import dao.dms.impl.ConsultaDslam;
+import exception.SwitchLotadaException;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -17,36 +19,26 @@ import java.net.Socket;
  */
 public class LoginCustomDMS implements LoginTelnetStrategy {
 
+    private ConsultaDslam cs;
+
     @Override
-    public void conectar(ConsultaDslam cs) {
-        try {
-            cs.pingSocket = new Socket(cs.dslam.getIpDslam(), 23);
-            cs.out = new PrintWriter(cs.pingSocket.getOutputStream(), true);
-            cs.in = new BufferedReader(new InputStreamReader(cs.pingSocket.getInputStream()));
-            cs.out.println(cs.dslam.getCredencial().getLogin());
-            cs.out.println(cs.dslam.getCredencial().getPass());
+    public void conectar(ConsultaDslam cs) throws Exception {
 
-            /**
-             * Anotação para discussão sobre arquitetura.
-             *
-             * Dar preferencia ao polimorfismo.
-             *
-             * Principio da responsabilidade unica: Esses comandos são
-             * especificos do ALCATEL GPON;
-             *
-             * @see Construtor AlcatelGponDslam
-             * @author G0042204
-             */
-//            if(cs.dslam.getVendor().equalsIgnoreCase("ALCATEL")){
-//                cs.out.println("environment inhibit-alarms");
-//                cs.out.println("environment mode batch");
-//                cs.out.println("exit");
-//            }
-            System.out.println("Connect!");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        this.cs = cs;
+        this.cs.pingSocket = new Socket(this.cs.dslam.getIpDslam(), 23);
+        this.cs.out = new PrintWriter(this.cs.pingSocket.getOutputStream(), true);
+        this.cs.in = new BufferedReader(new InputStreamReader(this.cs.pingSocket.getInputStream()));
+        this.cs.out.println(this.cs.dslam.getCredencial().getLogin());
+        this.cs.out.println(this.cs.dslam.getCredencial().getPass());
+        this.tratativaCentralLotada();
+    }
+
+    protected void tratativaCentralLotada() throws SwitchLotadaException, IOException {
+        for (String s : this.cs.getRetorno()) {
+            if (s.toUpperCase().contains("SUICIDE")) {
+                throw new SwitchLotadaException();
+            }
         }
-
     }
 
 }

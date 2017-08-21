@@ -7,6 +7,8 @@ package model.dms;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import util.JsonEnumDeserializer;
 
 /**
  *

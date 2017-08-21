@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.2">
+    <deployment>
+        <dependencies>
+            <module name="com.sun.xml.messaging.saaj" />
+        </dependencies>
+        <exclusions>
+            <module name="com.fasterxml.jackson.core.jackson-core" />
+            <module name="com.fasterxml.jackson.core.jackson-databind" />
+            <module name="com.fasterxml.jackson.jaxrs.jackson-jaxrs-json-provider" />
+            <module name="org.jboss.resteasy.resteasy-jackson2-provider" />
+        </exclusions>
+        <exclude-subsystems>
+            <subsystem name="webservices" />
+        </exclude-subsystems>
+    </deployment>
+</jboss-deployment-structure>

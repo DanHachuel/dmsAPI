@@ -47,8 +47,11 @@ public class NortelImplIT {
     public void testConsultar() {
         System.out.println("consultar");
         try {
+//            String instancia = "6230957133";
+//            String ip = "10.161.88.100";
             String instancia = "4130886762";
-            NortelImpl instance = new NortelImpl("10.141.245.97");
+            String ip = "10.141.245.97";
+            NortelImpl instance = new NortelImpl(ip);
             instance.conectar();
 
             ConfiguracaoDMS result = instance.consultar(instancia);
