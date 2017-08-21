@@ -9,10 +9,10 @@ package exception;
  *
  * @author G0042204
  */
-public class LinhaPertenceCentralException extends Exception {
+public class LinhaNaoPertenceCentralException extends Exception {
 
-    public LinhaPertenceCentralException() {
-        super("Central Lotada.");
+    public LinhaNaoPertenceCentralException() {
+        super("Linha não pertence a Central.");
     }
 
 }

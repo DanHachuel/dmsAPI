@@ -5,6 +5,7 @@
  */
 package dao.dms.impl.tratativa;
 
+import exception.LinhaNaoPertenceCentralException;
 import model.dms.ConfiguracaoDMS;
 import model.dms.LineService;
 import util.Regex;
@@ -15,7 +16,7 @@ public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
     public ConfiguracaoDMS parse(String blob) throws Exception {
         
         if(blob.toUpperCase().contains("INVALID FOR THIS OFFICE")){
-            
+            throw new LinhaNaoPertenceCentralException();
         }
 
         ConfiguracaoDMS conf = new ConfiguracaoDMS();
