@@ -6,6 +6,7 @@
 package dao.dms;
 
 import dao.dms.credencial.Credencial;
+import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.AbstractTelnetHost;
 import dao.dms.impl.login.LoginCustomDMS;
 
@@ -15,8 +16,15 @@ import dao.dms.impl.login.LoginCustomDMS;
  */
 public abstract class AbstractDMS extends AbstractTelnetHost {
 
-    public AbstractDMS(String ipDslam) {
-        super(ipDslam, Credencial.UM, new LoginCustomDMS());
+    private final SwitchesEnum central;
+
+    public AbstractDMS(SwitchesEnum central) {
+        super(central.getIp(), Credencial.UM, new LoginCustomDMS());
+        this.central = central;
+    }
+
+    public SwitchesEnum getCentral() {
+        return central;
     }
 
 }

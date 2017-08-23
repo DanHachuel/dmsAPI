@@ -5,6 +5,7 @@
  */
 package dao.dms.impl;
 
+import dao.dms.enums.SwitchesEnum;
 import exception.LinhaNaoPertenceCentralException;
 import model.dms.ConfiguracaoDMS;
 import org.junit.After;
@@ -21,7 +22,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl("10.161.88.100");
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.GOGNA_DOS01);
 
     public NortelImplIT() {
     }
@@ -49,13 +50,15 @@ public class NortelImplIT {
     public void testConsultar() {
         System.out.println("consultar");
         try {
-            String instancia = "6230957133";
+            String instancia = "4876237846";
+//            String instancia = "6230957133";
 
-            ConfiguracaoDMS result = instance.consultarPorInstancia(instancia);
+            ConfiguracaoDMS result = instance.consultarPorDn(instancia);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("qdn", result != null);
             assertTrue("qlen", instance.consultarPorLen(result.getLen()) != null);
         } catch (Exception e) {
+            instance.desconectar();
             e.printStackTrace();
             fail(e.getMessage());
         }
@@ -66,7 +69,7 @@ public class NortelImplIT {
         System.out.println("consultar");
         try {
             String instancia = "4130222839";
-            ConfiguracaoDMS result = instance.consultarPorInstancia(instancia);
+            ConfiguracaoDMS result = instance.consultarPorDn(instancia);
             System.out.println("Retono: " + GsonUtil.serialize(result));
         } catch (Exception e) {
             assertTrue(e instanceof LinhaNaoPertenceCentralException);

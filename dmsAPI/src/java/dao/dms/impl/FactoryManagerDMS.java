@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package dao.dms.impl;
+
+import dao.dms.enums.SwitchesEnum;
 
 /**
  *
  * @author G0042204
  */
-public class InfoCRM {
+public class FactoryManagerDMS {
+
+    public static ManagerDMS create(SwitchesEnum central) {
+        return new NortelImpl(central);
+    }
 
 }

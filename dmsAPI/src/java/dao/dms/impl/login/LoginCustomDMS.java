@@ -5,7 +5,6 @@
  */
 package dao.dms.impl.login;
 
-import dao.dms.impl.ComandoDMS;
 import dao.dms.impl.ConsultaSocket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

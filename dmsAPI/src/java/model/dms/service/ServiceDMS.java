@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dms.impl;
+package model.dms.service;
 
 import model.dms.ConfiguracaoDMS;
+import model.dms.ConsultaDmsIn;
 
 /**
  *
  * @author G0042204
  */
-interface ConsultaDMS {
+public interface ServiceDMS {
     
-    public ConfiguracaoDMS consultarPorInstancia(String instancia) throws Exception;
-    
-    public ConfiguracaoDMS consultarPorLen(String len) throws Exception;
+    public ConfiguracaoDMS consultar(ConsultaDmsIn in) throws Exception;
     
 }

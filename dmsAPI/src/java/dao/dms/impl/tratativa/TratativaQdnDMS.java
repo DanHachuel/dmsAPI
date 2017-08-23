@@ -14,18 +14,21 @@ public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
 
     @Override
     public ConfiguracaoDMS parse(String blob) throws Exception {
-        
-        if(blob.toUpperCase().contains("INVALID FOR THIS OFFICE")){
+        ConfiguracaoDMS conf = new ConfiguracaoDMS();
+
+        if (blob.toUpperCase().contains("INVALID FOR THIS OFFICE")) {
             throw new LinhaNaoPertenceCentralException();
         }
 
-        ConfiguracaoDMS conf = new ConfiguracaoDMS();
+        if (blob.toUpperCase().contains("UNASSIGNED")) {
+            
+        }
 
         String linePattern = "(?:LINE EQUIPMENT NUMBER:\\s{0,5}(.{10,18}))";
         String custGrpPattern = "(?:STATIONCUSTGRP:\\s{0,20}(\\w{6,10}))";
         String ncosPattern = "(?:NCOS:\\s{0,1}(\\d{1,5}))";
         String servPattern = "(?:OPTIONS:)(.{0,50})[^-]";
-        
+
         String len = Regex.capture(blob, linePattern).trim();
         conf.setLen(len.replaceAll("   ", " "));
         conf.setCustGrp(Regex.capture(blob, custGrpPattern).trim());

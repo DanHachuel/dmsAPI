@@ -6,6 +6,7 @@
 package dao.dms.impl;
 
 import dao.dms.AbstractDMS;
+import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaQdnDMS;
 import dao.dms.impl.tratativa.TratativaQlenDMS;
@@ -19,16 +20,16 @@ import model.dms.LineService;
  *
  * @author G0042204
  */
-public class NortelImpl extends AbstractDMS implements ConsultaDMS {
+public class NortelImpl extends AbstractDMS implements ManagerDMS {
 
-    public NortelImpl(String ipDslam) {
-        super(ipDslam);
+    public NortelImpl(SwitchesEnum central) {
+        super(central);
     }
 
     @Override
-    public ConfiguracaoDMS consultarPorInstancia(String instancia) throws Exception {
+    public ConfiguracaoDMS consultarPorDn(String dn) throws Exception {
         ConfiguracaoDMS c = new ConfiguracaoDMS();
-        ComandoDMS cmd = command().consulta(qdn(instancia));
+        ComandoDMS cmd = command().consulta(qdn(dn));
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
         return t.parse(cmd.getBlob());
     }
@@ -102,6 +103,16 @@ public class NortelImpl extends AbstractDMS implements ConsultaDMS {
         } catch (Exception ex) {
             Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public Boolean isSameSwitch(SwitchesEnum sw) {
+        return this.getCentral().equals(sw);
+    }
+
+    @Override
+    public Boolean isSamePrefix(String prefix) {
+        return this.getCentral().getPrefix().equalsIgnoreCase(prefix);
     }
 
 }

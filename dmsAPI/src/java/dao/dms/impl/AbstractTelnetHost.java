@@ -15,15 +15,15 @@ import dao.dms.impl.login.LoginTelnetStrategy;
  *
  * @author G0041775
  */
-public abstract class AbstractTelnetHost implements ConsultaDMS {
+public abstract class AbstractTelnetHost implements ManagerDMS {
 
-    private final String ipDslam;
+    private final String ip;
     private Credencial credencial;
     private LoginTelnetStrategy loginStrategy;
     private ConsultaSocket cd;
 
     public AbstractTelnetHost(String ipDslam, Credencial credencial, LoginTelnetStrategy loginStrategy) {
-        this.ipDslam = ipDslam;
+        this.ip = ipDslam;
         this.credencial = credencial;
         this.loginStrategy = loginStrategy;
         this.cd = new ConsultaSocket(this);
@@ -42,7 +42,7 @@ public abstract class AbstractTelnetHost implements ConsultaDMS {
     }
 
     public String getIpDslam() {
-        return this.ipDslam;
+        return this.ip;
     }
 
     public Credencial getCredencial() {
