@@ -28,6 +28,6 @@ public class Regex {
             return m.group(group);
 
         }
-        throw new Exception("Group não encontrado.");
+        throw new Exception("Regex - Group não encontrado.");
     }
 }

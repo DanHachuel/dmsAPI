@@ -8,6 +8,7 @@ package dao.dms.impl.tratativa;
 import exception.LinhaNaoPertenceCentralException;
 import model.dms.ConfiguracaoDMS;
 import model.dms.LineService;
+import model.dms.LineStatus;
 import util.Regex;
 
 public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
@@ -21,7 +22,8 @@ public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
         }
 
         if (blob.toUpperCase().contains("UNASSIGNED")) {
-            
+            conf.setStatus(LineStatus.NOT_CREATED);
+            return conf;
         }
 
         String linePattern = "(?:LINE EQUIPMENT NUMBER:\\s{0,5}(.{10,18}))";

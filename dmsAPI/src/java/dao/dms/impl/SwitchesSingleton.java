@@ -8,6 +8,7 @@ package dao.dms.impl;
 import dao.dms.enums.SwitchesEnum;
 import java.util.ArrayList;
 import java.util.List;
+import util.GsonUtil;
 
 /**
  *
@@ -38,17 +39,27 @@ public class SwitchesSingleton {
         for (SwitchesEnum v : SwitchesEnum.values()) {
             NortelImpl n = new NortelImpl(v);
             try {
-               // n.conectar();
+                // n.conectar();
             } catch (Exception e) {
                 System.out.println("Falha ao conectar Central: " + n.getCentral().name());
             } finally {
-                switchs.add(n);
+                this.adicionarCentral(n);
             }
 
         }
     }
 
+    public void adicionarCentral(ManagerDMS m) {
+        if (!switchs.contains(m)) {
+            System.out.println("Central Adicionada: " + GsonUtil.serialize(m));
+            switchs.add(m);
+        }
+    }
+
     public List<ManagerDMS> getSwitchs() {
+        if(switchs == null){
+            switchs = new ArrayList<>();
+        }
         return switchs;
     }
 

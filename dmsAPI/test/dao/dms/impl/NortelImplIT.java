@@ -22,7 +22,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.GOGNA_DOS01);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.CEFLA_JBS01);
 
     public NortelImplIT() {
     }
@@ -50,17 +50,16 @@ public class NortelImplIT {
     public void testConsultar() {
         System.out.println("consultar");
         try {
-            String instancia = "4876237846";
-//            String instancia = "6230957133";
+            String instancia = "8560971414";
 
             ConfiguracaoDMS result = instance.consultarPorDn(instancia);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("qdn", result != null);
             assertTrue("qlen", instance.consultarPorLen(result.getLen()) != null);
         } catch (Exception e) {
-            instance.desconectar();
-            e.printStackTrace();
             fail(e.getMessage());
+        } finally {
+            instance.desconectar();
         }
     }
 
@@ -73,9 +72,17 @@ public class NortelImplIT {
             System.out.println("Retono: " + GsonUtil.serialize(result));
         } catch (Exception e) {
             assertTrue(e instanceof LinhaNaoPertenceCentralException);
-        }finally{
+        } finally {
             instance.desconectar();
         }
+    }
+
+    @Test
+    public void testEnter() {
+        ComandoDMS result = instance.enter();
+        System.out.println("result:" + result.getBlob());
+        instance.desconectar();
+
     }
 
 }

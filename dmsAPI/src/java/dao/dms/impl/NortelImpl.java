@@ -27,6 +27,11 @@ public class NortelImpl extends AbstractDMS implements ManagerDMS {
     }
 
     @Override
+    public Boolean isSameIP(String ip) {
+        return getCentral().getIp().equalsIgnoreCase(ip);
+    }
+
+    @Override
     public ConfiguracaoDMS consultarPorDn(String dn) throws Exception {
         ConfiguracaoDMS c = new ConfiguracaoDMS();
         ComandoDMS cmd = command().consulta(qdn(dn));
@@ -95,6 +100,10 @@ public class NortelImpl extends AbstractDMS implements ManagerDMS {
         return param.contains(">SO:");
     }
 
+    public ComandoDMS enter() {
+        return new ComandoDMS("");
+    }
+
     @Override
     public void desconectar() {
         try {
@@ -107,12 +116,21 @@ public class NortelImpl extends AbstractDMS implements ManagerDMS {
 
     @Override
     public Boolean isSameSwitch(SwitchesEnum sw) {
-        return this.getCentral().equals(sw);
+        return this.getCentral().getIp().equalsIgnoreCase(sw.getIp());
     }
 
     @Override
     public Boolean isSamePrefix(String prefix) {
         return this.getCentral().getPrefix().equalsIgnoreCase(prefix);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return equals((NortelImpl) obj);
+    }
+
+    public boolean equals(NortelImpl dev) {
+        return this.isSameIP(dev.getIpDslam());
     }
 
 }

@@ -49,12 +49,13 @@ public class ServiceDMSImplIT {
         System.out.println("consultar");
         try {
             ConsultaDMS in = new ConsultaDMS();
-            in.setDn("4130886762");
-            in.setCentral(SwitchesEnum.PRCTA_PVS01);
+            in.setDn("8560971414");
+            in.setCentral(SwitchesEnum.GOGNA_DOS03);
             
             ServiceDMSImpl instance = new ServiceDMSImpl();
             ConfiguracaoDMS result = instance.consultar(in);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
+            
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());

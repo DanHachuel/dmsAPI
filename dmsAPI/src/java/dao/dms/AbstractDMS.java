@@ -19,7 +19,7 @@ public abstract class AbstractDMS extends AbstractTelnetHost {
     private final SwitchesEnum central;
 
     public AbstractDMS(SwitchesEnum central) {
-        super(central.getIp(), Credencial.UM, new LoginCustomDMS());
+        super(central.getIp(), Credencial.DOIS, new LoginCustomDMS());
         this.central = central;
     }
 

@@ -13,13 +13,15 @@ import model.dms.ConfiguracaoDMS;
  * @author G0042204
  */
 public interface ManagerDMS {
-    
+
     public ConfiguracaoDMS consultarPorDn(String instancia) throws Exception;
-    
+
     public ConfiguracaoDMS consultarPorLen(String len) throws Exception;
-    
+
     public Boolean isSameSwitch(SwitchesEnum sw);
-    
+
     public Boolean isSamePrefix(String prefix);
-    
+
+    public Boolean isSameIP(String ip);
+
 }
