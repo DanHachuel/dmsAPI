@@ -28,7 +28,7 @@ public class DMSController extends RestJaxAbstract {
     @Path("/consultar")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response consultar(ConsultaDMSIn in) {
+    public Response consultar(ConsultaDMSIn in) throws Exception {
         Response r = null;
         System.out.println("ConsultaDMSIn");
         try {
@@ -38,8 +38,8 @@ public class DMSController extends RestJaxAbstract {
             r = ok(consultar);
         } catch (Exception e) {
             r = serverError(e);
-        }finally{
-            
+        } finally {
+
         }
 
         return r;

@@ -33,7 +33,5 @@ public class ConsultaDMSIn extends GenericLog {
     public Object entrada() {
         return dms;
     }
-    
-    
 
 }
