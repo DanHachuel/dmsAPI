@@ -5,7 +5,6 @@
  */
 package model.dms.service;
 
-import dao.dms.enums.SwitchesEnum;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import org.junit.After;
@@ -14,53 +13,45 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import util.GsonUtil;
 
 /**
  *
  * @author G0042204
  */
-public class ServiceDMSImplIT {
-
-    public ServiceDMSImplIT() {
+public class ServiceDMSIT {
+    
+    public ServiceDMSIT() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of consultar method, of class ServiceDMSImpl.
+     * Test of consultar method, of class ServiceDMS.
      */
     @Test
     public void testConsultar() throws Exception {
         System.out.println("consultar");
-        try {
-            ConsultaDMS in = new ConsultaDMS();
-            in.setDn("4130886762");
-            in.setCentral(SwitchesEnum.PRCTA_PVS01);
-            
-            ServiceDMSImpl instance = new ServiceDMSImpl();
-            ConfiguracaoDMS result = instance.consultar(in);
-            System.out.println("Resultado: " + GsonUtil.serialize(result));
-        } catch (Exception e) {
-            e.printStackTrace();
-            fail(e.getMessage());
-        }
-
+        ConsultaDMS in = null;
+        ServiceDMS instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.consultar(in);
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

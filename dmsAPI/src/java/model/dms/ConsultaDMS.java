@@ -11,13 +11,13 @@ import dao.dms.enums.SwitchesEnum;
  *
  * @author G0042204
  */
-public class ConsultaDmsIn {
+public class ConsultaDMS {
 
     private String dn;
 
     private SwitchesEnum central;
 
-    public ConsultaDmsIn() {
+    public ConsultaDMS() {
     }
 
     public String getDn() {

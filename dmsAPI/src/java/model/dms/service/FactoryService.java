@@ -5,15 +5,14 @@
  */
 package model.dms.service;
 
-import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaDMS;
-
 /**
  *
  * @author G0042204
  */
-public interface ServiceDMS {
-    
-    public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception;
-    
+public class FactoryService {
+
+    public static ServiceDMS create() {
+        return new ServiceDMSImpl();
+    }
+
 }

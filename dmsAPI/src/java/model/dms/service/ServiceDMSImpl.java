@@ -8,7 +8,7 @@ package model.dms.service;
 import dao.dms.impl.ManagerDMS;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaDmsIn;
+import model.dms.ConsultaDMS;
 
 public class ServiceDMSImpl extends GenericService implements ServiceDMS {
 
@@ -16,7 +16,7 @@ public class ServiceDMSImpl extends GenericService implements ServiceDMS {
     }
 
     @Override
-    public ConfiguracaoDMS consultar(ConsultaDmsIn in) throws Exception {
+    public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
         if (in.getCentral() != null) {
             return manager(in.getCentral()).consultarPorDn(in.getDn());
         } else {
@@ -24,7 +24,7 @@ public class ServiceDMSImpl extends GenericService implements ServiceDMS {
         }
     }
 
-    protected ConfiguracaoDMS consultaGenerica(ConsultaDmsIn in) {
+    protected ConfiguracaoDMS consultaGenerica(ConsultaDMS in) {
         List<ManagerDMS> mgrs = manager(in.getDn().substring(0, 2));
 
         for (ManagerDMS manager : mgrs) {

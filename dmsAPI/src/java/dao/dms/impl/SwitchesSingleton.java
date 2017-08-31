@@ -30,10 +30,21 @@ public class SwitchesSingleton {
         return instance;
     }
 
+    /**
+     * Método responsável por carregar centrais
+     */
     protected void prepararCentral() {
         switchs = new ArrayList<>();
         for (SwitchesEnum v : SwitchesEnum.values()) {
-            switchs.add(new NortelImpl(v));
+            NortelImpl n = new NortelImpl(v);
+            try {
+               // n.conectar();
+            } catch (Exception e) {
+                System.out.println("Falha ao conectar Central: " + n.getCentral().name());
+            } finally {
+                switchs.add(n);
+            }
+
         }
     }
 

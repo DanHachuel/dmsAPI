@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dms.service;
+package model.log;
 
-import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaDMS;
+import model.entity.LogEntity;
 
 /**
  *
  * @author G0042204
  */
-public interface ServiceDMS {
-    
-    public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception;
-    
+public interface Logger {
+
+    public LogEntity log();
+
 }
