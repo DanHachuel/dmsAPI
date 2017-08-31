@@ -5,6 +5,7 @@
  */
 package model.dms;
 
+import model.dms.dto.LineServiceDTO;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import util.JsonEnumDeserializer;
 
@@ -44,6 +45,10 @@ public enum LineService {
             }
         }
         return null;
+    }
+    
+    public LineServiceDTO dto(){
+        return new LineServiceDTO(desc, key);
     }
 
 }
