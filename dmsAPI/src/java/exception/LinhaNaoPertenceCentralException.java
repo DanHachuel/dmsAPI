@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dms.impl;
-
-import model.dms.ConfiguracaoDMS;
+package exception;
 
 /**
  *
  * @author G0042204
  */
-interface ConsultaDMS {
-    
-    public ConfiguracaoDMS consultar(String instancia) throws Exception;
-    
+public class LinhaNaoPertenceCentralException extends Exception {
+
+    public LinhaNaoPertenceCentralException() {
+        super("Linha não pertence a Central.");
+    }
+
 }

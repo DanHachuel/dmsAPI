@@ -11,6 +11,6 @@ package model.dms;
  */
 public enum LineStatus {
     
-    CREATED, NOT_CREATED, INVALID_OFFICE;
+    CREATED, NOT_CREATED;
     
 }

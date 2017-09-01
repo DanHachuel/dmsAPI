@@ -5,8 +5,9 @@
  */
 package dao.dms.impl;
 
+import dao.dms.enums.SwitchesEnum;
+import exception.LinhaNaoPertenceCentralException;
 import model.dms.ConfiguracaoDMS;
-import model.dms.LineService;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,6 +21,8 @@ import util.GsonUtil;
  * @author G0042204
  */
 public class NortelImplIT {
+
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.CEFLA_JBS01);
 
     public NortelImplIT() {
     }
@@ -47,25 +50,39 @@ public class NortelImplIT {
     public void testConsultar() {
         System.out.println("consultar");
         try {
-            String instancia = "4130886762";
-            NortelImpl instance = new NortelImpl("10.141.245.97");
-            instance.conectar();
+            String instancia = "8560971414";
 
-            ConfiguracaoDMS result = instance.consultar(instancia);
-            result = instance.consultar(instancia);
+            ConfiguracaoDMS result = instance.consultarPorDn(instancia);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
-            instance.desconectar();
-            assertTrue(result != null);
+            assertTrue("qdn", result != null);
+            assertTrue("qlen", instance.consultarPorLen(result.getLen()) != null);
         } catch (Exception e) {
-            e.printStackTrace();
             fail(e.getMessage());
+        } finally {
+            instance.desconectar();
         }
     }
 
     @Test
-    public void testAtivarServico() {
-        NortelImpl instance = new NortelImpl("10.141.245.97");
-        System.out.println(instance.ativarServico("4130886762", LineService.DIGITAL).getSintax());
+    public void testLinhaNaoPertenceCentralException() {
+        System.out.println("consultar");
+        try {
+            String instancia = "4130222839";
+            ConfiguracaoDMS result = instance.consultarPorDn(instancia);
+            System.out.println("Retono: " + GsonUtil.serialize(result));
+        } catch (Exception e) {
+            assertTrue(e instanceof LinhaNaoPertenceCentralException);
+        } finally {
+            instance.desconectar();
+        }
+    }
+
+    @Test
+    public void testEnter() {
+        ComandoDMS result = instance.enter();
+        System.out.println("result:" + result.getBlob());
+        instance.desconectar();
+
     }
 
 }

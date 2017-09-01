@@ -5,10 +5,12 @@
  */
 package dao.dms.impl;
 
-import dao.dms.credencial.Credencial;
-import dao.dms.impl.login.LoginCustomDMS;
+import dao.dms.AbstractDMS;
+import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.Tratativa;
-import dao.dms.impl.tratativa.TratativaConfiguracaoDMS;
+import dao.dms.impl.tratativa.TratativaQdnDMS;
+import dao.dms.impl.tratativa.TratativaQlenDMS;
+import exception.LoginSwitchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
@@ -18,19 +20,30 @@ import model.dms.LineService;
  *
  * @author G0042204
  */
-public class NortelImpl extends AbstractTelnetHost implements ConsultaDMS {
+public class NortelImpl extends AbstractDMS implements ManagerDMS {
 
-    public NortelImpl(String ipDslam) {
-        super(ipDslam, Credencial.UM, new LoginCustomDMS());
+    public NortelImpl(SwitchesEnum central) {
+        super(central);
     }
 
     @Override
-    public ConfiguracaoDMS consultar(String instancia) throws Exception {
+    public Boolean isSameIP(String ip) {
+        return getCentral().getIp().equalsIgnoreCase(ip);
+    }
+
+    @Override
+    public ConfiguracaoDMS consultarPorDn(String dn) throws Exception {
         ConfiguracaoDMS c = new ConfiguracaoDMS();
+        ComandoDMS cmd = command().consulta(qdn(dn));
+        Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
+        return t.parse(cmd.getBlob());
+    }
 
-        ComandoDMS cmd = command().consulta(qdn(instancia));
-
-        Tratativa<ConfiguracaoDMS> t = new TratativaConfiguracaoDMS();
+    @Override
+    public ConfiguracaoDMS consultarPorLen(String len) throws Exception {
+        ConfiguracaoDMS c = new ConfiguracaoDMS();
+        ComandoDMS cmd = command().consulta(qlen(len));
+        Tratativa<ConfiguracaoDMS> t = new TratativaQlenDMS();
         return t.parse(cmd.getBlob());
     }
 
@@ -75,13 +88,20 @@ public class NortelImpl extends AbstractTelnetHost implements ConsultaDMS {
     }
 
     @Override
-    public void conectar() {
+    public void conectar() throws Exception {
         super.conectar();
-        try {
-            command().consulta(servord());
-        } catch (Exception ex) {
-            Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
+        ComandoDMS cmd = command().consulta(servord());
+        if (!isLogged(cmd.getBlob())) {
+            throw new LoginSwitchException();
         }
+    }
+
+    protected boolean isLogged(String param) {
+        return param.contains(">SO:");
+    }
+
+    public ComandoDMS enter() {
+        return new ComandoDMS("");
     }
 
     @Override
@@ -92,6 +112,25 @@ public class NortelImpl extends AbstractTelnetHost implements ConsultaDMS {
         } catch (Exception ex) {
             Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public Boolean isSameSwitch(SwitchesEnum sw) {
+        return this.getCentral().getIp().equalsIgnoreCase(sw.getIp());
+    }
+
+    @Override
+    public Boolean isSamePrefix(String prefix) {
+        return this.getCentral().getPrefix().equalsIgnoreCase(prefix);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return equals((NortelImpl) obj);
+    }
+
+    public boolean equals(NortelImpl dev) {
+        return this.isSameIP(dev.getIpDslam());
     }
 
 }

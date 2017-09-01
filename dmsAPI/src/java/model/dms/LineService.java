@@ -5,14 +5,20 @@
  */
 package model.dms;
 
+import model.dms.dto.LineServiceDTO;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import util.JsonEnumDeserializer;
+
 /**
- *CWT 3WC DGT DDN NOAMA 
+ * CWT 3WC DGT DDN NOAMA
+ *
  * @author G0042204
  */
+@JsonSerialize(using = JsonEnumDeserializer.class)
 public enum LineService {
 
-    CONV_TRES("Conversa a Três", "3WC"), 
-    DIGITAL("Digital (TOM / TONE)", "DGT"), 
+    CONV_TRES("Conversa a Três", "3WC"),
+    DIGITAL("Digital (TOM / TONE)", "DGT"),
     IDENT_CHAM_NOAMA("Identificador de Chamadas", "NOAMA"),
     IDENT_CHAM_DDN("Identificador de Chamadas", "DDN"),
     LIG_SIMULT("Ligação Simultânea", "CWT");
@@ -39,6 +45,10 @@ public enum LineService {
             }
         }
         return null;
+    }
+    
+    public LineServiceDTO dto(){
+        return new LineServiceDTO(desc, key);
     }
 
 }

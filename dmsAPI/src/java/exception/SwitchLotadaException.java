@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package exception;
 
 /**
  *
  * @author G0042204
  */
-public class InfoCRM {
+public class SwitchLotadaException extends Exception {
+
+    public SwitchLotadaException() {
+        super("Central Lotada.");
+    }
 
 }

@@ -17,37 +17,37 @@ import dao.dms.impl.login.LoginTelnetStrategy;
  *
  * @author G0042204
  */
-public class ConsultaDslam implements Conector {
+public class ConsultaSocket implements Conector {
 
     public Socket pingSocket;
     public PrintWriter out;
     public BufferedReader in;
-
     public AbstractTelnetHost dslam;
-
     public LoginTelnetStrategy styLogin;
+    private Boolean busy;
 
-    public ConsultaDslam(AbstractTelnetHost dslam) {
+    public ConsultaSocket(AbstractTelnetHost dslam) {
         this.dslam = dslam;
-
+        this.busy = false;
     }
 
     @Override
-    public void conectar() {
+    public void conectar() throws Exception {
         this.dslam.conectar();
     }
 
     public List<String> getRetorno() throws IOException {
-
         List<String> list = new ArrayList<>();
-        String line;
         try {
+            String line;
             while ((line = in.readLine()) != null) {
                 list.add(line);
                 System.out.println(line);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             return list;
+        } finally {
+            this.busy = false;
         }
         return list;
     }
@@ -68,6 +68,15 @@ public class ConsultaDslam implements Conector {
                 this.conectar();
             }
 
+            int i = 0;
+            while (busy) {
+                i++;
+                Thread.sleep(1000);
+            }
+
+            System.out.println("Sleeps:" + i);
+
+            this.busy = true;
             pingSocket.setSoTimeout(comando.getSleep());
             out.println(comando.getSintax());
             if (comando.getSintaxAux() != null) {

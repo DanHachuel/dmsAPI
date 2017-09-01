@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dms.impl.login;
+package model.log;
 
-import dao.dms.impl.ConsultaSocket;
+import model.entity.LogEntity;
 
 /**
  *
  * @author G0042204
  */
-public interface LoginTelnetStrategy {
+public interface Logger {
 
-    public void conectar(ConsultaSocket cs) throws Exception;
+    public LogEntity log();
 
 }
