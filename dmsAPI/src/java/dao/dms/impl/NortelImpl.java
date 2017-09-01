@@ -20,28 +20,28 @@ import model.dms.LineService;
  *
  * @author G0042204
  */
-public class NortelImpl extends AbstractDMS implements ManagerDMS {
+public class NortelImpl extends AbstractDMS {
 
     public NortelImpl(SwitchesEnum central) {
         super(central);
     }
 
     @Override
-    public Boolean isSameIP(String ip) {
-        return getCentral().getIp().equalsIgnoreCase(ip);
+    public Boolean isSameSwitch(SwitchesEnum sw) {
+        return this.getCentral().isSameIP(sw);
     }
 
     @Override
     public ConfiguracaoDMS consultarPorDn(String dn) throws Exception {
-        ConfiguracaoDMS c = new ConfiguracaoDMS();
         ComandoDMS cmd = command().consulta(qdn(dn));
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
-        return t.parse(cmd.getBlob());
+        ConfiguracaoDMS conf = t.parse(cmd.getBlob());
+        conf.setDn(dn);
+        return conf;
     }
 
     @Override
     public ConfiguracaoDMS consultarPorLen(String len) throws Exception {
-        ConfiguracaoDMS c = new ConfiguracaoDMS();
         ComandoDMS cmd = command().consulta(qlen(len));
         Tratativa<ConfiguracaoDMS> t = new TratativaQlenDMS();
         return t.parse(cmd.getBlob());
@@ -115,22 +115,12 @@ public class NortelImpl extends AbstractDMS implements ManagerDMS {
     }
 
     @Override
-    public Boolean isSameSwitch(SwitchesEnum sw) {
-        return this.getCentral().getIp().equalsIgnoreCase(sw.getIp());
-    }
-
-    @Override
-    public Boolean isSamePrefix(String prefix) {
-        return this.getCentral().getPrefix().equalsIgnoreCase(prefix);
-    }
-
-    @Override
     public boolean equals(Object obj) {
         return equals((NortelImpl) obj);
     }
 
     public boolean equals(NortelImpl dev) {
-        return this.isSameIP(dev.getIpDslam());
+        return this.getCentral().isSameIP(dev.getCentral());
     }
 
 }

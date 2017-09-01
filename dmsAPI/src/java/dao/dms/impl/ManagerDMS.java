@@ -20,8 +20,6 @@ public interface ManagerDMS {
 
     public Boolean isSameSwitch(SwitchesEnum sw);
 
-    public Boolean isSamePrefix(String prefix);
-
-    public Boolean isSameIP(String ip);
+    public SwitchesEnum getCentral();
 
 }

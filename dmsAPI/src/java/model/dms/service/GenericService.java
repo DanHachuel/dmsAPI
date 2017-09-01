@@ -8,7 +8,7 @@ package model.dms.service;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.ManagerDMS;
 import dao.dms.impl.SwitchesSingleton;
-import java.util.List;
+import exception.SwitchNaoEncontradaException;
 
 /**
  *
@@ -16,12 +16,8 @@ import java.util.List;
  */
 public abstract class GenericService {
 
-    public ManagerDMS manager(SwitchesEnum central) {
+    public ManagerDMS manager(SwitchesEnum central) throws SwitchNaoEncontradaException {
         return SwitchesSingleton.getInstance().getSwitchBySwitch(central);
-    }
-    
-    public List<ManagerDMS> manager(String prefix) {
-        return SwitchesSingleton.getInstance().getSwitchByPrefix(prefix);
     }
 
 }

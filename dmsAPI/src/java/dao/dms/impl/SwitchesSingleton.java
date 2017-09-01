@@ -6,9 +6,9 @@
 package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
+import exception.SwitchNaoEncontradaException;
 import java.util.ArrayList;
 import java.util.List;
-import util.GsonUtil;
 
 /**
  *
@@ -43,6 +43,7 @@ public class SwitchesSingleton {
             } catch (Exception e) {
                 System.out.println("Falha ao conectar Central: " + n.getCentral().name());
             } finally {
+                System.out.println(n.getCentral().name());
                 this.adicionarCentral(n);
             }
 
@@ -50,36 +51,26 @@ public class SwitchesSingleton {
     }
 
     public void adicionarCentral(ManagerDMS m) {
-        if (!switchs.contains(m)) {
-            System.out.println("Central Adicionada: " + GsonUtil.serialize(m));
-            switchs.add(m);
+        if (!getSwitchs().contains(m)) {
+            System.out.println("adicionarCentral -> " + m.getCentral().name());
+            getSwitchs().add(m);
         }
     }
 
     public List<ManagerDMS> getSwitchs() {
-        if(switchs == null){
+        if (switchs == null) {
             switchs = new ArrayList<>();
         }
         return switchs;
     }
 
-    public ManagerDMS getSwitchBySwitch(SwitchesEnum sw) {
+    public ManagerDMS getSwitchBySwitch(SwitchesEnum sw) throws SwitchNaoEncontradaException {
         for (ManagerDMS m : getSwitchs()) {
             if (m.isSameSwitch(sw)) {
                 return m;
             }
         }
-        return null;
-    }
-
-    public List<ManagerDMS> getSwitchByPrefix(String prefix) {
-        List<ManagerDMS> lst = new ArrayList<>();
-        for (ManagerDMS m : getSwitchs()) {
-            if (m.isSamePrefix(prefix)) {
-                lst.add(m);
-            }
-        }
-        return lst;
+        throw new SwitchNaoEncontradaException();
     }
 
 }

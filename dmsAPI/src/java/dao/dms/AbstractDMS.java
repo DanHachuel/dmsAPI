@@ -8,13 +8,14 @@ package dao.dms;
 import dao.dms.credencial.Credencial;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.AbstractTelnetHost;
+import dao.dms.impl.ManagerDMS;
 import dao.dms.impl.login.LoginCustomDMS;
 
 /**
  *
  * @author G0042204
  */
-public abstract class AbstractDMS extends AbstractTelnetHost {
+public abstract class AbstractDMS extends AbstractTelnetHost implements ManagerDMS {
 
     private final SwitchesEnum central;
 
