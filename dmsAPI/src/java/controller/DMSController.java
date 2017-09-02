@@ -8,6 +8,7 @@ package controller;
 import controller.in.ConsultaDMSIn;
 import java.util.Calendar;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -41,6 +42,16 @@ public class DMSController extends RestJaxAbstract {
         } finally {
 
         }
+
+        return r;
+    }
+
+    @GET
+    @Path("/singleton")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response singleton() throws Exception {
+        Response r = null;
+
 
         return r;
     }

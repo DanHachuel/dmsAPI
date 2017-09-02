@@ -8,14 +8,14 @@ package model.dms.service;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 
-public class ServiceDMSImpl extends GenericService implements ServiceDMS {
+public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
     public ServiceDMSImpl() {
     }
 
     @Override
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
-        return debugger(in.getCentral()).consultarPorDn(in.getDn());
+        return manager(in.getCentral()).consultarPorDn(in.getDn());
     }
 
 }

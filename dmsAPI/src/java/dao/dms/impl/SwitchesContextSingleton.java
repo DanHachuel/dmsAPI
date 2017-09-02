@@ -14,18 +14,18 @@ import java.util.List;
  *
  * @author G0042204
  */
-public class SwitchesSingleton {
+public class SwitchesContextSingleton {
 
-    private static SwitchesSingleton instance;
+    private static SwitchesContextSingleton instance;
 
     private List<ManagerDMS> switchs;
 
-    private SwitchesSingleton() {
+    private SwitchesContextSingleton() {
     }
 
-    public static synchronized SwitchesSingleton getInstance() {
+    public static synchronized SwitchesContextSingleton getInstance() {
         if (instance == null) {
-            instance = new SwitchesSingleton();
+            instance = new SwitchesContextSingleton();
             instance.prepararCentral();
         }
         return instance;

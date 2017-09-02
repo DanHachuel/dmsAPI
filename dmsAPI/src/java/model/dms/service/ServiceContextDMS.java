@@ -5,16 +5,14 @@
  */
 package model.dms.service;
 
+import model.dms.ConfiguracaoDMS;
+
 /**
  *
  * @author G0042204
  */
-public class FactoryService {
-
-    public static ServiceDMS create() {
-        return new ServiceDMSImpl();
-    }
+public interface ServiceContextDMS {
     
+    public ConfiguracaoDMS consultar() throws Exception;
     
-
 }
