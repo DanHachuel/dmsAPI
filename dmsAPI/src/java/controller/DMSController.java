@@ -16,6 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
 import model.dms.service.FactoryService;
+import model.dms.service.ServiceContextDMS;
+import model.dms.service.ServiceContextDMSImpl;
 import model.dms.service.ServiceDMS;
 
 /**
@@ -51,8 +53,11 @@ public class DMSController extends RestJaxAbstract {
     @Produces(MediaType.APPLICATION_JSON)
     public Response singleton() throws Exception {
         Response r = null;
-
-
+        
+        ServiceContextDMS serv = new ServiceContextDMSImpl();
+        
+        r = ok(serv.contextDetail());
+        
         return r;
     }
 

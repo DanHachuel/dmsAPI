@@ -108,4 +108,20 @@ public class SocketDMS implements Conector {
         }
     }
 
+    public Boolean isBusy() {
+        return busy;
+    }
+
+    public void setBusy(Boolean busy) {
+        this.busy = busy;
+    }
+
+    public Boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(Boolean connected) {
+        this.connected = connected;
+    }
+
 }

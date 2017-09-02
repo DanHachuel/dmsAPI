@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
 import model.dms.LineService;
+import model.dms.dto.DetailDTO;
 
 /**
  *
@@ -121,6 +122,11 @@ public class NortelImpl extends AbstractDMS {
 
     public boolean equals(NortelImpl dev) {
         return this.getCentral().isSameIP(dev.getCentral());
+    }
+
+    @Override
+    public DetailDTO getDetail() {
+        return new DetailDTO(this.getCentral(), command().isConnected(), command().isBusy());
     }
 
 }

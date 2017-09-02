@@ -8,6 +8,7 @@ package model.dms.service;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.ManagerDMS;
 import dao.dms.impl.NortelImpl;
+import dao.dms.impl.SwitchesContextSingleton;
 import exception.SwitchNaoEncontradaException;
 
 /**
@@ -22,7 +23,11 @@ public abstract class GenericDMSService {
     }
 
     public ManagerDMS managerContexto(SwitchesEnum central) throws SwitchNaoEncontradaException {
-        return new NortelImpl(central);
+        return context().getSwitchBySwitch(central);
+    }
+    
+    public SwitchesContextSingleton context(){
+        return SwitchesContextSingleton.getInstance();
     }
 
     public ManagerDMS debugger(SwitchesEnum central) throws SwitchNaoEncontradaException {

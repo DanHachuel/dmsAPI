@@ -7,6 +7,7 @@ package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
 import model.dms.ConfiguracaoDMS;
+import model.dms.dto.DetailDTO;
 
 /**
  *
@@ -21,5 +22,7 @@ public interface ManagerDMS {
     public Boolean isSameSwitch(SwitchesEnum sw);
 
     public SwitchesEnum getCentral();
+    
+    public DetailDTO getDetail();
 
 }

@@ -63,7 +63,7 @@ public class SwitchesContextSingleton {
         }
         return switchs;
     }
-
+    
     public ManagerDMS getSwitchBySwitch(SwitchesEnum sw) throws SwitchNaoEncontradaException {
         for (ManagerDMS m : getSwitchs()) {
             if (m.isSameSwitch(sw)) {

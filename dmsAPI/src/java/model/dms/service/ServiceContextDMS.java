@@ -5,14 +5,15 @@
  */
 package model.dms.service;
 
-import model.dms.ConfiguracaoDMS;
+import java.util.List;
+import model.dms.dto.DetailDTO;
 
 /**
  *
  * @author G0042204
  */
 public interface ServiceContextDMS {
-    
-    public ConfiguracaoDMS consultar() throws Exception;
-    
+
+    public List<DetailDTO> contextDetail();
+
 }
