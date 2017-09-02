@@ -124,9 +124,6 @@ public class NortelImpl extends AbstractDMS {
         return this.getCentral().isSameIP(dev.getCentral());
     }
 
-    @Override
-    public DetailDTO getDetail() {
-        return new DetailDTO(this.getCentral(), command().isConnected(), command().isBusy());
-    }
+
 
 }

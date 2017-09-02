@@ -10,6 +10,7 @@ import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.AbstractHost;
 import dao.dms.impl.ManagerDMS;
 import dao.dms.impl.login.LoginCustomDMS;
+import model.dms.dto.DetailDTO;
 
 /**
  *
@@ -27,6 +28,11 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
     @Override
     public SwitchesEnum getCentral() {
         return central;
+    }
+
+    @Override
+    public DetailDTO getDetail() {
+        return new DetailDTO(this.getCentral(), command().isConnected(), command().isBusy());
     }
 
 }

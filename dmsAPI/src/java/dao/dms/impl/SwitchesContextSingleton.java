@@ -23,7 +23,7 @@ public class SwitchesContextSingleton {
     private SwitchesContextSingleton() {
     }
 
-    public static synchronized SwitchesContextSingleton getInstance() {
+    public static SwitchesContextSingleton getInstance() {
         if (instance == null) {
             instance = new SwitchesContextSingleton();
             instance.prepararCentral();
@@ -35,9 +35,8 @@ public class SwitchesContextSingleton {
      * Método responsável por carregar centrais
      */
     protected void prepararCentral() {
-        switchs = new ArrayList<>();
         for (SwitchesEnum v : SwitchesEnum.values()) {
-            NortelImpl n = new NortelImpl(v);
+            ManagerDMS n = new NortelImpl(v);
             try {
                 // n.conectar();
             } catch (Exception e) {
@@ -46,7 +45,6 @@ public class SwitchesContextSingleton {
                 System.out.println(n.getCentral().name());
                 this.adicionarCentral(n);
             }
-
         }
     }
 
@@ -63,7 +61,7 @@ public class SwitchesContextSingleton {
         }
         return switchs;
     }
-    
+
     public ManagerDMS getSwitchBySwitch(SwitchesEnum sw) throws SwitchNaoEncontradaException {
         for (ManagerDMS m : getSwitchs()) {
             if (m.isSameSwitch(sw)) {
