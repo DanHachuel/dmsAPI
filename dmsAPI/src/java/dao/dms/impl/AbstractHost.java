@@ -15,18 +15,18 @@ import dao.dms.impl.login.LoginTelnetStrategy;
  *
  * @author G0041775
  */
-public abstract class AbstractTelnetHost implements ManagerDMS {
+public abstract class AbstractHost implements ManagerDMS {
 
     private final String ip;
     private Credencial credencial;
     private LoginTelnetStrategy loginStrategy;
-    private ConsultaSocket cd;
+    private SocketDMS socket;
 
-    public AbstractTelnetHost(String ipDslam, Credencial credencial, LoginTelnetStrategy loginStrategy) {
+    public AbstractHost(String ipDslam, Credencial credencial, LoginTelnetStrategy loginStrategy) {
         this.ip = ipDslam;
         this.credencial = credencial;
         this.loginStrategy = loginStrategy;
-        this.cd = new ConsultaSocket(this);
+        this.socket = new SocketDMS(this);
     }
 
     public void conectar() throws Exception {
@@ -35,9 +35,9 @@ public abstract class AbstractTelnetHost implements ManagerDMS {
 
     public void desconectar() {
         try {
-            this.cd.close();
+            this.socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(AbstractTelnetHost.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractHost.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -61,12 +61,12 @@ public abstract class AbstractTelnetHost implements ManagerDMS {
         this.loginStrategy = loginStrategy;
     }
 
-    public ConsultaSocket command() {
-        return cd;
+    public SocketDMS command() {
+        return socket;
     }
 
-    public void setCd(ConsultaSocket cd) {
-        this.cd = cd;
+    public void setCd(SocketDMS cd) {
+        this.socket = cd;
     }
 
 }

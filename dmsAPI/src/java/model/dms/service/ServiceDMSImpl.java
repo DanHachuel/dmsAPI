@@ -15,7 +15,7 @@ public class ServiceDMSImpl extends GenericService implements ServiceDMS {
 
     @Override
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
-        return manager(in.getCentral()).consultarPorDn(in.getDn());
+        return debugger(in.getCentral()).consultarPorDn(in.getDn());
     }
 
 }
