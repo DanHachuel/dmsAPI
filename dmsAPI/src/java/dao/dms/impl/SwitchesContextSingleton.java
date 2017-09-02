@@ -20,9 +20,6 @@ public class SwitchesContextSingleton {
 
     private List<ManagerDMS> switchs;
 
-    private SwitchesContextSingleton() {
-    }
-
     public static SwitchesContextSingleton getInstance() {
         if (instance == null) {
             instance = new SwitchesContextSingleton();
@@ -70,5 +67,20 @@ public class SwitchesContextSingleton {
         }
         throw new SwitchNaoEncontradaException();
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("SwitchesContextSingleton -> finalize");
+        
+        
+        
+        
+        super.finalize(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+
+
+    
+    
 
 }

@@ -20,4 +20,18 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
         return as;
     }
 
+    @Override
+    public void connect() {
+        context().getSwitchs().forEach((t) -> {
+            t.connect();
+        });
+    }
+
+    @Override
+    public void disconnect() {
+        context().getSwitchs().forEach((t) -> {
+            t.disconnect();
+        });
+    }
+
 }

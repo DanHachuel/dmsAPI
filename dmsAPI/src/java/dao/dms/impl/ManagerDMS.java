@@ -22,7 +22,11 @@ public interface ManagerDMS {
     public Boolean isSameSwitch(SwitchesEnum sw);
 
     public SwitchesEnum getCentral();
-    
+
     public DetailDTO getDetail();
+
+    public void disconnect();
+
+    public void connect();
 
 }

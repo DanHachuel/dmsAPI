@@ -5,6 +5,8 @@
  */
 package dao.dms.enums;
 
+import exception.SwitchNaoEncontradaException;
+
 /**
  *
  * @author G0042204
@@ -101,6 +103,14 @@ public enum SwitchesEnum {
 
     public Boolean isSameIP(SwitchesEnum s) {
         return this.getIp().equalsIgnoreCase(s.getIp());
+    }
+
+    public static SwitchesEnum findByName(String name) throws SwitchNaoEncontradaException {
+        try {
+            return SwitchesEnum.valueOf(name);
+        } catch (Exception e) {
+            throw new SwitchNaoEncontradaException();
+        }
     }
 
 }

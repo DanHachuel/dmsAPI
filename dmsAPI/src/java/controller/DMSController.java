@@ -7,10 +7,12 @@ package controller;
 
 import controller.in.ConsultaDMSIn;
 import java.util.Calendar;
+import javax.jws.WebParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -40,6 +42,7 @@ public class DMSController extends RestJaxAbstract {
             in.setDataLogOut(Calendar.getInstance());
             r = ok(consultar);
         } catch (Exception e) {
+            e.printStackTrace();
             r = serverError(e);
         } finally {
 
@@ -53,11 +56,23 @@ public class DMSController extends RestJaxAbstract {
     @Produces(MediaType.APPLICATION_JSON)
     public Response singleton() throws Exception {
         Response r = null;
-        
         ServiceContextDMS serv = new ServiceContextDMSImpl();
-        
         r = ok(serv.contextDetail());
-        
+        return r;
+    }
+
+    @GET
+    @Path("/singleton/connection/{state}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response singletonConnections(@PathParam("state") Boolean state) throws Exception {
+        Response r = null;
+        ServiceContextDMS serv = new ServiceContextDMSImpl();
+        if (state) {
+            serv.connect();
+        } else {
+            serv.disconnect();
+        }
+        r = ok(serv.contextDetail());
         return r;
     }
 

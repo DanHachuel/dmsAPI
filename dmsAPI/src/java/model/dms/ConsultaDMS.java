@@ -5,8 +5,6 @@
  */
 package model.dms;
 
-import dao.dms.enums.SwitchesEnum;
-
 /**
  *
  * @author G0042204
@@ -15,7 +13,7 @@ public class ConsultaDMS {
 
     private String dn;
 
-    private SwitchesEnum central;
+    private String central;
 
     public ConsultaDMS() {
     }
@@ -28,11 +26,11 @@ public class ConsultaDMS {
         this.dn = dn;
     }
 
-    public SwitchesEnum getCentral() {
+    public String getCentral() {
         return central;
     }
 
-    public void setCentral(SwitchesEnum central) {
+    public void setCentral(String central) {
         this.central = central;
     }
 

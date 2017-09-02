@@ -15,5 +15,9 @@ import model.dms.dto.DetailDTO;
 public interface ServiceContextDMS {
 
     public List<DetailDTO> contextDetail();
+    
+    public void connect();
+    
+    public void disconnect();
 
 }

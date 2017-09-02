@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import dao.dms.enums.SwitchesEnum;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 
@@ -15,7 +16,7 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
     @Override
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
-        return manager(in.getCentral()).consultarPorDn(in.getDn());
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());;
+        return manager(enu).consultarPorDn(in.getDn());
     }
-
 }

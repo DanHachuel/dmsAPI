@@ -11,10 +11,12 @@ import model.dms.LineService;
 import model.dms.LineStatus;
 import util.Regex;
 
-public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
+public class TratativaQdnDMS extends TratativaGeneric implements Tratativa<ConfiguracaoDMS> {
 
     @Override
     public ConfiguracaoDMS parse(String blob) throws Exception {
+        validar(blob);
+        
         ConfiguracaoDMS conf = new ConfiguracaoDMS();
 
         if (blob.toUpperCase().contains("INVALID FOR THIS OFFICE")) {
