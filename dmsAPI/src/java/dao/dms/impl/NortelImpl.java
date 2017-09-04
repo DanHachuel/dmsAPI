@@ -5,7 +5,6 @@
  */
 package dao.dms.impl;
 
-import dao.dms.AbstractDMS;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaQdnDMS;

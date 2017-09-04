@@ -69,9 +69,9 @@ public class ComandoDMS {
 
     public String getBlob() {
         StringBuilder resp = new StringBuilder();
-        for (String string : retorno) {
+        retorno.forEach((string) -> {
             resp.append(string);
-        }
+        });
         return resp.toString();
     }
 

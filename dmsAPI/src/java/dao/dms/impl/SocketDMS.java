@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import dao.dms.impl.login.LoginTelnetStrategy;
+import util.OSValidator;
 
 /**
  *
@@ -88,18 +89,23 @@ public class SocketDMS implements Conector {
 
             this.busy = true;
             pingSocket.setSoTimeout(comando.getSleep());
-            out.println(comando.getSintax());
-            if (comando.getSintaxAux() != null) {
-                Thread.sleep(comando.getSleep());
-                pingSocket.setSoTimeout(comando.getSleepAux());
-                out.println(comando.getSintaxAux());
-                if (comando.getSintaxAux2() != null) {
-                    Thread.sleep(comando.getSleepAux());
-                    pingSocket.setSoTimeout(comando.getSleep());
-                    out.println(comando.getSintaxAux2());
-                }
+
+            if (OSValidator.isWindows()) {
+                out.println(comando.getSintax());
+            } else {
+                out.println(comando.getSintax() + "\n\r");
             }
 
+//            if (comando.getSintaxAux() != null) {
+//                Thread.sleep(comando.getSleep());
+//                pingSocket.setSoTimeout(comando.getSleepAux());
+//                out.println(comando.getSintaxAux());
+//                if (comando.getSintaxAux2() != null) {
+//                    Thread.sleep(comando.getSleepAux());
+//                    pingSocket.setSoTimeout(comando.getSleep());
+//                    out.println(comando.getSintaxAux2());
+//                }
+//            }
             comando.setRetorno(this.getRetorno());
             return comando;
 

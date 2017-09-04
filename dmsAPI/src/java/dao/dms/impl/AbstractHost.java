@@ -15,7 +15,7 @@ import dao.dms.impl.login.LoginTelnetStrategy;
  *
  * @author G0041775
  */
-public abstract class AbstractHost implements ManagerDMS {
+public abstract class AbstractHost {
 
     private final String ip;
     private Credencial credencial;

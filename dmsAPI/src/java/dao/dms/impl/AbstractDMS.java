@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dao.dms;
+package dao.dms.impl;
 
 import dao.dms.credencial.Credencial;
 import dao.dms.enums.SwitchesEnum;
-import dao.dms.impl.AbstractHost;
-import dao.dms.impl.ManagerDMS;
-import dao.dms.impl.NortelImpl;
-import dao.dms.impl.login.LoginCustomDMS;
+import dao.dms.impl.login.FactoryLoginStrategy;
+import dao.dms.impl.login.LoginTelnetStrategy;
+import dao.dms.impl.login.LoginUnixCustomDMS;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.dto.DetailDTO;
+import util.OSValidator;
 
 /**
  *
@@ -25,7 +25,7 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
     private final SwitchesEnum central;
 
     public AbstractDMS(SwitchesEnum central) {
-        super(central.getIp(), Credencial.DOIS, new LoginCustomDMS());
+        super(central.getIp(), Credencial.DOIS, FactoryLoginStrategy.create());
         this.central = central;
 
     }
