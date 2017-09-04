@@ -88,6 +88,11 @@ public class NortelImpl extends AbstractDMS {
         if (!isLogged(cmd.getBlob())) {
             throw new LoginSwitchException();
         }
+        command().consulta(mapciContext());
+    }
+
+    protected ComandoDMS mapciContext() {
+        return new ComandoDMS("mapci nodisp;mtc;lns;ltp");
     }
 
     protected boolean isLogged(String param) {

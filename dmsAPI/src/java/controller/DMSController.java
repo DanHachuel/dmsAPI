@@ -7,7 +7,6 @@ package controller;
 
 import controller.in.ConsultaDMSIn;
 import java.util.Calendar;
-import javax.jws.WebParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -47,7 +46,6 @@ public class DMSController extends RestJaxAbstract {
         } finally {
 
         }
-
         return r;
     }
 

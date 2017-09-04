@@ -48,7 +48,6 @@ public class ConfiguracaoDMS {
         this.len = len;
         if (len.isEmpty()) {
             this.setStatus(LineStatus.NOT_CREATED);
-
         } else {
             this.setStatus(LineStatus.CREATED);
         }
@@ -89,7 +88,6 @@ public class ConfiguracaoDMS {
     public List<LineServiceDTO> getServicos() {
         if (servicos == null) {
             servicos = new ArrayList<>();
-
         }
         return servicos;
     }
