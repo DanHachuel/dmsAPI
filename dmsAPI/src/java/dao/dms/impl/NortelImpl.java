@@ -49,7 +49,7 @@ public class NortelImpl extends AbstractDMS {
 
     @Override
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        command().consulta(delete(linha));
     }
 
     @Override
@@ -79,8 +79,8 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("logout");
     }
 
-    protected ComandoDMS delete(String facilidade) {
-        return new ComandoDMS("OUT $ " + facilidade + " BLDN Y");
+    protected ComandoDMS delete(ConfiguracaoDMS linha) {
+        return new ComandoDMS("OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
     }
 
     protected ComandoDMS servord() {
