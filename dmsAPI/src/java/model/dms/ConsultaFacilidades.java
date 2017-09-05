@@ -9,13 +9,23 @@ package model.dms;
  *
  * @author G0042204
  */
-public class ConsultaDMS {
+public class ConsultaFacilidades {
+
+    private Len len;
 
     private String dn;
 
-    private String central;
+    private String state;
 
-    public ConsultaDMS() {
+    public ConsultaFacilidades() {
+    }
+
+    public Len getLen() {
+        return len;
+    }
+
+    public void setLen(Len len) {
+        this.len = len;
     }
 
     public String getDn() {
@@ -26,12 +36,12 @@ public class ConsultaDMS {
         this.dn = dn;
     }
 
-    public String getCentral() {
-        return central;
+    public String getState() {
+        return state;
     }
 
-    public void setCentral(String central) {
-        this.central = central;
+    public void setState(String state) {
+        this.state = state;
     }
 
 }

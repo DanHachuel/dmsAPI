@@ -19,8 +19,7 @@ public enum LineService {
 
     CONV_TRES("Conversa a Três", "3WC"),
     DIGITAL("Digital (TOM / TONE)", "DGT"),
-    IDENT_CHAM_NOAMA("Identificador de Chamadas", "NOAMA"),
-    IDENT_CHAM_DDN("Identificador de Chamadas", "DDN"),
+    IDENT_CHAM("Identificador de Chamadas", "DDN NOAMA"),
     LIG_SIMULT("Ligação Simultânea", "CWT");
 
     private String desc, key;

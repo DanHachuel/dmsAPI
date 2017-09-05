@@ -17,11 +17,9 @@ public class ConfiguracaoDMS {
 
     private String dn;
 
-    private String len;
+    private Len len;
 
     private String custGrp;
-
-    private String subGrp;
 
     private Integer ncos;
 
@@ -40,17 +38,16 @@ public class ConfiguracaoDMS {
         this.dn = dn;
     }
 
-    public String getLen() {
+    public Len getLen() {
         return len;
     }
 
-    public void setLen(String len) {
+    public void setLen(Len len) {
         this.len = len;
-        if (len.isEmpty()) {
-            this.setStatus(LineStatus.NOT_CREATED);
-
-        } else {
+        if (len != null) {
             this.setStatus(LineStatus.CREATED);
+        } else {
+            this.setStatus(LineStatus.NOT_CREATED);
         }
     }
 
@@ -60,14 +57,6 @@ public class ConfiguracaoDMS {
 
     public void setCustGrp(String custGrp) {
         this.custGrp = custGrp;
-    }
-
-    public String getSubGrp() {
-        return subGrp;
-    }
-
-    public void setSubGrp(String subGrp) {
-        this.subGrp = subGrp;
     }
 
     public Integer getNcos() {
@@ -89,7 +78,6 @@ public class ConfiguracaoDMS {
     public List<LineServiceDTO> getServicos() {
         if (servicos == null) {
             servicos = new ArrayList<>();
-
         }
         return servicos;
     }

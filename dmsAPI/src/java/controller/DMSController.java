@@ -6,15 +6,22 @@
 package controller;
 
 import controller.in.ConsultaDMSIn;
+import controller.in.ListarLensLivresIn;
 import java.util.Calendar;
+import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
+import model.dms.ConsultaFacilidades;
 import model.dms.service.FactoryService;
+import model.dms.service.ServiceContextDMS;
+import model.dms.service.ServiceContextDMSImpl;
 import model.dms.service.ServiceDMS;
 
 /**
@@ -30,7 +37,6 @@ public class DMSController extends RestJaxAbstract {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response consultar(ConsultaDMSIn in) throws Exception {
         Response r = null;
-        System.out.println("ConsultaDMSIn");
         try {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS consultar = serv.consultar(in.getDms());
@@ -41,7 +47,50 @@ public class DMSController extends RestJaxAbstract {
         } finally {
 
         }
+        return r;
+    }
 
+    @POST
+    @Path("/listarLensLivres")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response listarLensLivres(ListarLensLivresIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            List<ConsultaFacilidades> lst = serv.listarLensLivres(in.getDms());
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(lst);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @GET
+    @Path("/singleton")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response singleton() throws Exception {
+        Response r = null;
+        ServiceContextDMS serv = new ServiceContextDMSImpl();
+        r = ok(serv.contextDetail());
+        return r;
+    }
+
+    @GET
+    @Path("/singleton/connection/{state}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response singletonConnections(@PathParam("state") Boolean state) throws Exception {
+        Response r = null;
+        ServiceContextDMS serv = new ServiceContextDMSImpl();
+        if (state) {
+            serv.connect();
+        } else {
+            serv.disconnect();
+        }
+        r = ok(serv.contextDetail());
         return r;
     }
 

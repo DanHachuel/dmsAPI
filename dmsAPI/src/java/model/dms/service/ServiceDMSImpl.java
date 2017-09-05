@@ -5,38 +5,28 @@
  */
 package model.dms.service;
 
-import dao.dms.impl.ManagerDMS;
+import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
+import model.dms.ConsultaFacilidades;
 
-public class ServiceDMSImpl extends GenericService implements ServiceDMS {
+public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
     public ServiceDMSImpl() {
     }
 
     @Override
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
-        if (in.getCentral() != null) {
-            return manager(in.getCentral()).consultarPorDn(in.getDn());
-        } else {
-            return consultaGenerica(in);
-        }
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());
+        return manager(enu).consultarPorDn(in.getDn());
     }
 
-    protected ConfiguracaoDMS consultaGenerica(ConsultaDMS in) {
-        List<ManagerDMS> mgrs = manager(in.getDn().substring(0, 2));
-
-        for (ManagerDMS manager : mgrs) {
-            try {
-                return manager.consultarPorDn(in.getDn());
-            } catch (Exception ex) {
-                System.out.println("Proxima Central...");
-                System.out.println(ex.getMessage());
-            }
-        }
-
-        return null;
+    @Override
+    public List<ConsultaFacilidades> listarLensLivres(ConsultaDMS in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());
+        ConfiguracaoDMS conf = manager(enu).consultarPorDn(in.getDn());
+        return manager(enu).listarLensLivres(conf.getLen());
     }
 
 }

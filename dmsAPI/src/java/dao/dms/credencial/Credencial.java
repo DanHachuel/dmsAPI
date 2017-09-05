@@ -12,7 +12,7 @@ package dao.dms.credencial;
  */
 public enum Credencial {
 
-    UM("G0042204", "d20m08"), DOIS("G0041775", "465852"), TRES("G0056638", "johnnyM5");
+    UM("G0042204", "d20m08"), DOIS("G0041775", "465852"), TRES("G0056638", "johnnyM5"), QUATRO("G0034481", "binholoco01");
 
     private final String login;
     private final String pass;

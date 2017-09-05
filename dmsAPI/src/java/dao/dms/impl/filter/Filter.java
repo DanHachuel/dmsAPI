@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.log;
+package dao.dms.impl.filter;
+
+import java.util.List;
 
 /**
  *
  * @author G0042204
+ * @param <T>
  */
-public enum ActionsEnum {
+public interface Filter<T> {
 
-    CONSULTAR_DN,
-    LISTAR_LENS_LIVRES;
+    public List<T> filter(List<T> lst);
 
 }

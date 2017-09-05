@@ -5,16 +5,19 @@
  */
 package model.dms.service;
 
+import java.util.List;
+import model.dms.dto.DetailDTO;
+
 /**
  *
  * @author G0042204
  */
-public class FactoryService {
+public interface ServiceContextDMS {
 
-    public static ServiceDMS create() {
-        return new ServiceDMSImpl();
-    }
+    public List<DetailDTO> contextDetail();
     
+    public void connect();
     
+    public void disconnect();
 
 }

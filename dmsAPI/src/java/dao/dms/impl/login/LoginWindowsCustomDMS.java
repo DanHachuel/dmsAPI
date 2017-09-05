@@ -5,7 +5,8 @@
  */
 package dao.dms.impl.login;
 
-import dao.dms.impl.ConsultaSocket;
+import dao.dms.impl.ComandoDMS;
+import dao.dms.impl.SocketDMS;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -15,12 +16,12 @@ import java.net.Socket;
  *
  * @author G0042204
  */
-public class LoginCustomDMS implements LoginTelnetStrategy {
+public class LoginWindowsCustomDMS implements LoginTelnetStrategy {
 
-    private ConsultaSocket cs;
+    private SocketDMS cs;
 
     @Override
-    public void conectar(ConsultaSocket cs) throws Exception {
+    public void conectar(SocketDMS cs) throws Exception {
         this.cs = cs;
         this.cs.pingSocket = new Socket(this.cs.dslam.getIpDslam(), 23);
         this.cs.out = new PrintWriter(this.cs.pingSocket.getOutputStream(), true);

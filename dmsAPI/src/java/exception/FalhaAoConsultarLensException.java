@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.log;
+package exception;
 
 /**
  *
  * @author G0042204
  */
-public enum ActionsEnum {
+public class FalhaAoConsultarLensException extends Exception {
 
-    CONSULTAR_DN,
-    LISTAR_LENS_LIVRES;
+    public FalhaAoConsultarLensException() {
+        super("Falha ao consultar facilidades livres.");
+    }
 
 }

@@ -12,31 +12,39 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import dao.dms.impl.login.LoginTelnetStrategy;
+import util.OSValidator;
 
 /**
  *
  * @author G0042204
  */
-public class ConsultaSocket implements Conector {
+public class SocketDMS implements Conector {
 
     public Socket pingSocket;
     public PrintWriter out;
     public BufferedReader in;
-    public AbstractTelnetHost dslam;
+    public AbstractHost dslam;
     public LoginTelnetStrategy styLogin;
-    private Boolean busy;
+    private Boolean busy, connected;
 
-    public ConsultaSocket(AbstractTelnetHost dslam) {
+    public SocketDMS(AbstractHost dslam) {
         this.dslam = dslam;
         this.busy = false;
+        this.connected = false;
     }
 
     @Override
     public void conectar() throws Exception {
-        this.dslam.conectar();
+        try {
+            this.connected = true;
+            this.dslam.conectar();
+        } catch (Exception e) {
+            this.connected = false;
+        }
+
     }
 
-    public List<String> getRetorno() throws IOException {
+    public List<String> getRetorno() {
         List<String> list = new ArrayList<>();
         try {
             String line;
@@ -55,6 +63,7 @@ public class ConsultaSocket implements Conector {
     @Override
     public void close() throws IOException {
         if (out != null) {
+            this.connected = false;
             out.close();
             in.close();
             pingSocket.close();
@@ -64,7 +73,7 @@ public class ConsultaSocket implements Conector {
     public ComandoDMS consulta(ComandoDMS comando) throws Exception {
 
         try {
-            if (pingSocket == null) {
+            if (!this.connected) {
                 this.conectar();
             }
 
@@ -74,28 +83,57 @@ public class ConsultaSocket implements Conector {
                 Thread.sleep(1000);
             }
 
-            System.out.println("Sleeps:" + i);
+            if (i > 0) {
+                System.out.println("Sleeps:" + i);
+            }
 
             this.busy = true;
             pingSocket.setSoTimeout(comando.getSleep());
-            out.println(comando.getSintax());
+
+            if (OSValidator.isWindows()) {
+                out.println(comando.getSintax());
+            } else {
+                out.println(comando.getSintax() + "\n\r");
+            }
+
             if (comando.getSintaxAux() != null) {
-                Thread.sleep(comando.getSleep());
+//                Thread.sleep(comando.getSleep());
                 pingSocket.setSoTimeout(comando.getSleepAux());
                 out.println(comando.getSintaxAux());
                 if (comando.getSintaxAux2() != null) {
-                    Thread.sleep(comando.getSleepAux());
+//                    Thread.sleep(comando.getSleepAux());
                     pingSocket.setSoTimeout(comando.getSleep());
                     out.println(comando.getSintaxAux2());
+
+                    if (comando.getSintaxAux3() != null) {
+//                    Thread.sleep(comando.getSleepAux());
+                        pingSocket.setSoTimeout(comando.getSleep());
+                        out.println(comando.getSintaxAux3());
+                    }
                 }
             }
-
             comando.setRetorno(this.getRetorno());
             return comando;
 
         } catch (IOException e) {
             throw e;
         }
+    }
+
+    public Boolean isBusy() {
+        return busy;
+    }
+
+    public void setBusy(Boolean busy) {
+        this.busy = busy;
+    }
+
+    public Boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(Boolean connected) {
+        this.connected = connected;
     }
 
 }

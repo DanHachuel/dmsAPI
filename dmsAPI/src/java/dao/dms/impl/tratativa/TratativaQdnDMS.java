@@ -7,14 +7,17 @@ package dao.dms.impl.tratativa;
 
 import exception.LinhaNaoPertenceCentralException;
 import model.dms.ConfiguracaoDMS;
+import model.dms.Len;
 import model.dms.LineService;
 import model.dms.LineStatus;
 import util.Regex;
 
-public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
+public class TratativaQdnDMS extends TratativaGeneric implements Tratativa<ConfiguracaoDMS> {
 
     @Override
     public ConfiguracaoDMS parse(String blob) throws Exception {
+        validar(blob);
+
         ConfiguracaoDMS conf = new ConfiguracaoDMS();
 
         if (blob.toUpperCase().contains("INVALID FOR THIS OFFICE")) {
@@ -32,11 +35,18 @@ public class TratativaQdnDMS implements Tratativa<ConfiguracaoDMS> {
         String servPattern = "(?:OPTIONS:)(.{0,50})[^-]";
 
         String len = Regex.capture(blob, linePattern).trim();
-        conf.setLen(len.replaceAll("   ", " "));
+        
+        Tratativa<Len> t = new TratativaLenDMS();
+        conf.setLen(t.parse(len));
+        
         conf.setCustGrp(Regex.capture(blob, custGrpPattern).trim());
         conf.setNcos(new Integer(Regex.capture(blob, ncosPattern)));
 
         String servs = Regex.capture(blob, servPattern).trim();
+
+        if (servs.contains(LineService.IDENT_CHAM.getKey())) {
+            conf.add(LineService.IDENT_CHAM);
+        }
 
         for (String key : servs.split(" ")) {
             LineService serv = LineService.findByKey(key);

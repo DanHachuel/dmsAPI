@@ -5,7 +5,7 @@
  */
 package dao.dms.impl.login;
 
-import dao.dms.impl.ConsultaSocket;
+import dao.dms.impl.SocketDMS;
 
 /**
  *
@@ -13,6 +13,6 @@ import dao.dms.impl.ConsultaSocket;
  */
 public interface LoginTelnetStrategy {
 
-    public void conectar(ConsultaSocket cs) throws Exception;
+    public void conectar(SocketDMS cs) throws Exception;
 
 }

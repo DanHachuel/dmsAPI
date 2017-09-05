@@ -6,26 +6,23 @@
 package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
+import exception.SwitchNaoEncontradaException;
 import java.util.ArrayList;
 import java.util.List;
-import util.GsonUtil;
 
 /**
  *
  * @author G0042204
  */
-public class SwitchesSingleton {
+public class SwitchesContextSingleton {
 
-    private static SwitchesSingleton instance;
+    private static SwitchesContextSingleton instance;
 
     private List<ManagerDMS> switchs;
 
-    private SwitchesSingleton() {
-    }
-
-    public static synchronized SwitchesSingleton getInstance() {
+    public static SwitchesContextSingleton getInstance() {
         if (instance == null) {
-            instance = new SwitchesSingleton();
+            instance = new SwitchesContextSingleton();
             instance.prepararCentral();
         }
         return instance;
@@ -35,51 +32,55 @@ public class SwitchesSingleton {
      * Método responsável por carregar centrais
      */
     protected void prepararCentral() {
-        switchs = new ArrayList<>();
         for (SwitchesEnum v : SwitchesEnum.values()) {
-            NortelImpl n = new NortelImpl(v);
+            ManagerDMS n = new NortelImpl(v);
             try {
                 // n.conectar();
             } catch (Exception e) {
                 System.out.println("Falha ao conectar Central: " + n.getCentral().name());
             } finally {
+                System.out.println(n.getCentral().name());
                 this.adicionarCentral(n);
             }
-
         }
     }
 
     public void adicionarCentral(ManagerDMS m) {
-        if (!switchs.contains(m)) {
-            System.out.println("Central Adicionada: " + GsonUtil.serialize(m));
-            switchs.add(m);
+        if (!getSwitchs().contains(m)) {
+            System.out.println("adicionarCentral -> " + m.getCentral().name());
+            getSwitchs().add(m);
         }
     }
 
     public List<ManagerDMS> getSwitchs() {
-        if(switchs == null){
+        if (switchs == null) {
             switchs = new ArrayList<>();
         }
         return switchs;
     }
 
-    public ManagerDMS getSwitchBySwitch(SwitchesEnum sw) {
+    public ManagerDMS getSwitchBySwitch(SwitchesEnum sw) throws SwitchNaoEncontradaException {
         for (ManagerDMS m : getSwitchs()) {
             if (m.isSameSwitch(sw)) {
                 return m;
             }
         }
-        return null;
+        throw new SwitchNaoEncontradaException();
     }
 
-    public List<ManagerDMS> getSwitchByPrefix(String prefix) {
-        List<ManagerDMS> lst = new ArrayList<>();
-        for (ManagerDMS m : getSwitchs()) {
-            if (m.isSamePrefix(prefix)) {
-                lst.add(m);
-            }
-        }
-        return lst;
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("SwitchesContextSingleton -> finalize");
+        
+        
+        
+        
+        super.finalize(); //To change body of generated methods, choose Tools | Templates.
     }
+
+
+
+    
+    
 
 }

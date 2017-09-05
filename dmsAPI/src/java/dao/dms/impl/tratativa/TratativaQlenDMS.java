@@ -9,11 +9,12 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.LineService;
 import util.Regex;
 
-public class TratativaQlenDMS implements Tratativa<ConfiguracaoDMS> {
+public class TratativaQlenDMS extends TratativaGeneric implements Tratativa<ConfiguracaoDMS> {
 
     @Override
     public ConfiguracaoDMS parse(String blob) throws Exception {
-        System.out.println("Blob:" + blob);
+        validar(blob);
+
         ConfiguracaoDMS conf = new ConfiguracaoDMS();
 
         String prefixPattern = "(?:LINESNPA:\\s{0,5}(\\d{1,10}))";
@@ -21,7 +22,7 @@ public class TratativaQlenDMS implements Tratativa<ConfiguracaoDMS> {
         String custGrpPattern = "(?:STATIONCUSTGRP:\\s{0,20}(\\w{6,10}))";
         String ncosPattern = "(?:NCOS:\\s{0,1}(\\d{1,5}))";
         String servPattern = "(?:OPTIONS:)(.{0,50})[^-]";
-        
+
         String prefix = Regex.capture(blob, prefixPattern).trim();
         String dn = Regex.capture(blob, dnPattern).trim();
 

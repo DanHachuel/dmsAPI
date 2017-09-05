@@ -8,6 +8,7 @@ package model.dms.service;
 import dao.dms.enums.SwitchesEnum;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
+import model.dms.LineStatus;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -50,11 +51,15 @@ public class ServiceDMSImplIT {
         try {
             ConsultaDMS in = new ConsultaDMS();
             in.setDn("8560971414");
-            in.setCentral(SwitchesEnum.GOGNA_DOS03);
+            in.setCentral(SwitchesEnum.CEFLA_JBS01.name());
             
             ServiceDMSImpl instance = new ServiceDMSImpl();
             ConfiguracaoDMS result = instance.consultar(in);
-            System.out.println("Resultado: " + GsonUtil.serialize(result));
+            ConfiguracaoDMS result1 = instance.consultar(in);
+            System.out.println("Result:" + GsonUtil.serialize(result));
+            System.out.println("Result:" + GsonUtil.serialize(result1));
+            System.out.println("end");
+            assertTrue(result.getStatus() == LineStatus.CREATED);
             
         } catch (Exception e) {
             e.printStackTrace();
