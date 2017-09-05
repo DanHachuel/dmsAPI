@@ -7,9 +7,13 @@ package dao.dms.impl;
 
 import com.google.gson.Gson;
 import dao.dms.enums.SwitchesEnum;
+import dao.dms.impl.tratativa.Tratativa;
+import dao.dms.impl.tratativa.TratativaLenDMS;
 import exception.LinhaNaoPertenceCentralException;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
+import model.dms.ConsultaFacilidades;
+import model.dms.Len;
 import model.dms.LineService;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -88,6 +92,18 @@ public class NortelImplIT {
 
     }
 
+    @Test
+    public void test() {
+        try {
+            Tratativa<Len> trat = new TratativaLenDMS();
+            List<ConsultaFacilidades> listarLens = instance.listarLensLivres(trat.parse("FLAB  15 0 03 36"));
+            System.out.println("tamanho:" + listarLens.size());
+        } catch (Exception e) {
+            
+        }
+        instance.desconectar();
+    }
+  
     /**
      * Test of consultarPorDn method, of class NortelImpl.
      */
