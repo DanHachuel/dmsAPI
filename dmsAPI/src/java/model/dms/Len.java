@@ -75,10 +75,16 @@ public class Len {
     @Override
     public String toString() {
         String ptString = String.format("%04d", porta);
+        if (alternate) {
+            return ard.concat(shelf.toString()) + " 02 1 " + ptString.substring(0, 2) + " " + ptString.substring(2, 4);
+        }
         return cnl + ard + " " + shelf + " " + ptString.substring(0, 2) + " " + ptString.substring(2, 4);
     }
 
     public String lenParcial() {
+        if (alternate) {
+            return ard.concat(shelf.toString()) + " 02 1 ";
+        }
         return cnl + ard + " " + shelf + " ";
     }
 

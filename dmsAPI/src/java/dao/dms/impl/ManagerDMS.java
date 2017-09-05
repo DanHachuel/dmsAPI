@@ -7,6 +7,7 @@ package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
 import model.dms.ConfiguracaoDMS;
+import model.dms.Len;
 import model.dms.dto.DetailDTO;
 
 /**
@@ -17,7 +18,7 @@ public interface ManagerDMS {
 
     public ConfiguracaoDMS consultarPorDn(String instancia) throws Exception;
 
-    public ConfiguracaoDMS consultarPorLen(String len) throws Exception;
+    public ConfiguracaoDMS consultarPorLen(Len len) throws Exception;
 
     public Boolean isSameSwitch(SwitchesEnum sw);
 

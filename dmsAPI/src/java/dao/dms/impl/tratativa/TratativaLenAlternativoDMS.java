@@ -15,8 +15,17 @@ public class TratativaLenAlternativoDMS extends TratativaGeneric implements Trat
         Len l = new Len();
         l.setAlternate(Boolean.TRUE);
 
-        String alter = "(\\w{4}\\s{0,3}02 1)";
-        Regex.capture(len, alter);
+        String regexArd = "(\\w{3})(\\d{1})\\s{0,3}(?:02\\s{0,3}1)";
+        String regexPorta = "(\\d{2}\\s{0,2}\\d{2})";
+        
+        String ard = Regex.capture(len, regexArd);
+        String shelf = Regex.capture(len, regexArd, 2);
+        String porta = Regex.capture(len, regexPorta).replace(" ", "");
+
+        l.setCnl(null);
+        l.setArd(ard);
+        l.setShelf(new Integer(shelf));
+        l.setPorta(new Integer(porta));
 
         return l;
     }

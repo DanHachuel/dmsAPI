@@ -17,7 +17,7 @@ public class ConfiguracaoDMS {
 
     private String dn;
 
-    private String len;
+    private Len len;
 
     private String custGrp;
 
@@ -40,16 +40,16 @@ public class ConfiguracaoDMS {
         this.dn = dn;
     }
 
-    public String getLen() {
+    public Len getLen() {
         return len;
     }
 
-    public void setLen(String len) {
+    public void setLen(Len len) {
         this.len = len;
-        if (len.isEmpty()) {
-            this.setStatus(LineStatus.NOT_CREATED);
-        } else {
+        if (len != null) {
             this.setStatus(LineStatus.CREATED);
+        } else {
+            this.setStatus(LineStatus.NOT_CREATED);
         }
     }
 

@@ -13,6 +13,7 @@ import exception.LoginSwitchException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
+import model.dms.Len;
 import model.dms.LineService;
 
 /**
@@ -35,8 +36,8 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public ConfiguracaoDMS consultarPorLen(String len) throws Exception {
-        ComandoDMS cmd = command().consulta(qlen(len));
+    public ConfiguracaoDMS consultarPorLen(Len len) throws Exception {
+        ComandoDMS cmd = command().consulta(qlen(len.toString()));
         Tratativa<ConfiguracaoDMS> t = new TratativaQlenDMS();
         return t.parse(cmd.getBlob());
     }
