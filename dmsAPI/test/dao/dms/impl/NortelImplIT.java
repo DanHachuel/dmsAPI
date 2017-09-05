@@ -6,8 +6,13 @@
 package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
+import dao.dms.impl.tratativa.Tratativa;
+import dao.dms.impl.tratativa.TratativaLenDMS;
 import exception.LinhaNaoPertenceCentralException;
+import java.util.List;
 import model.dms.ConfiguracaoDMS;
+import model.dms.ConsultaFacilidades;
+import model.dms.Len;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -81,6 +86,19 @@ public class NortelImplIT {
     public void testEnter() {
         ComandoDMS result = instance.enter();
         System.out.println("result:" + result.getBlob());
+        instance.desconectar();
+
+    }
+
+    @Test
+    public void test() {
+        try {
+            Tratativa<Len> trat = new TratativaLenDMS();
+            List<ConsultaFacilidades> listarLens = instance.listarLensLivres(trat.parse("FLAB  15 0 03 36"));
+            System.out.println("tamanho:" + listarLens.size());
+        } catch (Exception e) {
+            
+        }
         instance.desconectar();
 
     }

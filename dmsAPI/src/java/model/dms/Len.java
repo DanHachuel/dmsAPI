@@ -5,6 +5,11 @@
  */
 package model.dms;
 
+import dao.dms.impl.tratativa.Tratativa;
+import dao.dms.impl.tratativa.TratativaLenDMS;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * exemplo: - FLAB 15 0 01 00 - A1E0 02 1 04 83
  *
@@ -65,6 +70,7 @@ public class Len {
     }
 
     public String getLen() {
+        this.len = toString();
         return len;
     }
 

@@ -12,12 +12,13 @@ public class TratativaLenAlternativoDMS extends TratativaGeneric implements Trat
 
     @Override
     public Len parse(String len) throws Exception {
+        validar(len);
         Len l = new Len();
         l.setAlternate(Boolean.TRUE);
 
         String regexArd = "(\\w{3})(\\d{1})\\s{0,3}(?:02\\s{0,3}1)";
         String regexPorta = "(\\d{2}\\s{0,2}\\d{2})";
-        
+
         String ard = Regex.capture(len, regexArd);
         String shelf = Regex.capture(len, regexArd, 2);
         String porta = Regex.capture(len, regexPorta).replace(" ", "");

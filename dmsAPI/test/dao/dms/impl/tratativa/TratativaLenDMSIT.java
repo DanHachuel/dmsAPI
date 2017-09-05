@@ -70,8 +70,8 @@ public class TratativaLenDMSIT {
     @Test
     public void testParse2() throws Exception {
         System.out.println("testParse2");
-        String len = "FLAB  15 0 03 36";
-        String ard = "B  15";
+        String len = "FLAB 15 0 03 36";
+        String ard = "B 15";
         String cnl = "FLA";
         TratativaLenDMS instance = new TratativaLenDMS();
         Len result = instance.parse(len);

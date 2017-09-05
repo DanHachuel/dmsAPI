@@ -6,7 +6,9 @@
 package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
+import java.util.List;
 import model.dms.ConfiguracaoDMS;
+import model.dms.ConsultaFacilidades;
 import model.dms.Len;
 import model.dms.dto.DetailDTO;
 
@@ -25,6 +27,10 @@ public interface ManagerDMS {
     public SwitchesEnum getCentral();
 
     public DetailDTO getDetail();
+
+    public List<ConsultaFacilidades> listarLens(Len len) throws Exception;
+    
+    public List<ConsultaFacilidades> listarLensLivres(Len len) throws Exception;
 
     public void disconnect();
 

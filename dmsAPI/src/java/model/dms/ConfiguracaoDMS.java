@@ -21,8 +21,6 @@ public class ConfiguracaoDMS {
 
     private String custGrp;
 
-    private String subGrp;
-
     private Integer ncos;
 
     private LineStatus status;
@@ -59,14 +57,6 @@ public class ConfiguracaoDMS {
 
     public void setCustGrp(String custGrp) {
         this.custGrp = custGrp;
-    }
-
-    public String getSubGrp() {
-        return subGrp;
-    }
-
-    public void setSubGrp(String subGrp) {
-        this.subGrp = subGrp;
     }
 
     public Integer getNcos() {
