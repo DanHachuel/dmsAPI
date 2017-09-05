@@ -38,5 +38,7 @@ public interface ManagerDMS {
     public void disconnect();
 
     public void connect();
+    
+    public void alteraSenha(String oldPass, String newPass) throws Exception;
 
 }

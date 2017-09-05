@@ -5,6 +5,7 @@
  */
 package dao.dms.impl;
 
+import com.google.gson.Gson;
 import dao.dms.enums.SwitchesEnum;
 import exception.LinhaNaoPertenceCentralException;
 import java.util.List;
@@ -123,13 +124,14 @@ public class NortelImplIT {
     @Test
     public void testCriarLinha() throws Exception {
         System.out.println("criarLinha");
-        ConfiguracaoDMS linha = null;
-        NortelImpl instance = null;
-        ConfiguracaoDMS expResult = null;
+        String json = "{\"dn\":\"5130382205\",\"len\":\"CBMV  01 4 01 17\",\"custGrp\":\"CBM_POS\",\"ncos\":1,\"status\":\"CREATED\",\"servicos\":[{\"desc\":\"Ligação Simultânea\",\"key\":\"CWT\"},{\"desc\":\"Digital (TOM / TONE)\",\"key\":\"DGT\"},{\"desc\":\"Identificador de Chamadas\",\"key\":\"DDN\"},{\"desc\":\"Identificador de Chamadas\",\"key\":\"NOAMA\"}]}";
+        Gson leG = new Gson();
+        ConfiguracaoDMS linha = leG.fromJson(json, ConfiguracaoDMS.class);
+        instance = new NortelImpl(SwitchesEnum.RSNHO_MAS01);
+        ConfiguracaoDMS expResult = linha;
         ConfiguracaoDMS result = instance.criarLinha(linha);
-        assertEquals(expResult, result);
+        assertEquals(expResult.getLen(), result.getLen());
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -138,15 +140,36 @@ public class NortelImplIT {
     @Test
     public void testDeletarLinha() throws Exception {
         System.out.println("deletarLinha");
-        NortelImpl instance = new NortelImpl(SwitchesEnum.PERCE_LNS01);
-        ConfiguracaoDMS linha = instance.consultarPorDn("8130206712");
+        instance = new NortelImpl(SwitchesEnum.RSNHO_MAS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("5130382205");
         System.out.println(GsonUtil.serialize(linha));
         instance.deletarLinha(linha);
 //        System.out.println(GsonUtil.serialize(instance.consultarPorDn("8130206712")));
-        
+
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
+
+//    @Test
+//    public void alteraPass() throws Exception {
+//        System.out.println("alteraPass");
+//        List<SwitchesEnum> l = new ArrayList<>();
+//        for (SwitchesEnum sw : SwitchesEnum.values()) {
+//            instance = new NortelImpl(sw);
+//            instance.setCredencial(Credencial.QUATRO);
+//            try {
+//                instance.alteraSenha(Credencial.QUATRO.getPass(), "binholoco01");
+//            } catch (Exception e) {
+//                l.add(sw);
+//            }
+//
+//        }
+//        l.forEach((t) -> {
+//            System.out.println("ndeu-> "+t.name()+" - "+t.getIp());
+//        });
+//        
+//
+//    }
 
     /**
      * Test of adicionarServico method, of class NortelImpl.

@@ -44,7 +44,8 @@ public class NortelImpl extends AbstractDMS {
 
     @Override
     public ConfiguracaoDMS criarLinha(ConfiguracaoDMS linha) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        command().consulta(createLinha(linha));
+        return consultarPorDn(linha.getDn());
     }
 
     @Override
@@ -60,6 +61,15 @@ public class NortelImpl extends AbstractDMS {
     @Override
     public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void alteraSenha(String oldPass, String newPass) throws Exception {
+        command().consulta(alterarSenha(oldPass, newPass));
+    }
+    
+    protected ComandoDMS alterarSenha(String oldPass, String newPass){
+        return new ComandoDMS("password", newPass, newPass, oldPass);
     }
 
     /**
@@ -79,12 +89,16 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("logout");
     }
 
-    protected ComandoDMS delete(ConfiguracaoDMS linha) {
-        return new ComandoDMS("OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
-    }
-
     protected ComandoDMS servord() {
         return new ComandoDMS("servord");
+    }
+
+    protected ComandoDMS delete(ConfiguracaoDMS linha) {
+        return new ComandoDMS("post d "+linha.getDn()+";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
+    }
+    
+    protected ComandoDMS createLinha(ConfiguracaoDMS linha){
+        return new ComandoDMS("NEW $ "+linha.getDn()+" ibn "+linha.getCustGrp()+" 0 115 "+linha.getLen()+" DGT $ Y");
     }
 
     protected ComandoDMS ativarServico(String dn, LineService serv) {
