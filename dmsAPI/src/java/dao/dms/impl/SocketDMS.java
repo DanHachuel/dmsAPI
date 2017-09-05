@@ -96,16 +96,22 @@ public class SocketDMS implements Conector {
                 out.println(comando.getSintax() + "\n\r");
             }
 
-//            if (comando.getSintaxAux() != null) {
+            if (comando.getSintaxAux() != null) {
 //                Thread.sleep(comando.getSleep());
-//                pingSocket.setSoTimeout(comando.getSleepAux());
-//                out.println(comando.getSintaxAux());
-//                if (comando.getSintaxAux2() != null) {
+                pingSocket.setSoTimeout(comando.getSleepAux());
+                out.println(comando.getSintaxAux());
+                if (comando.getSintaxAux2() != null) {
 //                    Thread.sleep(comando.getSleepAux());
-//                    pingSocket.setSoTimeout(comando.getSleep());
-//                    out.println(comando.getSintaxAux2());
-//                }
-//            }
+                    pingSocket.setSoTimeout(comando.getSleep());
+                    out.println(comando.getSintaxAux2());
+
+                    if (comando.getSintaxAux3() != null) {
+//                    Thread.sleep(comando.getSleepAux());
+                        pingSocket.setSoTimeout(comando.getSleep());
+                        out.println(comando.getSintaxAux3());
+                    }
+                }
+            }
             comando.setRetorno(this.getRetorno());
             return comando;
 
