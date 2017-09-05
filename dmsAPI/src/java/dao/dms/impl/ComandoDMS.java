@@ -23,6 +23,8 @@ public class ComandoDMS {
 
     private String sintaxAux2;
 
+    private String sintaxAux3;
+
     private List<String> retorno;
 
     public ComandoDMS(String sintax) {
@@ -53,6 +55,21 @@ public class ComandoDMS {
         this.sintaxAux = sintaxAux;
         this.sintaxAux2 = sintaxAux2;
         this.sleepAux = sleepAux;
+    }
+
+    public ComandoDMS(String sintax, String sintaxAux,String sintaxAux2, String sintaxAux3) {
+        this.sintax = sintax;
+        this.sintaxAux = sintaxAux;
+        this.sintaxAux2 = sintaxAux2;
+        this.sintaxAux3 = sintaxAux3;
+    }
+
+    public String getSintaxAux3() {
+        return sintaxAux3;
+    }
+
+    public void setSintaxAux3(String sintaxAux3) {
+        this.sintaxAux3 = sintaxAux3;
     }
 
     public String getSintax() {

@@ -6,7 +6,9 @@
 package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
+import java.util.List;
 import model.dms.ConfiguracaoDMS;
+import model.dms.LineService;
 import model.dms.dto.DetailDTO;
 
 /**
@@ -19,14 +21,24 @@ public interface ManagerDMS {
 
     public ConfiguracaoDMS consultarPorLen(String len) throws Exception;
 
+    public ConfiguracaoDMS criarLinha(ConfiguracaoDMS linha) throws Exception;
+
     public Boolean isSameSwitch(SwitchesEnum sw);
 
     public SwitchesEnum getCentral();
 
     public DetailDTO getDetail();
 
+    public void deletarLinha(ConfiguracaoDMS linha) throws Exception;
+
+    public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;
+
+    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;
+
     public void disconnect();
 
     public void connect();
+    
+    public void alteraSenha(String oldPass, String newPass) throws Exception;
 
 }

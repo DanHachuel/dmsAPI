@@ -8,13 +8,10 @@ package dao.dms.impl;
 import dao.dms.credencial.Credencial;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.login.FactoryLoginStrategy;
-import dao.dms.impl.login.LoginTelnetStrategy;
-import dao.dms.impl.login.LoginUnixCustomDMS;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.dto.DetailDTO;
-import util.OSValidator;
 
 /**
  *
@@ -25,7 +22,7 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
     private final SwitchesEnum central;
 
     public AbstractDMS(SwitchesEnum central) {
-        super(central.getIp(), Credencial.DOIS, FactoryLoginStrategy.create());
+        super(central.getIp(), Credencial.QUATRO, FactoryLoginStrategy.create());
         this.central = central;
 
     }

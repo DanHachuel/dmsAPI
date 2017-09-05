@@ -10,6 +10,7 @@ import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaQdnDMS;
 import dao.dms.impl.tratativa.TratativaQlenDMS;
 import exception.LoginSwitchException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
@@ -41,6 +42,36 @@ public class NortelImpl extends AbstractDMS {
         return t.parse(cmd.getBlob());
     }
 
+    @Override
+    public ConfiguracaoDMS criarLinha(ConfiguracaoDMS linha) throws Exception {
+        command().consulta(createLinha(linha));
+        return consultarPorDn(linha.getDn());
+    }
+
+    @Override
+    public void deletarLinha(ConfiguracaoDMS linha) throws Exception {
+        command().consulta(delete(linha));
+    }
+
+    @Override
+    public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public void alteraSenha(String oldPass, String newPass) throws Exception {
+        command().consulta(alterarSenha(oldPass, newPass));
+    }
+    
+    protected ComandoDMS alterarSenha(String oldPass, String newPass){
+        return new ComandoDMS("password", newPass, newPass, oldPass);
+    }
+
     /**
      *
      * @param instancia
@@ -58,37 +89,31 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("logout");
     }
 
-    protected ComandoDMS delete(String facilidade) {
-        return new ComandoDMS("OUT $ " + facilidade + " BLDN Y");
-    }
-
     protected ComandoDMS servord() {
         return new ComandoDMS("servord");
     }
 
-    public ComandoDMS ativarServico(String dn, LineService serv) {
+    protected ComandoDMS delete(ConfiguracaoDMS linha) {
+        return new ComandoDMS("post d "+linha.getDn()+";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
+    }
+    
+    protected ComandoDMS createLinha(ConfiguracaoDMS linha){
+        return new ComandoDMS("NEW $ "+linha.getDn()+" ibn "+linha.getCustGrp()+" 0 115 "+linha.getLen()+" DGT $ Y");
+    }
+
+    protected ComandoDMS ativarServico(String dn, LineService serv) {
         return new ComandoDMS("ADO $ " + dn + " " + serv.getKey() + " $ Y");
     }
 
-    public ComandoDMS desativarServico(String dn, LineService serv) {
+    protected ComandoDMS desativarServico(String dn, LineService serv) {
         return new ComandoDMS("DEO $ " + dn + " " + serv.getKey() + " $ Y");
     }
 
-    public ComandoDMS manobrar(String facilidadeAtual, String facilidadeNova) throws Exception {
+    protected ComandoDMS manobrar(String facilidadeAtual, String facilidadeNova) throws Exception {
         if (facilidadeNova.isEmpty() || facilidadeAtual.isEmpty()) {
             throw new Exception("Facilidades não preenchidas.");
         }
         return new ComandoDMS("CLN $ " + facilidadeAtual + " " + facilidadeNova + " Y");
-    }
-
-    @Override
-    public void conectar() throws Exception {
-        super.conectar();
-        ComandoDMS cmd = command().consulta(servord());
-        if (!isLogged(cmd.getBlob())) {
-            throw new LoginSwitchException();
-        }
-        command().consulta(mapciContext());
     }
 
     protected ComandoDMS mapciContext() {
@@ -99,8 +124,18 @@ public class NortelImpl extends AbstractDMS {
         return param.contains(">SO:");
     }
 
-    public ComandoDMS enter() {
+    protected ComandoDMS enter() {
         return new ComandoDMS("");
+    }
+
+    @Override
+    public void conectar() throws Exception {
+        super.conectar();
+        ComandoDMS cmd = command().consulta(servord());
+        if (!isLogged(cmd.getBlob())) {
+            throw new LoginSwitchException();
+        }
+        command().consulta(mapciContext());
     }
 
     @Override
