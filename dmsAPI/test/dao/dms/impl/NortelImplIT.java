@@ -99,11 +99,11 @@ public class NortelImplIT {
             List<ConsultaFacilidades> listarLens = instance.listarLensLivres(trat.parse("FLAB  15 0 03 36"));
             System.out.println("tamanho:" + listarLens.size());
         } catch (Exception e) {
-            
+
         }
         instance.desconectar();
     }
-  
+
     /**
      * Test of consultarPorDn method, of class NortelImpl.
      */
@@ -114,21 +114,6 @@ public class NortelImplIT {
         NortelImpl instance = null;
         ConfiguracaoDMS expResult = null;
         ConfiguracaoDMS result = instance.consultarPorDn(dn);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of consultarPorLen method, of class NortelImpl.
-     */
-    @Test
-    public void testConsultarPorLen() throws Exception {
-        System.out.println("consultarPorLen");
-        String len = "";
-        NortelImpl instance = null;
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.consultarPorLen(len);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -163,7 +148,6 @@ public class NortelImplIT {
 //        System.out.println(GsonUtil.serialize(instance.consultarPorDn("8130206712")));
 
         // TODO review the generated test code and remove the default call to fail.
-
     }
 
 //    @Test
@@ -186,7 +170,6 @@ public class NortelImplIT {
 //        
 //
 //    }
-
     /**
      * Test of adicionarServico method, of class NortelImpl.
      */
