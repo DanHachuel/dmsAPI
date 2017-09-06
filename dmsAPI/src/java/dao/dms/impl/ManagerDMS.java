@@ -8,7 +8,7 @@ package dao.dms.impl;
 import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
 import model.dms.dto.DetailDTO;
@@ -31,11 +31,11 @@ public interface ManagerDMS {
 
     public DetailDTO getDetail();
 
-    public ConsultaFacilidades consultarEstadoDaPorta(Len len) throws Exception;
+    public FacilidadesMapci consultarEstadoDaPorta(Len len) throws Exception;
 
-    public List<ConsultaFacilidades> listarLens(Len len) throws Exception;
+    public List<FacilidadesMapci> listarLens(Len len) throws Exception;
 
-    public List<ConsultaFacilidades> listarLensLivres(Len len) throws Exception;
+    public List<FacilidadesMapci> listarLensLivres(Len len) throws Exception;
 
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception;
 

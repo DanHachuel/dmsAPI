@@ -23,6 +23,10 @@ public class FactoryEstadoDaPorta {
             return EstadoDaPorta.PLO;
         }
 
+        if (compare(EstadoDaPorta.INB, state)) {
+            return EstadoDaPorta.INB;
+        }
+
         return new EstadoDaPorta(state, "Estado de Porta não mapeado.", Boolean.TRUE);
     }
 

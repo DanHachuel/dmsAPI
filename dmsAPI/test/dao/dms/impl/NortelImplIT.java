@@ -12,7 +12,7 @@ import dao.dms.impl.tratativa.TratativaLenDMS;
 import exception.LinhaNaoPertenceCentralException;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
 import org.junit.After;
@@ -96,7 +96,7 @@ public class NortelImplIT {
     public void test() {
         try {
             Tratativa<Len> trat = new TratativaLenDMS();
-            List<ConsultaFacilidades> listarLens = instance.listarLensLivres(trat.parse("FLAB  15 0 03 36"));
+            List<FacilidadesMapci> listarLens = instance.listarLensLivres(trat.parse("FLAB  15 0 03 36"));
             System.out.println("tamanho:" + listarLens.size());
         } catch (Exception e) {
 
@@ -258,7 +258,7 @@ public class NortelImplIT {
         try {
             String instancia = "8560971414";
 
-            ConsultaFacilidades result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia).getLen());
+            FacilidadesMapci result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia).getLen());
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
             assertTrue("ok", result.getState().isValid());

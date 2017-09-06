@@ -9,7 +9,7 @@ package model.dms;
  *
  * @author G0042204
  */
-public class ConsultaFacilidades {
+public class FacilidadesMapci {
 
     private Len len;
 
@@ -17,7 +17,7 @@ public class ConsultaFacilidades {
 
     private EstadoDaPorta state;
 
-    public ConsultaFacilidades() {
+    public FacilidadesMapci() {
     }
 
     public Len getLen() {

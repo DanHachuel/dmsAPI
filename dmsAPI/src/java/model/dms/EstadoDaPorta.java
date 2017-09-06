@@ -14,7 +14,8 @@ public class EstadoDaPorta {
     public static final EstadoDaPorta IDL = new EstadoDaPorta("IDL", "Ociosa", Boolean.TRUE);
     public static final EstadoDaPorta LMB = new EstadoDaPorta("LMB", "LMB", Boolean.FALSE);
     public static final EstadoDaPorta PLO = new EstadoDaPorta("PLO", "Curto", Boolean.FALSE);
-
+    public static final EstadoDaPorta INB = new EstadoDaPorta("INB", "Livre", Boolean.TRUE);
+    
     private String nome;
 
     private String desc;
