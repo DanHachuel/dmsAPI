@@ -7,11 +7,13 @@ package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.filter.Filter;
+import dao.dms.impl.filter.FilterLen;
 import dao.dms.impl.filter.FilterLensLivres;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaConsultaFacilidades;
 import dao.dms.impl.tratativa.TratativaQdnDMS;
 import dao.dms.impl.tratativa.TratativaQlenDMS;
+import exception.FalhaAoConsultarEstadoException;
 import exception.FalhaAoConsultarLensException;
 import exception.LoginSwitchException;
 import java.util.ArrayList;
@@ -69,13 +71,13 @@ public class NortelImpl extends AbstractDMS {
     public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public void alteraSenha(String oldPass, String newPass) throws Exception {
         command().consulta(alterarSenha(oldPass, newPass));
     }
-    
-    protected ComandoDMS alterarSenha(String oldPass, String newPass){
+
+    protected ComandoDMS alterarSenha(String oldPass, String newPass) {
         return new ComandoDMS("password", newPass, newPass, oldPass);
     }
 
@@ -101,11 +103,11 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS delete(ConfiguracaoDMS linha) {
-        return new ComandoDMS("post d "+linha.getDn()+";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
+        return new ComandoDMS("post d " + linha.getDn() + ";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
     }
-    
-    protected ComandoDMS createLinha(ConfiguracaoDMS linha){
-        return new ComandoDMS("NEW $ "+linha.getDn()+" ibn "+linha.getCustGrp()+" 0 115 "+linha.getLen()+" DGT $ Y");
+
+    protected ComandoDMS createLinha(ConfiguracaoDMS linha) {
+        return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen() + " DGT $ Y");
     }
 
     protected ComandoDMS ativarServico(String dn, LineService serv) {
@@ -197,6 +199,16 @@ public class NortelImpl extends AbstractDMS {
     public List<ConsultaFacilidades> listarLensLivres(Len len) throws Exception {
         Filter<ConsultaFacilidades> fil = new FilterLensLivres();
         return fil.filter(this.listarLens(len));
+    }
+
+    @Override
+    public ConsultaFacilidades consultarEstadoDaPorta(Len len) throws Exception {
+        try {
+            Filter<ConsultaFacilidades> fil = new FilterLen(len);
+            return fil.filter(this.listarLens(len)).get(0);
+        } catch (Exception e) {
+            throw new FalhaAoConsultarEstadoException();
+        }
     }
 
 }

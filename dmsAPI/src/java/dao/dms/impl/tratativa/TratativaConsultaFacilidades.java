@@ -6,6 +6,7 @@
 package dao.dms.impl.tratativa;
 
 import model.dms.ConsultaFacilidades;
+import model.dms.FactoryEstadoDaPorta;
 import util.Regex;
 
 public class TratativaConsultaFacilidades extends TratativaGeneric implements Tratativa<ConsultaFacilidades> {
@@ -22,7 +23,7 @@ public class TratativaConsultaFacilidades extends TratativaGeneric implements Tr
         ConsultaFacilidades c = new ConsultaFacilidades();
         c.setDn(dn);
         c.setLen(trat.parse(len));
-        c.setState(state);
+        c.setState(FactoryEstadoDaPorta.find(state));
 
         return c;
     }

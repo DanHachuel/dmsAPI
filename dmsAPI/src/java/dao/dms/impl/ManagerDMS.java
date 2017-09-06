@@ -31,8 +31,10 @@ public interface ManagerDMS {
 
     public DetailDTO getDetail();
 
+    public ConsultaFacilidades consultarEstadoDaPorta(Len len) throws Exception;
+
     public List<ConsultaFacilidades> listarLens(Len len) throws Exception;
-    
+
     public List<ConsultaFacilidades> listarLensLivres(Len len) throws Exception;
 
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception;
@@ -44,7 +46,7 @@ public interface ManagerDMS {
     public void disconnect();
 
     public void connect();
-    
+
     public void alteraSenha(String oldPass, String newPass) throws Exception;
 
 }

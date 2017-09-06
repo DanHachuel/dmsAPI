@@ -252,4 +252,21 @@ public class NortelImplIT {
         fail("The test case is a prototype.");
     }
 
+    @Test
+    public void testConsultarEstadoDaPorta() {
+        System.out.println("consultar");
+        try {
+            String instancia = "8560971414";
+
+            ConsultaFacilidades result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia).getLen());
+            System.out.println("Resultado: " + GsonUtil.serialize(result));
+            assertTrue("consulta", result != null);
+            assertTrue("ok", result.getState().isValid());
+        } catch (Exception e) {
+            fail(e.getMessage());
+        } finally {
+            instance.desconectar();
+        }
+    }
+
 }
