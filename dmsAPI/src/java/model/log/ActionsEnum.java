@@ -12,6 +12,8 @@ package model.log;
 public enum ActionsEnum {
 
     CONSULTAR_DN,
-    LISTAR_LENS_LIVRES;
+    LISTAR_LENS_LIVRES,
+    CRIAR_LINHA,
+    DELETAR_LINHA;
 
 }

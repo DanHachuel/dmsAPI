@@ -24,6 +24,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import util.GsonUtil;
 
 /**
  *
@@ -125,7 +126,8 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS createLinha(ConfiguracaoDMS linha) {
-        return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen() + " DGT $ Y");
+        System.out.println("createLinha_Line->"+GsonUtil.serialize(linha));
+        return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen().getLen() + " DGT $ Y");
     }
 
     protected ComandoDMS ativarServico(String dn, LineService serv) {

@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import controller.in.CriarLinhaIn;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.ConfiguracoesShelf;
@@ -16,6 +17,8 @@ import model.dms.ConfiguracoesShelf;
 public interface ServiceDMS {
 
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception;
+    
+    public ConfiguracaoDMS criarLinha(CriarLinhaIn in) throws Exception;
 
     public ConfiguracoesShelf consultarConfiguracoesShelf(ConsultaDMS in) throws Exception;
 

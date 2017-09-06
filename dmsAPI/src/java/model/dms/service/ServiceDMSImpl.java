@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import controller.in.CriarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
@@ -21,6 +22,16 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());
         return manager(enu).consultarPorDn(in.getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS criarLinha(CriarLinhaIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = new ConfiguracaoDMS();
+        linha.setDn(in.getDms().getDn());
+        linha.setCustGrp(in.getConfBinada().getCustGrp());
+        linha.setLen(in.getLen());
+        return manager(enu).criarLinha(linha);
     }
 
     @Override
