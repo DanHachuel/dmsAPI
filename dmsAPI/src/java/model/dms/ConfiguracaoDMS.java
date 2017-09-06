@@ -8,6 +8,7 @@ package model.dms;
 import java.util.ArrayList;
 import java.util.List;
 import model.dms.dto.LineServiceDTO;
+import model.dms.dto.NcosDTO;
 
 /**
  *
@@ -21,7 +22,7 @@ public class ConfiguracaoDMS {
 
     private String custGrp;
 
-    private Integer ncos;
+    private NcosDTO ncos;
 
     private LineStatus status;
 
@@ -59,11 +60,11 @@ public class ConfiguracaoDMS {
         this.custGrp = custGrp;
     }
 
-    public Integer getNcos() {
+    public NcosDTO getNcos() {
         return ncos;
     }
 
-    public void setNcos(Integer ncos) {
+    public void setNcos(NcosDTO ncos) {
         this.ncos = ncos;
     }
 
