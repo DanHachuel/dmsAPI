@@ -39,6 +39,10 @@ public interface ManagerDMS {
 
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception;
 
+    public void alterarNcos(ConfiguracaoDMS linha) throws Exception;
+    
+    public void alterarCustGroup(ConfiguracaoDMS linha) throws Exception;
+
     public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;
 
     public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;

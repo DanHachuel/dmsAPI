@@ -257,7 +257,6 @@ public class NortelImplIT {
         System.out.println("consultar");
         try {
             String instancia = "8560971414";
-
             FacilidadesMapci result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia).getLen());
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
@@ -267,6 +266,87 @@ public class NortelImplIT {
         } finally {
             instance.desconectar();
         }
+    }
+
+    /**
+     * Test of consultarPorLen method, of class NortelImpl.
+     */
+    @Test
+    public void testConsultarPorLen() throws Exception {
+        System.out.println("consultarPorLen");
+        Len len = null;
+        String instancia = "8560971414";
+        ConfiguracaoDMS result = instance.consultarPorLen(len);
+
+    }
+
+    /**
+     * Test of alterarNcos method, of class NortelImpl.
+     */
+    @Test
+    public void testAlterarNcos() throws Exception {
+        System.out.println("alterarNcos");
+        String instancia = "8560971414";
+        instance.alterarNcos(instance.consultarPorDn(instancia));
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of alterarCustGroup method, of class NortelImpl.
+     */
+    @Test
+    public void testAlterarCustGroup() throws Exception {
+        System.out.println("alterarCustGroup");
+        ConfiguracaoDMS linha = null;
+        NortelImpl instance = null;
+        instance.alterarCustGroup(linha);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of alteraSenha method, of class NortelImpl.
+     */
+    @Test
+    public void testAlteraSenha() throws Exception {
+        System.out.println("alteraSenha");
+        String oldPass = "";
+        String newPass = "";
+        NortelImpl instance = null;
+        instance.alteraSenha(oldPass, newPass);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of listarLens method, of class NortelImpl.
+     */
+    @Test
+    public void testListarLens() throws Exception {
+        System.out.println("listarLens");
+        Len len = null;
+        NortelImpl instance = null;
+        List<FacilidadesMapci> expResult = null;
+        List<FacilidadesMapci> result = instance.listarLens(len);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of listarLensLivres method, of class NortelImpl.
+     */
+    @Test
+    public void testListarLensLivres() throws Exception {
+        System.out.println("listarLensLivres");
+        Len len = null;
+        NortelImpl instance = null;
+        List<FacilidadesMapci> expResult = null;
+        List<FacilidadesMapci> result = instance.listarLensLivres(len);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

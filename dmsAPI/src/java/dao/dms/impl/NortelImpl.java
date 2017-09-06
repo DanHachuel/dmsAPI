@@ -63,6 +63,16 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
+    public void alterarNcos(ConfiguracaoDMS linha) throws Exception {
+        command().consulta(cmdAlterarNcos(linha));
+    }
+
+    @Override
+    public void alterarCustGroup(ConfiguracaoDMS linha) throws Exception {
+        command().consulta(cmdAlterarCustGroup(linha));
+    }
+
+    @Override
     public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -79,6 +89,14 @@ public class NortelImpl extends AbstractDMS {
 
     protected ComandoDMS alterarSenha(String oldPass, String newPass) {
         return new ComandoDMS("password", newPass, newPass, oldPass);
+    }
+
+    protected ComandoDMS cmdAlterarNcos(ConfiguracaoDMS conf) {
+        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS 115 Y");
+    }
+
+    protected ComandoDMS cmdAlterarCustGroup(ConfiguracaoDMS conf) {
+        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " CUSTGRP " + conf.getCustGrp() + " Y");
     }
 
     /**
