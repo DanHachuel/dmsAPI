@@ -7,6 +7,7 @@ package controller;
 
 import controller.in.ConsultaDMSIn;
 import controller.in.CriarLinhaIn;
+import controller.in.DeletarLinhaIn;
 import controller.in.ListarLensLivresIn;
 import java.util.Calendar;
 import java.util.List;
@@ -77,11 +78,29 @@ public class DMSController extends RestJaxAbstract {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response criarLinha(CriarLinhaIn in) throws Exception {
-        System.out.println("LEIN-> "+GsonUtil.serialize(in));
         Response r = null;
         try {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.criarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/deletarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deletarLinha(DeletarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.deletarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
         } catch (Exception e) {

@@ -6,6 +6,7 @@
 package model.dms.service;
 
 import controller.in.CriarLinhaIn;
+import controller.in.DeletarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
@@ -32,6 +33,11 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         linha.setCustGrp(in.getConfBinada().getCustGrp());
         linha.setLen(in.getLen());
         return manager(enu).criarLinha(linha);
+    }
+
+    @Override
+    public ConfiguracaoDMS deletarLinha(DeletarLinhaIn in) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

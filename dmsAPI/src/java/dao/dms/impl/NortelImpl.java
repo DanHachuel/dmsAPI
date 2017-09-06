@@ -126,7 +126,6 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS createLinha(ConfiguracaoDMS linha) {
-        System.out.println("createLinha_Line->"+GsonUtil.serialize(linha));
         return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen().getLen() + " DGT $ Y");
     }
 
