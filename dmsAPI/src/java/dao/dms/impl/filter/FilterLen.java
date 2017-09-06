@@ -7,10 +7,10 @@ package dao.dms.impl.filter;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dms.ConsultaFacilidades;
+import model.dms.FacilidadesMapci;
 import model.dms.Len;
 
-public class FilterLen implements Filter<ConsultaFacilidades> {
+public class FilterLen implements Filter<FacilidadesMapci> {
 
     private Len len;
 
@@ -19,8 +19,8 @@ public class FilterLen implements Filter<ConsultaFacilidades> {
     }
 
     @Override
-    public List<ConsultaFacilidades> filter(List<ConsultaFacilidades> lst) {
-        List<ConsultaFacilidades> ret = new ArrayList<>();
+    public List<FacilidadesMapci> filter(List<FacilidadesMapci> lst) {
+        List<FacilidadesMapci> ret = new ArrayList<>();
         lst.stream().filter((c) -> (c.getLen().equals(this.len))).forEachOrdered((c) -> {
             ret.add(c);
         });

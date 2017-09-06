@@ -18,7 +18,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.FacilidadesMapci;
+import model.dms.ConfiguracoesShelf;
 import model.dms.service.FactoryService;
 import model.dms.service.ServiceContextDMS;
 import model.dms.service.ServiceContextDMSImpl;
@@ -51,14 +52,14 @@ public class DMSController extends RestJaxAbstract {
     }
 
     @POST
-    @Path("/listarLensLivres")
+    @Path("/consultarConfiguracoesShelf")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listarLensLivres(ListarLensLivresIn in) throws Exception {
+    public Response consultarConfiguracoesShelf(ListarLensLivresIn in) throws Exception {
         Response r = null;
         try {
             ServiceDMS serv = FactoryService.create();
-            List<ConsultaFacilidades> lst = serv.listarLensLivres(in.getDms());
+            ConfiguracoesShelf lst = serv.consultarConfiguracoesShelf(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(lst);
         } catch (Exception e) {

@@ -5,10 +5,9 @@
  */
 package model.dms.service;
 
-import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.ConfiguracoesShelf;
 
 /**
  *
@@ -18,6 +17,6 @@ public interface ServiceDMS {
 
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception;
 
-    public List<ConsultaFacilidades> listarLensLivres(ConsultaDMS in) throws Exception;
+    public ConfiguracoesShelf consultarConfiguracoesShelf(ConsultaDMS in) throws Exception;
 
 }

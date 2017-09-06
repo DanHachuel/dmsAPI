@@ -9,7 +9,8 @@ import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.ConfiguracoesShelf;
+import model.dms.FacilidadesMapci;
 
 public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
@@ -23,10 +24,11 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
     }
 
     @Override
-    public List<ConsultaFacilidades> listarLensLivres(ConsultaDMS in) throws Exception {
+    public ConfiguracoesShelf consultarConfiguracoesShelf(ConsultaDMS in) throws Exception {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());
         ConfiguracaoDMS conf = manager(enu).consultarPorDn(in.getDn());
-        return manager(enu).listarLensLivres(conf.getLen());
+        List<FacilidadesMapci> listarLensLivres = manager(enu).listarLensLivres(conf.getLen());
+        return new ConfiguracoesShelf(listarLensLivres, conf);
     }
 
 }

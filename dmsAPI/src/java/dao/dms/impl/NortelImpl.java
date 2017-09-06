@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
 
@@ -171,8 +171,8 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public List<ConsultaFacilidades> listarLens(Len len) throws Exception {
-        List<ConsultaFacilidades> fads = new ArrayList<>();
+    public List<FacilidadesMapci> listarLens(Len len) throws Exception {
+        List<FacilidadesMapci> fads = new ArrayList<>();
 
         List<String> retorno = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -181,7 +181,7 @@ public class NortelImpl extends AbstractDMS {
 
         retorno.forEach((string) -> {
             try {
-                Tratativa<ConsultaFacilidades> trat = new TratativaConsultaFacilidades();
+                Tratativa<FacilidadesMapci> trat = new TratativaConsultaFacilidades();
                 fads.add(trat.parse(string));
             } catch (Exception e) {
 //                System.out.println(e.getMessage());
@@ -196,15 +196,15 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public List<ConsultaFacilidades> listarLensLivres(Len len) throws Exception {
-        Filter<ConsultaFacilidades> fil = new FilterLensLivres();
+    public List<FacilidadesMapci> listarLensLivres(Len len) throws Exception {
+        Filter<FacilidadesMapci> fil = new FilterLensLivres();
         return fil.filter(this.listarLens(len));
     }
 
     @Override
-    public ConsultaFacilidades consultarEstadoDaPorta(Len len) throws Exception {
+    public FacilidadesMapci consultarEstadoDaPorta(Len len) throws Exception {
         try {
-            Filter<ConsultaFacilidades> fil = new FilterLen(len);
+            Filter<FacilidadesMapci> fil = new FilterLen(len);
             return fil.filter(this.listarLens(len)).get(0);
         } catch (Exception e) {
             throw new FalhaAoConsultarEstadoException();
