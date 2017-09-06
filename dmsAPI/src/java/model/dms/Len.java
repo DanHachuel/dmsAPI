@@ -102,4 +102,12 @@ public class Len {
         this.alternate = alternate;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        Len objLen = (Len) obj; 
+        return objLen.toString().equalsIgnoreCase(this.toString());
+    }
+    
+    
+
 }
