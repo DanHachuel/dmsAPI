@@ -261,7 +261,7 @@ public class NortelImplIT {
             ConsultaFacilidades result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia).getLen());
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
-            assertTrue("ok", !result.getState().isEmpty());
+            assertTrue("ok", result.getState().isValid());
         } catch (Exception e) {
             fail(e.getMessage());
         } finally {

@@ -15,7 +15,7 @@ public class ConsultaFacilidades {
 
     private String dn;
 
-    private String state;
+    private EstadoDaPorta state;
 
     public ConsultaFacilidades() {
     }
@@ -36,11 +36,11 @@ public class ConsultaFacilidades {
         this.dn = dn;
     }
 
-    public String getState() {
+    public EstadoDaPorta getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(EstadoDaPorta state) {
         this.state = state;
     }
 

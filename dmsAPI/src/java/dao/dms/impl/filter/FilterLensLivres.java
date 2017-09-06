@@ -15,7 +15,7 @@ public class FilterLensLivres implements Filter<ConsultaFacilidades> {
     public List<ConsultaFacilidades> filter(List<ConsultaFacilidades> lst) {
         List<ConsultaFacilidades> ret = new ArrayList<>();
         for (ConsultaFacilidades c : lst) {
-            if (c.getState().equalsIgnoreCase("INB") && c.getDn().equalsIgnoreCase("NODIRN")) {
+            if (c.getState().getNome().equalsIgnoreCase("INB") && c.getDn().equalsIgnoreCase("NODIRN")) {
                 ret.add(c);
             }
         }
