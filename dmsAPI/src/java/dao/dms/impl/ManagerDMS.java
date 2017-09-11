@@ -38,6 +38,8 @@ public interface ManagerDMS {
     public List<FacilidadesMapci> listarLensLivres(Len len) throws Exception;
 
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception;
+    
+    public void abort() throws Exception;
 
     public void alterarNcos(ConfiguracaoDMS linha) throws Exception;
     

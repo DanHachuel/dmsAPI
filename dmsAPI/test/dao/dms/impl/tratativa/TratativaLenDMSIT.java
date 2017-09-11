@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.GsonUtil;
 
 /**
  *
@@ -44,10 +45,12 @@ public class TratativaLenDMSIT {
     @Test
     public void testParse() throws Exception {
         System.out.println("testParse");
-        String len = "FLAB 15 0 01 00";
+        String len = "CBMV  01 4 01 17";
         TratativaLenDMS instance = new TratativaLenDMS();
+        
         Len result = instance.parse(len);
-        assertTrue(result.toString().equalsIgnoreCase(len));
+        System.out.println(GsonUtil.serialize(result));
+        assertTrue(result.getLen().equalsIgnoreCase(len));
         System.out.println(result.lenParcial());
         System.out.println(result);
     }

@@ -6,6 +6,8 @@
 package controller;
 
 import controller.in.ConsultaDMSIn;
+import controller.in.CriarLinhaIn;
+import controller.in.DeletarLinhaIn;
 import controller.in.ListarLensLivresIn;
 import java.util.Calendar;
 import java.util.List;
@@ -24,6 +26,7 @@ import model.dms.service.FactoryService;
 import model.dms.service.ServiceContextDMS;
 import model.dms.service.ServiceContextDMSImpl;
 import model.dms.service.ServiceDMS;
+import util.GsonUtil;
 
 /**
  *
@@ -62,6 +65,44 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracoesShelf lst = serv.consultarConfiguracoesShelf(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(lst);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/criarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response criarLinha(CriarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.criarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/deletarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deletarLinha(DeletarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.deletarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
         } catch (Exception e) {
             r = serverError(e);
         } finally {

@@ -5,7 +5,11 @@
  */
 package model.dms.service;
 
+import controller.in.CriarLinhaIn;
+import controller.in.DeletarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
+import dao.dms.impl.ManagerDMS;
+import exception.FalhaAoExecutarComandoDeAlteracaoException;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
@@ -21,6 +25,39 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());
         return manager(enu).consultarPorDn(in.getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS criarLinha(CriarLinhaIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = new ConfiguracaoDMS();
+        linha.setDn(in.getDms().getDn());
+        linha.setCustGrp(in.getConfBinada().getCustGrp());
+        linha.setLen(in.getLen());
+        try {
+            return manager(enu).criarLinha(linha);
+        } catch (FalhaAoExecutarComandoDeAlteracaoException e) {
+            manager(enu).abort();
+            throw e;
+        }
+
+    }
+
+    @Override
+    public ConfiguracaoDMS deletarLinha(DeletarLinhaIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = new ConfiguracaoDMS();
+        linha.setDn(in.getDms().getDn());
+        linha.setLen(in.getLen());
+        try {
+            manager(enu).deletarLinha(linha);
+        } catch (FalhaAoExecutarComandoDeAlteracaoException e) {
+            manager(enu).abort();
+            System.out.println("deviaaborta");
+            throw e;
+        }
+        return manager(enu).consultarPorDn(linha.getDn());
+
     }
 
     @Override

@@ -20,6 +20,9 @@ public class NcosDTO {
         this.desc = desc;
     }
 
+    public NcosDTO() {
+    }
+
     public Integer getNcos() {
         return ncos;
     }

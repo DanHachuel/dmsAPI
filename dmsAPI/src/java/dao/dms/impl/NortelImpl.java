@@ -15,6 +15,7 @@ import dao.dms.impl.tratativa.TratativaQdnDMS;
 import dao.dms.impl.tratativa.TratativaQlenDMS;
 import exception.FalhaAoConsultarEstadoException;
 import exception.FalhaAoConsultarLensException;
+import exception.FalhaAoExecutarComandoDeAlteracaoException;
 import exception.LoginSwitchException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,13 +54,18 @@ public class NortelImpl extends AbstractDMS {
 
     @Override
     public ConfiguracaoDMS criarLinha(ConfiguracaoDMS linha) throws Exception {
-        command().consulta(createLinha(linha));
+        if (!command().consulta(createLinha(linha)).getBlob().contains("JOURNAL")) {
+            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        }
         return consultarPorDn(linha.getDn());
     }
 
     @Override
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception {
-        command().consulta(delete(linha));
+        Boolean deletaLinha = !command().consulta(delete(linha)).getBlob().contains("JOURNAL");
+        if (deletaLinha) {
+            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        }
     }
 
     @Override
@@ -85,6 +91,12 @@ public class NortelImpl extends AbstractDMS {
     @Override
     public void alteraSenha(String oldPass, String newPass) throws Exception {
         command().consulta(alterarSenha(oldPass, newPass));
+    }
+
+    @Override
+    public void abort() throws Exception {
+        System.out.println("tonadao");
+        command().consulta(aborte()).getBlob();
     }
 
     protected ComandoDMS alterarSenha(String oldPass, String newPass) {
@@ -120,12 +132,16 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("servord");
     }
 
+    protected ComandoDMS aborte() {
+        return new ComandoDMS("abort");
+    }
+
     protected ComandoDMS delete(ConfiguracaoDMS linha) {
         return new ComandoDMS("post d " + linha.getDn() + ";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
     }
 
     protected ComandoDMS createLinha(ConfiguracaoDMS linha) {
-        return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen() + " DGT $ Y");
+        return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen().getLen() + " DGT $ Y");
     }
 
     protected ComandoDMS ativarServico(String dn, LineService serv) {
