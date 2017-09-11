@@ -10,6 +10,7 @@ import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaLenDMS;
 import exception.LinhaNaoPertenceCentralException;
+import java.util.ArrayList;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
@@ -176,12 +177,18 @@ public class NortelImplIT {
     @Test
     public void testAdicionarServico() throws Exception {
         System.out.println("adicionarServico");
-        ConfiguracaoDMS linha = null;
-        List<LineService> services = null;
-        NortelImpl instance = null;
+        instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
+        System.out.println(GsonUtil.serialize(linha));
+        List<LineService> services = new ArrayList<>();
+        services.add(LineService.CONV_TRES);
+        services.add(LineService.LIG_SIMULT);
+        services.add(LineService.DIGITAL);
         instance.adicionarServico(linha, services);
+
+//        System.out.println(GsonUtil.serialize(instance.consultarPorDn("2760005674")));
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        fail("The test case is a prototype.");
     }
 
     /**
@@ -345,6 +352,18 @@ public class NortelImplIT {
         List<FacilidadesMapci> expResult = null;
         List<FacilidadesMapci> result = instance.listarLensLivres(len);
         assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of abort method, of class NortelImpl.
+     */
+    @Test
+    public void testAbort() throws Exception {
+        System.out.println("abort");
+        NortelImpl instance = null;
+        instance.abort();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
