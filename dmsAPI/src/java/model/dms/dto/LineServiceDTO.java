@@ -37,4 +37,12 @@ public class LineServiceDTO {
         this.key = key;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        LineServiceDTO l = (LineServiceDTO) obj;
+        return l.getKey().equalsIgnoreCase(key);
+    }
+    
+    
+
 }

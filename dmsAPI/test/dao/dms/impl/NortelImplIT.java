@@ -184,11 +184,12 @@ public class NortelImplIT {
         services.add(LineService.CONV_TRES);
         services.add(LineService.LIG_SIMULT);
         services.add(LineService.DIGITAL);
+        services.add(LineService.IDENT_CHAM);
         instance.adicionarServico(linha, services);
 
-//        System.out.println(GsonUtil.serialize(instance.consultarPorDn("2760005674")));
-        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("2760005674")));
+        
+        
     }
 
     /**
@@ -197,12 +198,15 @@ public class NortelImplIT {
     @Test
     public void testRemoverServico() throws Exception {
         System.out.println("removerServico");
-        ConfiguracaoDMS linha = null;
-        List<LineService> services = null;
-        NortelImpl instance = null;
+        instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
+        System.out.println(GsonUtil.serialize(linha));
+        List<LineService> services = new ArrayList<>();
+        services.add(LineService.CONV_TRES);
+        services.add(LineService.LIG_SIMULT);
+        services.add(LineService.IDENT_CHAM);
         instance.removerServico(linha, services);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
