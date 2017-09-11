@@ -46,7 +46,7 @@ public class NortelImpl extends AbstractDMS {
 
     @Override
     public ConfiguracaoDMS consultarPorLen(Len len) throws Exception {
-        ComandoDMS cmd = command().consulta(qlen(len.toString()));
+        ComandoDMS cmd = command().consulta(qlen(len.getLen()));
         Tratativa<ConfiguracaoDMS> t = new TratativaQlenDMS();
         return t.parse(cmd.getBlob());
     }

@@ -273,10 +273,19 @@ public class NortelImplIT {
      */
     @Test
     public void testConsultarPorLen() throws Exception {
-        System.out.println("consultarPorLen");
-        Len len = null;
-        String instancia = "8560971414";
-        ConfiguracaoDMS result = instance.consultarPorLen(len);
+
+        try {
+            System.out.println("consultarPorLen");
+            Tratativa<Len> trat = new TratativaLenDMS();
+            Len len = trat.parse("FLAB 15 0 03 36");
+            ConfiguracaoDMS result = instance.consultarPorLen(len);
+            System.out.println("Resultado: " + GsonUtil.serialize(result));
+            assertTrue("consulta", result != null);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        } finally {
+            instance.desconectar();
+        }
 
     }
 
