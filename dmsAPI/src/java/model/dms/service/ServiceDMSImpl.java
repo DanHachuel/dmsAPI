@@ -7,8 +7,8 @@ package model.dms.service;
 
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
-import dao.dms.impl.ManagerDMS;
 import exception.FalhaAoExecutarComandoDeAlteracaoException;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
@@ -53,7 +53,6 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
             manager(enu).deletarLinha(linha);
         } catch (FalhaAoExecutarComandoDeAlteracaoException e) {
             manager(enu).abort();
-            System.out.println("deviaaborta");
             throw e;
         }
         return manager(enu).consultarPorDn(linha.getDn());
@@ -66,6 +65,13 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         ConfiguracaoDMS conf = manager(enu).consultarPorDn(in.getDn());
         List<FacilidadesMapci> listarLensLivres = manager(enu).listarLensLivres(conf.getLen());
         return new ConfiguracoesShelf(listarLensLivres, conf);
+    }
+
+    @Override
+    public ConfiguracaoDMS editarServicos(EditServIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        
+        return manager(enu).consultarPorDn(in.getDms().getDn());
     }
 
 }
