@@ -141,10 +141,10 @@ public class NortelImplIT {
     @Test
     public void testDeletarLinha() throws Exception {
         System.out.println("deletarLinha");
-        instance = new NortelImpl(SwitchesEnum.RSNHO_MAS01);
-        ConfiguracaoDMS linha = instance.consultarPorDn("5130382205");
+        instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
         System.out.println(GsonUtil.serialize(linha));
-        instance.deletarLinha(linha);
+//        instance.deletarLinha(linha);
 //        System.out.println(GsonUtil.serialize(instance.consultarPorDn("8130206712")));
 
         // TODO review the generated test code and remove the default call to fail.
