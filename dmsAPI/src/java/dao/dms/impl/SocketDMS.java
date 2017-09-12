@@ -40,6 +40,7 @@ public class SocketDMS implements Conector {
             this.dslam.conectar();
         } catch (Exception e) {
             this.connected = false;
+            throw e;
         }
 
     }

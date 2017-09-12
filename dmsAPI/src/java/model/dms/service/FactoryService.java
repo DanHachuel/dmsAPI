@@ -15,6 +15,10 @@ public class FactoryService {
         return new ServiceDMSImpl();
     }
     
+    public static ServiceContextDMS createContext(){
+        return new ServiceContextDMSImpl();
+    }
+    
     
 
 }
