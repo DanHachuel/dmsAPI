@@ -10,6 +10,7 @@ import exception.FalhaAoConectarCentralException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -27,6 +28,7 @@ public class LoginUnixCustomDMS implements LoginTelnetStrategy {
             this.cs = cs;
             this.cs.pingSocket = new Socket();
             this.cs.pingSocket.connect(new InetSocketAddress(this.cs.dslam.getIpDslam(), 23), 10000);
+            this.cs.out = new PrintWriter(this.cs.pingSocket.getOutputStream(), true);
             this.cs.in = new BufferedReader(new InputStreamReader(this.cs.pingSocket.getInputStream()));
             this.cs.out.println(this.cs.dslam.getCredencial().getLogin() + "\n\r");
             this.cs.out.println(this.cs.dslam.getCredencial().getPass() + "\n\r");
