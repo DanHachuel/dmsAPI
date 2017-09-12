@@ -10,11 +10,14 @@ import controller.in.DeletarLinhaIn;
 import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
 import exception.FalhaAoExecutarComandoDeAlteracaoException;
+import java.util.ArrayList;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.FacilidadesMapci;
+import model.dms.LineService;
+import model.dms.dto.LineServiceDTO;
 
 public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
@@ -70,7 +73,20 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
     @Override
     public ConfiguracaoDMS editarServicos(EditServIn in) throws Exception {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
-        
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        List<LineServiceDTO> rmv = linha.getServicos();
+        List<LineServiceDTO> add = new ArrayList<>();
+
+        in.getServices().forEach((t) -> {
+            add.add(t.dto());
+        });
+        manager(enu).adicionarServico(linha, add);
+
+        rmv.removeIf((t) -> {
+            return in.getServices().contains(t.toEnum());
+        });
+        manager(enu).removerServico(linha, rmv);
+
         return manager(enu).consultarPorDn(in.getDms().getDn());
     }
 

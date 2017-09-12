@@ -25,6 +25,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import model.dms.dto.LineServiceDTO;
 
 /**
  *
@@ -79,26 +80,31 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
+    public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
+
         services.removeIf((t) -> {
-            return linha.getServicos().contains(t.dto());
+            return linha.getServicos().contains(t); //To change body of generated lambdas, choose Tools | Templates.
         });
 
-        Boolean addSrv = !command().consulta(addServices(linha, services)).getBlob().contains("JOURNAL");
-        if (addSrv) {
-            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        if (!services.isEmpty()) {
+            Boolean addSrv = !command().consulta(addServices(linha, services)).getBlob().contains("JOURNAL");
+            if (addSrv) {
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
         }
+
     }
 
     @Override
-    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
+    public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
         services.removeIf((t) -> {
-            return !linha.getServicos().contains(t.dto());
+            return !linha.getServicos().contains(t);
         });
-
-        Boolean rmvSrv = !command().consulta(rmvServices(linha, services)).getBlob().contains("JOURNAL");
-        if (rmvSrv) {
-            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        if (!services.isEmpty()) {
+            Boolean rmvSrv = !command().consulta(rmvServices(linha, services)).getBlob().contains("JOURNAL");
+            if (rmvSrv) {
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
         }
     }
 
@@ -112,7 +118,7 @@ public class NortelImpl extends AbstractDMS {
         command().consulta(aborte()).getBlob();
     }
 
-    protected ComandoDMS addServices(ConfiguracaoDMS linha, List<LineService> services) {
+    protected ComandoDMS addServices(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
         StringBuilder srvBuilder = new StringBuilder();
         services.forEach((t) -> {
             srvBuilder.append(" ").append(t.getKey());
@@ -121,14 +127,14 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("ADO $ " + linha.getDn() + leServices + " $ Y");
     }
 
-    protected ComandoDMS rmvServices(ConfiguracaoDMS linha, List<LineService> services) {
+    protected ComandoDMS rmvServices(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
         StringBuilder srvBuilder = new StringBuilder();
         services.forEach((t) -> {
             String leKey = t.getKey().contains(" ") ? t.getKey().split(" ")[0] : t.getKey();
             srvBuilder.append(" ").append(leKey);
         });
         String leServices = srvBuilder.toString();
-        
+
         return new ComandoDMS("DEO $ " + linha.getDn() + leServices + " $ Y");
     }
 

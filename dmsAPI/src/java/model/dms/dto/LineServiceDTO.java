@@ -5,6 +5,8 @@
  */
 package model.dms.dto;
 
+import model.dms.LineService;
+
 /**
  *
  * @author G0042204
@@ -43,6 +45,8 @@ public class LineServiceDTO {
         return l.getKey().equalsIgnoreCase(key);
     }
     
-    
+    public LineService toEnum(){
+        return LineService.findByKey(key);
+    }
 
 }

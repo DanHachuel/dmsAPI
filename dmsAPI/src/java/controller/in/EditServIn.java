@@ -19,7 +19,7 @@ public class EditServIn extends GenericLog {
 
     private ConsultaDMS dms;
 
-    List<LineService> services;
+    private List<LineService> services;
 
     public EditServIn() {
         super(ActionsEnum.EDITAR_SERVICOS);

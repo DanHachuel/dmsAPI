@@ -12,6 +12,7 @@ import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
 import model.dms.dto.DetailDTO;
+import model.dms.dto.LineServiceDTO;
 
 /**
  *
@@ -45,9 +46,9 @@ public interface ManagerDMS {
     
     public void alterarCustGroup(ConfiguracaoDMS linha) throws Exception;
 
-    public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;
+    public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception;
 
-    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;
+    public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception;
 
     public void disconnect();
 

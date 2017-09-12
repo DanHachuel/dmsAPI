@@ -16,6 +16,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import model.dms.dto.LineServiceDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -180,11 +181,11 @@ public class NortelImplIT {
         instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
         ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
         System.out.println(GsonUtil.serialize(linha));
-        List<LineService> services = new ArrayList<>();
-        services.add(LineService.CONV_TRES);
-        services.add(LineService.LIG_SIMULT);
-        services.add(LineService.DIGITAL);
-        services.add(LineService.IDENT_CHAM);
+        List<LineServiceDTO> services = new ArrayList<>();
+        services.add(LineService.CONV_TRES.dto());
+        services.add(LineService.LIG_SIMULT.dto());
+        services.add(LineService.DIGITAL.dto());
+        services.add(LineService.IDENT_CHAM.dto());
         instance.adicionarServico(linha, services);
 
         System.out.println(GsonUtil.serialize(instance.consultarPorDn("2760005674")));
@@ -201,10 +202,10 @@ public class NortelImplIT {
         instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
         ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
         System.out.println(GsonUtil.serialize(linha));
-        List<LineService> services = new ArrayList<>();
-        services.add(LineService.CONV_TRES);
-        services.add(LineService.LIG_SIMULT);
-        services.add(LineService.IDENT_CHAM);
+        List<LineServiceDTO> services = new ArrayList<>();
+        services.add(LineService.CONV_TRES.dto());
+        services.add(LineService.LIG_SIMULT.dto());
+        services.add(LineService.IDENT_CHAM.dto());
         instance.removerServico(linha, services);
         
     }
