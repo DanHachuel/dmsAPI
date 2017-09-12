@@ -62,7 +62,7 @@ public class ServiceContextDMSImplIT {
         try {
             System.out.println("connect");
             ServiceContextDMSImpl instance = new ServiceContextDMSImpl();
-            instance.connect();
+            instance.connectSwitches();
             System.out.println(GsonUtil.serialize(instance.contextDetail()));
         } catch (Exception e) {
             fail(e.getMessage());
@@ -76,7 +76,7 @@ public class ServiceContextDMSImplIT {
     public void testDisconnect() {
         System.out.println("disconnect");
         ServiceContextDMSImpl instance = new ServiceContextDMSImpl();
-        instance.disconnect();
+        instance.disconnectSwitches();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

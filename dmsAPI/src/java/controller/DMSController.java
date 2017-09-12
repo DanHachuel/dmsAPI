@@ -10,7 +10,6 @@ import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
 import controller.in.ListarLensLivresIn;
 import java.util.Calendar;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,13 +19,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
-import model.dms.FacilidadesMapci;
 import model.dms.ConfiguracoesShelf;
 import model.dms.service.FactoryService;
 import model.dms.service.ServiceContextDMS;
 import model.dms.service.ServiceContextDMSImpl;
 import model.dms.service.ServiceDMS;
-import util.GsonUtil;
 
 /**
  *
@@ -128,9 +125,9 @@ public class DMSController extends RestJaxAbstract {
         Response r = null;
         ServiceContextDMS serv = new ServiceContextDMSImpl();
         if (state) {
-            serv.connect();
+            serv.connectSwitches();
         } else {
-            serv.disconnect();
+            serv.disconnectSwitches();
         }
         r = ok(serv.contextDetail());
         return r;

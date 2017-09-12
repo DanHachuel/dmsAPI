@@ -46,8 +46,8 @@ public class TimerDMSService {
         this.setLastAutomaticTimeout(new Date());
         logger.info("TimerSessionBean -> conectar centrais");
         ServiceContextDMS dms = FactoryService.createContext();
-        dms.disconnect();
-        dms.connect();
+        dms.disconnectSwitches();
+        dms.connectSwitches();
     }
 
     public String getLastProgrammaticTimeout() {
