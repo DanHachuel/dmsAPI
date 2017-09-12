@@ -9,7 +9,9 @@ import controller.in.ConsultaDMSIn;
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
 import controller.in.ListarLensLivresIn;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -20,6 +22,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
+import model.dms.LineService;
+import model.dms.NcosEnum;
+import model.dms.dto.LineServiceDTO;
+import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
 import model.dms.service.ServiceContextDMS;
 import model.dms.service.ServiceContextDMSImpl;
@@ -133,4 +139,29 @@ public class DMSController extends RestJaxAbstract {
         return r;
     }
 
+    @GET
+    @Path("/servicos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response servicos() throws Exception {
+        Response r = null;
+        List<LineServiceDTO> dtos = new ArrayList<>();
+        for (LineService v : LineService.values()) {
+            dtos.add(v.dto());
+        }
+        r = ok(dtos);
+        return r;
+    }
+
+    @GET
+    @Path("/ncos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ncos() throws Exception {
+        Response r = null;
+        List<NcosDTO> dtos = new ArrayList<>();
+        for (NcosEnum v : NcosEnum.values()) {
+            dtos.add(v.dto());
+        }
+        r = ok(dtos);
+        return r;
+    }
 }
