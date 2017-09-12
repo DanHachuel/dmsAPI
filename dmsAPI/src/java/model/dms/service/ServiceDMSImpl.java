@@ -16,7 +16,6 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.FacilidadesMapci;
-import model.dms.LineService;
 import model.dms.dto.LineServiceDTO;
 
 public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
@@ -35,7 +34,7 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
         ConfiguracaoDMS linha = new ConfiguracaoDMS();
         linha.setDn(in.getDms().getDn());
-        linha.setCustGrp(in.getConfBinada().getCustGrp());
+        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
         linha.setLen(in.getLen());
         try {
             return manager(enu).criarLinha(linha);

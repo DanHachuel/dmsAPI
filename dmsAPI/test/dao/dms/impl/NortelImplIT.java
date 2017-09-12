@@ -31,7 +31,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.CEFLA_JBS01);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.MGBHE_HMS01);
 
     public NortelImplIT() {
     }
@@ -289,7 +289,7 @@ public class NortelImplIT {
         try {
             System.out.println("consultarPorLen");
             Tratativa<Len> trat = new TratativaLenDMS();
-            Len len = trat.parse("FLAB 15 0 03 36");
+            Len len = trat.parse("BHEB 17 4 01 84");
             ConfiguracaoDMS result = instance.consultarPorLen(len);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
