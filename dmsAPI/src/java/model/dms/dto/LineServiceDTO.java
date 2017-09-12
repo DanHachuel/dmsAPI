@@ -5,6 +5,8 @@
  */
 package model.dms.dto;
 
+import model.dms.LineService;
+
 /**
  *
  * @author G0042204
@@ -35,6 +37,16 @@ public class LineServiceDTO {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        LineServiceDTO l = (LineServiceDTO) obj;
+        return l.getKey().equalsIgnoreCase(key);
+    }
+    
+    public LineService toEnum(){
+        return LineService.findByKey(key);
     }
 
 }

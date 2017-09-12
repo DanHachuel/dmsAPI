@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.log;
+package model;
 
 /**
  *
- * @author G0042204
+ * @author G0041775
  */
-public enum ActionsEnum {
-
-    CONSULTAR_DN,
-    LISTAR_LENS_LIVRES,
-    CRIAR_LINHA,
-    DELETAR_LINHA,
-    EDITAR_SERVICOS;
-
+public class LineServiceAdapter {
+    
 }
