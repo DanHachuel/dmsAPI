@@ -150,7 +150,7 @@ public class ServiceDMSImplIT {
         services.add(LineService.IDENT_CHAM);
         in.setServices(services);
         ConfiguracaoDMS result = instance.editarServicos(in);
-        System.out.println(GsonUtil.serialize(result));
+        System.out.println(GsonUtil.serialize(services));
         // TODO review the generated test code and remove the default call to fail.
     }
 
