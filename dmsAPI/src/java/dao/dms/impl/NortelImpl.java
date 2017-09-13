@@ -70,6 +70,12 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
+    public ConfiguracaoDMS manobrarLinha(ConfiguracaoDMS linha, Len lenDestino) throws Exception {
+        command().consulta(manobrar(linha.getLen().getLen(), lenDestino.getLen()));
+        return consultarPorDn(linha.getDn());
+    }
+
+    @Override
     public void alterarNcos(ConfiguracaoDMS linha) throws Exception {
         command().consulta(cmdAlterarNcos(linha));
     }

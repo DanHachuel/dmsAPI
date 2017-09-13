@@ -10,7 +10,6 @@ import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
-import model.dms.LineService;
 import model.dms.dto.DetailDTO;
 import model.dms.dto.LineServiceDTO;
 
@@ -25,6 +24,8 @@ public interface ManagerDMS {
     public ConfiguracaoDMS consultarPorLen(Len len) throws Exception;
 
     public ConfiguracaoDMS criarLinha(ConfiguracaoDMS linha) throws Exception;
+
+    public ConfiguracaoDMS manobrarLinha(ConfiguracaoDMS linha, Len lenDestino) throws Exception;
 
     public Boolean isSameSwitch(SwitchesEnum sw);
 
