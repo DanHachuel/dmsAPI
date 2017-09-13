@@ -8,6 +8,7 @@ package model.dms.service;
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
 import controller.in.EditServIn;
+import controller.in.ManobrarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
 import exception.FalhaAoExecutarComandoDeAlteracaoException;
 import java.util.ArrayList;
@@ -87,6 +88,15 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         manager(enu).removerServico(linha, rmv);
 
         return manager(enu).consultarPorDn(in.getDms().getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS manobrarLinha(ManobrarLinhaIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
+
+        return manager(enu).manobrarLinha(linha, in.getLen());
     }
 
 }

@@ -10,6 +10,7 @@ import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
 import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
+import controller.in.ManobrarLinhaIn;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -124,6 +125,25 @@ public class DMSController extends RestJaxAbstract {
         try {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarServicos(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/manobrarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(ManobrarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.manobrarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
         } catch (Exception e) {

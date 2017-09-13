@@ -15,6 +15,7 @@ public enum ActionsEnum {
     LISTAR_LENS_LIVRES,
     CRIAR_LINHA,
     DELETAR_LINHA,
+    MANOBRAR_LINHA,
     EDITAR_SERVICOS;
 
 }
