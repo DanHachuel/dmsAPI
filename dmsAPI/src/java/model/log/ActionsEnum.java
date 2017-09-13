@@ -16,6 +16,8 @@ public enum ActionsEnum {
     CRIAR_LINHA,
     DELETAR_LINHA,
     MANOBRAR_LINHA,
-    EDITAR_SERVICOS;
+    EDITAR_SERVICOS,
+    EDITAR_CUSTGRP,
+    EDITAR_NCOS;
 
 }

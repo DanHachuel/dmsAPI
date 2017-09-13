@@ -7,6 +7,8 @@ package model.dms.service;
 
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
 import controller.in.EditServIn;
 import controller.in.ManobrarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
@@ -97,6 +99,26 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
 
         return manager(enu).manobrarLinha(linha, in.getLen());
+    }
+
+    @Override
+    public ConfiguracaoDMS editarCustGrp(EditCustGrpIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        linha.setCustGrp(in.getCustGrp());
+        manager(enu).alterarCustGroup(linha);
+
+        return manager(enu).consultarPorDn(in.getDms().getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS editarNcos(EditNcosIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        linha.setNcos(in.getNcos().dto());
+        manager(enu).alterarNcos(linha);
+
+        return manager(enu).consultarPorDn(in.getDms().getDn());
     }
 
 }
