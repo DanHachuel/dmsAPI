@@ -31,7 +31,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.MGBHE_HMS01);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.RJRJO_PVS04);
 
     public NortelImplIT() {
     }
@@ -189,8 +189,7 @@ public class NortelImplIT {
         instance.adicionarServico(linha, services);
 
         System.out.println(GsonUtil.serialize(instance.consultarPorDn("2760005674")));
-        
-        
+
     }
 
     /**
@@ -207,7 +206,7 @@ public class NortelImplIT {
         services.add(LineService.LIG_SIMULT.dto());
         services.add(LineService.IDENT_CHAM.dto());
         instance.removerServico(linha, services);
-        
+
     }
 
     /**
@@ -289,7 +288,7 @@ public class NortelImplIT {
         try {
             System.out.println("consultarPorLen");
             Tratativa<Len> trat = new TratativaLenDMS();
-            Len len = trat.parse("BHEB 17 4 01 84");
+            Len len = trat.parse("RJOB 50 4 00 24");
             ConfiguracaoDMS result = instance.consultarPorLen(len);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
@@ -319,9 +318,9 @@ public class NortelImplIT {
     @Test
     public void testAlterarCustGroup() throws Exception {
         System.out.println("alterarCustGroup");
-        ConfiguracaoDMS linha = null;
-        NortelImpl instance = null;
+        ConfiguracaoDMS linha = instance.consultarPorDn("2131724069");
         instance.alterarCustGroup(linha);
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("2131724069")));
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -380,6 +379,20 @@ public class NortelImplIT {
         instance.abort();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of manobrarLinha method, of class NortelImpl.
+     */
+    @Test
+    public void testManobrarLinha() throws Exception {
+        System.out.println("manobrarLinha");
+        Tratativa<Len> trat = new TratativaLenDMS();
+        Len lenDestino = trat.parse("RJOB 50 4 00 22");
+        ConfiguracaoDMS linha = instance.consultarPorDn("2131724069");
+        ConfiguracaoDMS result = instance.manobrarLinha(linha, lenDestino);
+        System.out.println(GsonUtil.serialize(result));
+        // TODO review the generated test code and remove the default call to fail.
     }
 
 }

@@ -94,7 +94,9 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
     public ConfiguracaoDMS manobrarLinha(ManobrarLinhaIn in) throws Exception {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
         ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
+
+        return manager(enu).manobrarLinha(linha, in.getLen());
     }
 
 }
