@@ -85,7 +85,7 @@ public enum NcosEnum {
     }
     
     public NcosDTO dto(){
-        return new NcosDTO(ncos, desc);
+        return new NcosDTO(ncos, desc, name());
     }
 
 }
