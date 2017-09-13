@@ -100,16 +100,29 @@ public class SocketDMS implements Conector {
             if (comando.getSintaxAux() != null) {
 //                Thread.sleep(comando.getSleep());
                 pingSocket.setSoTimeout(comando.getSleepAux());
-                out.println(comando.getSintaxAux());
+                if (OSValidator.isWindows()) {
+                    out.println(comando.getSintaxAux());
+                } else {
+                    out.println(comando.getSintaxAux() + "\n\r");
+                }
                 if (comando.getSintaxAux2() != null) {
 //                    Thread.sleep(comando.getSleepAux());
                     pingSocket.setSoTimeout(comando.getSleep());
                     out.println(comando.getSintaxAux2());
-
+                    if (OSValidator.isWindows()) {
+                        out.println(comando.getSintaxAux2());
+                    } else {
+                        out.println(comando.getSintaxAux2() + "\n\r");
+                    }
                     if (comando.getSintaxAux3() != null) {
 //                    Thread.sleep(comando.getSleepAux());
                         pingSocket.setSoTimeout(comando.getSleep());
                         out.println(comando.getSintaxAux3());
+                        if (OSValidator.isWindows()) {
+                            out.println(comando.getSintaxAux3());
+                        } else {
+                            out.println(comando.getSintaxAux3() + "\n\r");
+                        }
                     }
                 }
             }
