@@ -16,6 +16,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import model.dms.NcosEnum;
 import model.dms.dto.LineServiceDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -306,10 +307,12 @@ public class NortelImplIT {
     @Test
     public void testAlterarNcos() throws Exception {
         System.out.println("alterarNcos");
-        String instancia = "8560971414";
-        instance.alterarNcos(instance.consultarPorDn(instancia));
+        String instancia = "2131724069";
+        ConfiguracaoDMS linha = instance.consultarPorDn(instancia);
+        linha.setNcos(NcosEnum.NCOS_1.dto());
+        instance.alterarNcos(linha);
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn(instancia))); 
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -322,7 +325,6 @@ public class NortelImplIT {
         instance.alterarCustGroup(linha);
         System.out.println(GsonUtil.serialize(instance.consultarPorDn("2131724069")));
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

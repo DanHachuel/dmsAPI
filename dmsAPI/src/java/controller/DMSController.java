@@ -8,6 +8,8 @@ package controller;
 import controller.in.ConsultaDMSIn;
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
 import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
 import controller.in.ManobrarLinhaIn;
@@ -144,6 +146,44 @@ public class DMSController extends RestJaxAbstract {
         try {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.manobrarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarCustGrp")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(EditCustGrpIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarCustGrp(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarNcos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(EditNcosIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarNcos(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
         } catch (Exception e) {
