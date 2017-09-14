@@ -409,9 +409,9 @@ public class NortelImplIT {
         System.out.println("consultar");
         try {
             String instancia = "8560971414";
-            ConfiguracaoDMS result = instance.resetarPorta(instancia);
-            System.out.println("Resultado: " + GsonUtil.serialize(result));
-            assertTrue("qdn", result != null);
+            instance.resetarPorta(instancia);
+//            System.out.println("Resultado: " + GsonUtil.serialize(result));
+//            assertTrue("qdn", result != null);
         } catch (Exception e) {
             fail(e.getMessage());
         } finally {
