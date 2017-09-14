@@ -13,11 +13,12 @@ public class NcosDTO {
 
     private Integer ncos;
 
-    private String desc;
+    private String desc, key;
 
-    public NcosDTO(Integer ncos, String desc) {
+    public NcosDTO(Integer ncos, String desc, String key) {
         this.ncos = ncos;
         this.desc = desc;
+        this.key = key;
     }
 
     public NcosDTO() {
@@ -37,6 +38,14 @@ public class NcosDTO {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
 }

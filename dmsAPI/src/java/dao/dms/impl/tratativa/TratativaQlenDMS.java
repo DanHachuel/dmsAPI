@@ -8,7 +8,7 @@ package dao.dms.impl.tratativa;
 import model.dms.ConfiguracaoDMS;
 import model.dms.Len;
 import model.dms.LineService;
-import model.dms.NcosEnum;
+import model.dms.Ncos;
 import util.Regex;
 
 public class TratativaQlenDMS extends TratativaGeneric implements Tratativa<ConfiguracaoDMS> {
@@ -35,7 +35,7 @@ public class TratativaQlenDMS extends TratativaGeneric implements Tratativa<Conf
 
         conf.setDn(prefix.concat(dn));
         conf.setCustGrp(Regex.capture(blob, custGrpPattern).trim());
-        conf.setNcos(NcosEnum.findByInt(new Integer(Regex.capture(blob, ncosPattern))).dto());
+        conf.setNcos(Ncos.findByInt(new Integer(Regex.capture(blob, ncosPattern))).dto());
 
         String servs = Regex.capture(blob, servPattern).trim();
 

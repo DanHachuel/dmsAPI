@@ -25,6 +25,8 @@ import model.dms.EstadoDaPorta;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import model.dms.ServiceLevel;
+import model.dms.dto.LineServiceDTO;
 
 /**
  *
@@ -56,6 +58,7 @@ public class NortelImpl extends AbstractDMS {
     @Override
     public ConfiguracaoDMS criarLinha(ConfiguracaoDMS linha) throws Exception {
         if (!command().consulta(createLinha(linha)).getBlob().contains("JOURNAL")) {
+            abort();
             throw new FalhaAoExecutarComandoDeAlteracaoException();
         }
         return consultarPorDn(linha.getDn());
@@ -65,28 +68,72 @@ public class NortelImpl extends AbstractDMS {
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception {
         Boolean deletaLinha = !command().consulta(delete(linha)).getBlob().contains("JOURNAL");
         if (deletaLinha) {
+            abort();
             throw new FalhaAoExecutarComandoDeAlteracaoException();
         }
     }
 
     @Override
+    public ConfiguracaoDMS manobrarLinha(ConfiguracaoDMS linha, Len lenDestino) throws Exception {
+
+        if (!command().consulta(manobrar(linha.getLen().getLen(), lenDestino.getLen())).getBlob().contains("JOURNAL")) {
+            abort();
+            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        }
+        alterarCustGroup(linha);
+        
+        return consultarPorDn(linha.getDn());
+    }
+
+    @Override
     public void alterarNcos(ConfiguracaoDMS linha) throws Exception {
-        command().consulta(cmdAlterarNcos(linha));
+        if (!command().consulta(cmdAlterarNcos(linha)).getBlob().contains("JOURNAL")) {
+            abort();
+            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        }
     }
 
     @Override
     public void alterarCustGroup(ConfiguracaoDMS linha) throws Exception {
-        command().consulta(cmdAlterarCustGroup(linha));
+        if (!command().consulta(cmdAlterarCustGroup(linha)).getBlob().contains("JOURNAL")) {
+            abort();
+            throw new FalhaAoExecutarComandoDeAlteracaoException();
+        }
     }
 
     @Override
-    public void adicionarServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
+
+        services.removeIf((t) -> {
+            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE; 
+        });
+        
+        services.forEach((t) -> {
+            System.out.println(t.getNivel().toString());
+        });
+
+        if (!services.isEmpty()) {
+//            Boolean addSrv = !command().consulta(addServices(linha, services)).getBlob().contains("JOURNAL");
+//            if (addSrv) {
+//                abort();
+//                throw new FalhaAoExecutarComandoDeAlteracaoException();
+//            }
+        }
+
     }
 
     @Override
-    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
+        services.removeIf((t) -> {
+            return !linha.getServicos().contains(t);
+        });
+        if (!services.isEmpty()) {
+            Boolean rmvSrv = !command().consulta(rmvServices(linha, services)).getBlob().contains("JOURNAL");
+            if (rmvSrv) {
+                abort();
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
+        }
     }
 
     @Override
@@ -96,8 +143,27 @@ public class NortelImpl extends AbstractDMS {
 
     @Override
     public void abort() throws Exception {
-        System.out.println("tonadao");
         command().consulta(aborte()).getBlob();
+    }
+
+    protected ComandoDMS addServices(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+        StringBuilder srvBuilder = new StringBuilder();
+        services.forEach((t) -> {
+            srvBuilder.append(" ").append(t.getKey());
+        });
+        String leServices = srvBuilder.toString();
+        return new ComandoDMS("ADO $ " + linha.getDn() + leServices + " $ Y");
+    }
+
+    protected ComandoDMS rmvServices(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+        StringBuilder srvBuilder = new StringBuilder();
+        services.forEach((t) -> {
+            String leKey = t.getKey().contains(" ") ? t.getKey().split(" ")[0] : t.getKey();
+            srvBuilder.append(" ").append(leKey);
+        });
+        String leServices = srvBuilder.toString();
+
+        return new ComandoDMS("DEO $ " + linha.getDn() + leServices + " $ Y");
     }
 
     protected ComandoDMS alterarSenha(String oldPass, String newPass) {
@@ -105,11 +171,11 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS cmdAlterarNcos(ConfiguracaoDMS conf) {
-        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS 115 Y");
+        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS "+conf.getNcos().getNcos()+" Y");
     }
 
     protected ComandoDMS cmdAlterarCustGroup(ConfiguracaoDMS conf) {
-        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " CUSTGRP " + conf.getCustGrp() + " Y");
+        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " CUST " + conf.getCustGrp() + " Y");
     }
 
     /**

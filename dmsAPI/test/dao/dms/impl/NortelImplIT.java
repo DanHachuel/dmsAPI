@@ -10,12 +10,15 @@ import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaLenDMS;
 import exception.LinhaNaoPertenceCentralException;
+import java.util.ArrayList;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.EstadoDaPorta;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import model.dms.Ncos;
+import model.dms.dto.LineServiceDTO;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -30,7 +33,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.CEFLA_JBS01);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.RJRJO_PVS04);
 
     public NortelImplIT() {
     }
@@ -180,12 +183,19 @@ public class NortelImplIT {
     @Test
     public void testAdicionarServico() throws Exception {
         System.out.println("adicionarServico");
-        ConfiguracaoDMS linha = null;
-        List<LineService> services = null;
-        NortelImpl instance = null;
+        instance = new NortelImpl(SwitchesEnum.MGBHE_HMS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("3160090026");
+        System.out.println(GsonUtil.serialize(linha));
+        List<LineServiceDTO> services = new ArrayList<>();
+        services.add(LineService.CONV_TRES.dto());
+        services.add(LineService.LIG_SIMULT.dto());
+        services.add(LineService.DIGITAL.dto());
+        services.add(LineService.IDENT_CHAM.dto());
+        services.add(LineService.SEC_ELETRONICA.dto());
         instance.adicionarServico(linha, services);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+//        System.out.println(GsonUtil.serialize(instance.consultarPorDn("3160090026")));
+
     }
 
     /**
@@ -194,12 +204,15 @@ public class NortelImplIT {
     @Test
     public void testRemoverServico() throws Exception {
         System.out.println("removerServico");
-        ConfiguracaoDMS linha = null;
-        List<LineService> services = null;
-        NortelImpl instance = null;
+        instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
+        System.out.println(GsonUtil.serialize(linha));
+        List<LineServiceDTO> services = new ArrayList<>();
+        services.add(LineService.CONV_TRES.dto());
+        services.add(LineService.LIG_SIMULT.dto());
+        services.add(LineService.IDENT_CHAM.dto());
         instance.removerServico(linha, services);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -281,7 +294,7 @@ public class NortelImplIT {
         try {
             System.out.println("consultarPorLen");
             Tratativa<Len> trat = new TratativaLenDMS();
-            Len len = trat.parse("FLAB 15 0 03 36");
+            Len len = trat.parse("RJOB 50 4 00 24");
             ConfiguracaoDMS result = instance.consultarPorLen(len);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
@@ -299,10 +312,12 @@ public class NortelImplIT {
     @Test
     public void testAlterarNcos() throws Exception {
         System.out.println("alterarNcos");
-        String instancia = "8560971414";
-        instance.alterarNcos(instance.consultarPorDn(instancia));
+        String instancia = "2131724069";
+        ConfiguracaoDMS linha = instance.consultarPorDn(instancia);
+        linha.setNcos(Ncos.NCOS_1.dto());
+        instance.alterarNcos(linha);
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn(instancia))); 
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -311,11 +326,10 @@ public class NortelImplIT {
     @Test
     public void testAlterarCustGroup() throws Exception {
         System.out.println("alterarCustGroup");
-        ConfiguracaoDMS linha = null;
-        NortelImpl instance = null;
+        ConfiguracaoDMS linha = instance.consultarPorDn("2131724069");
         instance.alterarCustGroup(linha);
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("2131724069")));
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -360,6 +374,32 @@ public class NortelImplIT {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of abort method, of class NortelImpl.
+     */
+    @Test
+    public void testAbort() throws Exception {
+        System.out.println("abort");
+        NortelImpl instance = null;
+        instance.abort();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of manobrarLinha method, of class NortelImpl.
+     */
+    @Test
+    public void testManobrarLinha() throws Exception {
+        System.out.println("manobrarLinha");
+        Tratativa<Len> trat = new TratativaLenDMS();
+        Len lenDestino = trat.parse("RJOB 50 4 00 22");
+        ConfiguracaoDMS linha = instance.consultarPorDn("2131724069");
+        ConfiguracaoDMS result = instance.manobrarLinha(linha, lenDestino);
+        System.out.println(GsonUtil.serialize(result));
+        // TODO review the generated test code and remove the default call to fail.
     }
 
 }

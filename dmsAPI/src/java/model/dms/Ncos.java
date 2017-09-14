@@ -11,7 +11,7 @@ import model.dms.dto.NcosDTO;
  *
  * @author G0042204
  */
-public enum NcosEnum {
+public enum Ncos {
 
     NCOS_1(1, "Liberado TOTAL"),
     NCOS_2(2, "Não realiza ligações DDD 025 e DDI 0025"),
@@ -54,13 +54,13 @@ public enum NcosEnum {
 
     private String desc;
 
-    private NcosEnum(Integer ncos, String desc) {
+    private Ncos(Integer ncos, String desc) {
         this.ncos = ncos;
         this.desc = desc;
     }
 
-    public static NcosEnum findByInt(Integer i) {
-        for (NcosEnum n : NcosEnum.values()) {
+    public static Ncos findByInt(Integer i) {
+        for (Ncos n : Ncos.values()) {
             if (n.getNcos().compareTo(i) == 0) {
                 return n;
             }
@@ -85,7 +85,7 @@ public enum NcosEnum {
     }
     
     public NcosDTO dto(){
-        return new NcosDTO(ncos, desc);
+        return new NcosDTO(ncos, desc, name());
     }
 
 }

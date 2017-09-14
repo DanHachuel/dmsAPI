@@ -8,7 +8,11 @@ package controller;
 import controller.in.ConsultaDMSIn;
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
+import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
+import controller.in.ManobrarLinhaIn;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,7 +27,7 @@ import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.LineService;
-import model.dms.NcosEnum;
+import model.dms.Ncos;
 import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
@@ -114,6 +118,82 @@ public class DMSController extends RestJaxAbstract {
         return r;
     }
 
+    @POST
+    @Path("/editarServicos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response editarServicos(EditServIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarServicos(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/manobrarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(ManobrarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.manobrarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarCustGrp")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(EditCustGrpIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarCustGrp(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarNcos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(EditNcosIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarNcos(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
     @GET
     @Path("/singleton")
     @Produces(MediaType.APPLICATION_JSON)
@@ -158,7 +238,7 @@ public class DMSController extends RestJaxAbstract {
     public Response ncos() throws Exception {
         Response r = null;
         List<NcosDTO> dtos = new ArrayList<>();
-        for (NcosEnum v : NcosEnum.values()) {
+        for (Ncos v : Ncos.values()) {
             dtos.add(v.dto());
         }
         r = ok(dtos);

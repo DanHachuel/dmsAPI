@@ -7,14 +7,19 @@ package model.dms.service;
 
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
+import controller.in.EditServIn;
+import controller.in.ManobrarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
-import dao.dms.impl.ManagerDMS;
 import exception.FalhaAoExecutarComandoDeAlteracaoException;
+import java.util.ArrayList;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.FacilidadesMapci;
+import model.dms.dto.LineServiceDTO;
 
 public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
@@ -32,7 +37,7 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
         ConfiguracaoDMS linha = new ConfiguracaoDMS();
         linha.setDn(in.getDms().getDn());
-        linha.setCustGrp(in.getConfBinada().getCustGrp());
+        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
         linha.setLen(in.getLen());
         try {
             return manager(enu).criarLinha(linha);
@@ -53,7 +58,6 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
             manager(enu).deletarLinha(linha);
         } catch (FalhaAoExecutarComandoDeAlteracaoException e) {
             manager(enu).abort();
-            System.out.println("deviaaborta");
             throw e;
         }
         return manager(enu).consultarPorDn(linha.getDn());
@@ -66,6 +70,55 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         ConfiguracaoDMS conf = manager(enu).consultarPorDn(in.getDn());
         List<FacilidadesMapci> listarLensLivres = manager(enu).listarLensLivres(conf.getLen());
         return new ConfiguracoesShelf(listarLensLivres, conf);
+    }
+
+    @Override
+    public ConfiguracaoDMS editarServicos(EditServIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        List<LineServiceDTO> rmv = linha.getServicos();
+        List<LineServiceDTO> add = new ArrayList<>();
+
+        in.getServices().forEach((t) -> {
+            add.add(t.dto());
+        });
+        manager(enu).adicionarServico(linha, add);
+
+        rmv.removeIf((t) -> {
+            return in.getServices().contains(t.toEnum());
+        });
+        manager(enu).removerServico(linha, rmv);
+
+        return manager(enu).consultarPorDn(in.getDms().getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS manobrarLinha(ManobrarLinhaIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
+
+        return manager(enu).manobrarLinha(linha, in.getLen());
+    }
+
+    @Override
+    public ConfiguracaoDMS editarCustGrp(EditCustGrpIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        linha.setCustGrp(in.getCustGrp());
+        manager(enu).alterarCustGroup(linha);
+
+        return manager(enu).consultarPorDn(in.getDms().getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS editarNcos(EditNcosIn in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
+        ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
+        linha.setNcos(in.getNcos().dto());
+        manager(enu).alterarNcos(linha);
+
+        return manager(enu).consultarPorDn(in.getDms().getDn());
     }
 
 }
