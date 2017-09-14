@@ -28,6 +28,8 @@ public interface ManagerDMS {
 
     public ConfiguracaoDMS manobrarLinha(ConfiguracaoDMS linha, Len lenDestino) throws Exception;
 
+    public void resetarPorta(String instancia) throws Exception;
+
     public Boolean isSameSwitch(SwitchesEnum sw);
 
     public SwitchesEnum getCentral();
@@ -41,11 +43,11 @@ public interface ManagerDMS {
     public List<FacilidadesMapci> listarLensLivres(Len len) throws Exception;
 
     public void deletarLinha(ConfiguracaoDMS linha) throws Exception;
-    
+
     public void abort() throws Exception;
 
     public void alterarNcos(ConfiguracaoDMS linha) throws Exception;
-    
+
     public void alterarCustGroup(ConfiguracaoDMS linha) throws Exception;
 
     public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception;

@@ -33,7 +33,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.RJRJO_PVS04);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.CEFLA_JBS01);
 
     public NortelImplIT() {
     }
@@ -195,7 +195,6 @@ public class NortelImplIT {
         instance.adicionarServico(linha, services);
 
 //        System.out.println(GsonUtil.serialize(instance.consultarPorDn("3160090026")));
-
     }
 
     /**
@@ -316,7 +315,7 @@ public class NortelImplIT {
         ConfiguracaoDMS linha = instance.consultarPorDn(instancia);
         linha.setNcos(Ncos.NCOS_1.dto());
         instance.alterarNcos(linha);
-        System.out.println(GsonUtil.serialize(instance.consultarPorDn(instancia))); 
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn(instancia)));
         // TODO review the generated test code and remove the default call to fail.
     }
 
@@ -400,6 +399,24 @@ public class NortelImplIT {
         ConfiguracaoDMS result = instance.manobrarLinha(linha, lenDestino);
         System.out.println(GsonUtil.serialize(result));
         // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of resetarPorta method, of class NortelImpl.
+     */
+    @Test
+    public void testResetarPorta() throws Exception {
+        System.out.println("consultar");
+        try {
+            String instancia = "8560971414";
+            ConfiguracaoDMS result = instance.resetarPorta(instancia);
+            System.out.println("Resultado: " + GsonUtil.serialize(result));
+            assertTrue("qdn", result != null);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        } finally {
+            instance.desconectar();
+        }
     }
 
 }

@@ -22,7 +22,7 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
     private final SwitchesEnum central;
 
     public AbstractDMS(SwitchesEnum central) {
-        super(central.getIp(), Credencial.QUATRO, FactoryLoginStrategy.create());
+        super(central.getIp(), Credencial.DOIS, FactoryLoginStrategy.create());
         this.central = central;
 
     }

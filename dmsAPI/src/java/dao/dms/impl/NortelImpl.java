@@ -81,7 +81,7 @@ public class NortelImpl extends AbstractDMS {
             throw new FalhaAoExecutarComandoDeAlteracaoException();
         }
         alterarCustGroup(linha);
-        
+
         return consultarPorDn(linha.getDn());
     }
 
@@ -102,12 +102,17 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
+    public void resetarPorta(String instancia) throws Exception {
+        System.out.println(command().consulta(resetPorta(instancia)).getBlob());
+    }
+
+    @Override
     public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
 
         services.removeIf((t) -> {
-            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE; 
+            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE;
         });
-        
+
         services.forEach((t) -> {
             System.out.println(t.getNivel().toString());
         });
@@ -171,7 +176,7 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS cmdAlterarNcos(ConfiguracaoDMS conf) {
-        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS "+conf.getNcos().getNcos()+" Y");
+        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS " + conf.getNcos().getNcos() + " Y");
     }
 
     protected ComandoDMS cmdAlterarCustGroup(ConfiguracaoDMS conf) {
@@ -205,6 +210,10 @@ public class NortelImpl extends AbstractDMS {
 
     protected ComandoDMS delete(ConfiguracaoDMS linha) {
         return new ComandoDMS("post d " + linha.getDn() + ";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
+    }
+
+    protected ComandoDMS resetPorta(String dn) {
+        return new ComandoDMS("post d " + dn + ";frls;rts;");
     }
 
     protected ComandoDMS estadoPorta(ConfiguracaoDMS linha) {
