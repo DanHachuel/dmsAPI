@@ -27,7 +27,7 @@ import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.LineService;
-import model.dms.NcosEnum;
+import model.dms.Ncos;
 import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
@@ -238,7 +238,7 @@ public class DMSController extends RestJaxAbstract {
     public Response ncos() throws Exception {
         Response r = null;
         List<NcosDTO> dtos = new ArrayList<>();
-        for (NcosEnum v : NcosEnum.values()) {
+        for (Ncos v : Ncos.values()) {
             dtos.add(v.dto());
         }
         r = ok(dtos);

@@ -17,16 +17,27 @@ import util.JsonEnumDeserializer;
 @JsonSerialize(using = JsonEnumDeserializer.class)
 public enum LineService {
 
-    CONV_TRES("Conversa a Três", "3WC"),
-    DIGITAL("Digital (TOM / TONE)", "DGT"),
-    IDENT_CHAM("Identificador de Chamadas", "DDN NOAMA"),
-    LIG_SIMULT("Ligação Simultânea", "CWT");
+    CONV_TRES("Conversa a Três", "3WC", ServiceType.SERVICO),
+    DIGITAL("Digital (TOM / TONE)", "DGT", ServiceType.SERVICO),
+    IDENT_CHAM("Identificador de Chamadas", "DDN NOAMA", ServiceType.SERVICO),
+    LIG_SIMULT("Ligação Simultânea", "CWT", ServiceType.SERVICO);
 
     private String desc, key;
+    
+    private ServiceType tipo;
 
-    private LineService(String desc, String key) {
+    private LineService(String desc, String key, ServiceType tipo) {
         this.desc = desc;
         this.key = key;
+        this.tipo = tipo;
+    }
+
+    public ServiceType getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(ServiceType tipo) {
+        this.tipo = tipo;
     }
 
     public String getDesc() {
@@ -47,7 +58,7 @@ public enum LineService {
     }
     
     public LineServiceDTO dto(){
-        return new LineServiceDTO(desc, key);
+        return new LineServiceDTO(desc, key, tipo, name());
     }
 
 }

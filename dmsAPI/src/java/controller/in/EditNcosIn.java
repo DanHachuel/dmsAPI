@@ -6,7 +6,7 @@
 package controller.in;
 
 import model.dms.ConsultaDMS;
-import model.dms.NcosEnum;
+import model.dms.Ncos;
 import model.log.ActionsEnum;
 import model.log.GenericLog;
 
@@ -18,7 +18,7 @@ public class EditNcosIn extends GenericLog {
 
     private ConsultaDMS dms;
 
-    private NcosEnum ncos;
+    private Ncos ncos;
 
     public EditNcosIn() {
         super(ActionsEnum.EDITAR_NCOS);
@@ -32,11 +32,11 @@ public class EditNcosIn extends GenericLog {
         this.dms = dms;
     }
 
-    public NcosEnum getNcos() {
+    public Ncos getNcos() {
         return ncos;
     }
 
-    public void setNcos(NcosEnum ncos) {
+    public void setNcos(Ncos ncos) {
         this.ncos = ncos;
     }
 

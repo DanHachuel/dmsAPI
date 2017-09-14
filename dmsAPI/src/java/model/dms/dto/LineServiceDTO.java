@@ -6,6 +6,7 @@
 package model.dms.dto;
 
 import model.dms.LineService;
+import model.dms.ServiceType;
 
 /**
  *
@@ -13,14 +14,34 @@ import model.dms.LineService;
  */
 public class LineServiceDTO {
 
-    private String desc, key;
+    private String desc, key, nome;
+
+    private ServiceType tipo;
 
     public LineServiceDTO() {
     }
 
-    public LineServiceDTO(String desc, String key) {
+    public LineServiceDTO(String desc, String key, ServiceType tipo, String name) {
         this.desc = desc;
         this.key = key;
+        this.tipo = tipo;
+        this.nome = name;
+    }
+
+    public String getName() {
+        return nome;
+    }
+
+    public void setName(String name) {
+        this.nome = name;
+    }
+
+    public ServiceType getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(ServiceType tipo) {
+        this.tipo = tipo;
     }
 
     public String getDesc() {
@@ -44,8 +65,8 @@ public class LineServiceDTO {
         LineServiceDTO l = (LineServiceDTO) obj;
         return l.getKey().equalsIgnoreCase(key);
     }
-    
-    public LineService toEnum(){
+
+    public LineService toEnum() {
         return LineService.findByKey(key);
     }
 

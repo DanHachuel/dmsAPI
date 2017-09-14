@@ -16,7 +16,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
-import model.dms.NcosEnum;
+import model.dms.Ncos;
 import model.dms.dto.LineServiceDTO;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -309,7 +309,7 @@ public class NortelImplIT {
         System.out.println("alterarNcos");
         String instancia = "2131724069";
         ConfiguracaoDMS linha = instance.consultarPorDn(instancia);
-        linha.setNcos(NcosEnum.NCOS_1.dto());
+        linha.setNcos(Ncos.NCOS_1.dto());
         instance.alterarNcos(linha);
         System.out.println(GsonUtil.serialize(instance.consultarPorDn(instancia))); 
         // TODO review the generated test code and remove the default call to fail.
