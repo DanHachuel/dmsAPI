@@ -28,6 +28,8 @@ public class ConfiguracaoDMS {
 
     private List<LineServiceDTO> servicos;
 
+    private EstadoDaPorta estado;
+
     public ConfiguracaoDMS() {
     }
 
@@ -89,6 +91,14 @@ public class ConfiguracaoDMS {
 
     public void add(LineService s) {
         getServicos().add(s.dto());
+    }
+
+    public EstadoDaPorta getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoDaPorta estado) {
+        this.estado = estado;
     }
 
 }

@@ -7,7 +7,6 @@ package dao.dms.impl;
 
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.filter.Filter;
-import dao.dms.impl.filter.FilterLen;
 import dao.dms.impl.filter.FilterLensLivres;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaConsultaFacilidades;
@@ -22,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
+import model.dms.EstadoDaPorta;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -44,6 +44,7 @@ public class NortelImpl extends AbstractDMS {
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
         ConfiguracaoDMS conf = t.parse(cmd.getBlob());
         conf.setDn(dn);
+        conf.setEstado(consultarEstadoDaPorta(conf));
         return conf;
     }
 
@@ -206,6 +207,10 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("post d " + linha.getDn() + ";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
     }
 
+    protected ComandoDMS estadoPorta(ConfiguracaoDMS linha) {
+        return new ComandoDMS("post d " + linha.getDn() + " display");
+    }
+
     protected ComandoDMS createLinha(ConfiguracaoDMS linha) {
         return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen().getLen() + " DGT $ Y");
     }
@@ -302,13 +307,20 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public FacilidadesMapci consultarEstadoDaPorta(Len len) throws Exception {
+    public EstadoDaPorta consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception {
         try {
-            Filter<FacilidadesMapci> fil = new FilterLen(len);
-            return fil.filter(this.listarLens(len)).get(0);
+            for (String string : command().consulta(estadoPorta(linha)).getRetorno()) {
+                try {
+                    Tratativa<FacilidadesMapci> trat = new TratativaConsultaFacilidades();
+                    return trat.parse(string).getState();
+                } catch (Exception e) {
+                }
+            }
         } catch (Exception e) {
             throw new FalhaAoConsultarEstadoException();
         }
+
+        return null;
     }
 
 }
