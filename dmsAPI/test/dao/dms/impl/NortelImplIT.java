@@ -12,6 +12,7 @@ import dao.dms.impl.tratativa.TratativaLenDMS;
 import exception.LinhaNaoPertenceCentralException;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
+import model.dms.EstadoDaPorta;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -109,14 +110,17 @@ public class NortelImplIT {
      */
     @Test
     public void testConsultarPorDn() throws Exception {
-        System.out.println("consultarPorDn");
-        String dn = "";
-        NortelImpl instance = null;
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.consultarPorDn(dn);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("consultar");
+        try {
+            String instancia = "8560971414";
+            ConfiguracaoDMS result = instance.consultarPorDn(instancia);
+            System.out.println("Resultado: " + GsonUtil.serialize(result));
+            assertTrue("consulta", result != null);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        } finally {
+            instance.desconectar();
+        }
     }
 
     /**
@@ -257,10 +261,10 @@ public class NortelImplIT {
         System.out.println("consultar");
         try {
             String instancia = "8560971414";
-            FacilidadesMapci result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia).getLen());
+            EstadoDaPorta result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia));
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
-            assertTrue("ok", result.getState().isValid());
+            assertTrue("ok", result.isValid());
         } catch (Exception e) {
             fail(e.getMessage());
         } finally {
