@@ -188,9 +188,10 @@ public class NortelImplIT {
         services.add(LineService.DIGITAL.dto());
         services.add(LineService.IDENT_CHAM.dto());
         services.add(LineService.SEC_ELETRONICA.dto());
+        services.add(LineService.SUSP_TEMP.dto());
         instance.adicionarServico(linha, services);
 
-//        System.out.println(GsonUtil.serialize(instance.consultarPorDn("3160090026")));
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("3160090026")));
 
     }
 

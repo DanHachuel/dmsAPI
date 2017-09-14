@@ -32,7 +32,7 @@ public enum LineService {
     BLOQ_PROG_DDI("Bloqueio Programado DDI", "TDAS", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
     BLOQ_RECEB("Bloqueio Receber Chamadas", "DTM", ServiceType.BLOQUEIO, ServiceLevel.SIMPLE),
     BLOQ_EFET("Bloqueio Realizar Chamadas", "DOR", ServiceType.BLOQUEIO, ServiceLevel.SIMPLE),
-    BLOQ_A_COBRAR("Bloqueio Receber Chamadas a Cobrar", "ACCB", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_A_COBRAR("Bloqueio Receber Chamadas a Cobrar", "ACCB", ServiceType.BLOQUEIO, ServiceLevel.SIMPLE),
     LIG_SIMULT("Ligação Simultânea", "CWT", ServiceType.SERVICO, ServiceLevel.SIMPLE);
 
     private String desc, key;
