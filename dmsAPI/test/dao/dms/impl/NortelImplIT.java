@@ -179,17 +179,18 @@ public class NortelImplIT {
     @Test
     public void testAdicionarServico() throws Exception {
         System.out.println("adicionarServico");
-        instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
-        ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
+        instance = new NortelImpl(SwitchesEnum.MGBHE_HMS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("3160090026");
         System.out.println(GsonUtil.serialize(linha));
         List<LineServiceDTO> services = new ArrayList<>();
         services.add(LineService.CONV_TRES.dto());
         services.add(LineService.LIG_SIMULT.dto());
         services.add(LineService.DIGITAL.dto());
         services.add(LineService.IDENT_CHAM.dto());
+        services.add(LineService.SEC_ELETRONICA.dto());
         instance.adicionarServico(linha, services);
 
-        System.out.println(GsonUtil.serialize(instance.consultarPorDn("2760005674")));
+//        System.out.println(GsonUtil.serialize(instance.consultarPorDn("3160090026")));
 
     }
 

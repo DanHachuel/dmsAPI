@@ -17,19 +17,43 @@ import util.JsonEnumDeserializer;
 @JsonSerialize(using = JsonEnumDeserializer.class)
 public enum LineService {
 
-    CONV_TRES("Conversa a Três", "3WC", ServiceType.SERVICO),
-    DIGITAL("Digital (TOM / TONE)", "DGT", ServiceType.SERVICO),
-    IDENT_CHAM("Identificador de Chamadas", "DDN NOAMA", ServiceType.SERVICO),
-    LIG_SIMULT("Ligação Simultânea", "CWT", ServiceType.SERVICO);
+    CONV_TRES("Conversa a Três", "3WC", ServiceType.SERVICO, ServiceLevel.SIMPLE),
+    DIGITAL("Digital (TOM / TONE)", "DGT", ServiceType.SERVICO, ServiceLevel.SIMPLE),
+    IDENT_CHAM("Identificador de Chamadas", "DDN NOAMA", ServiceType.SERVICO, ServiceLevel.SIMPLE),
+    SIGA_ME("Siga-me", "CFU N", ServiceType.SERVICO, ServiceLevel.SIMPLE),
+    SIGA_ME_FORCED("Siga-me (Forçado)", "CFF", ServiceType.SERVICO, ServiceLevel.RMV_ONLY),
+    NAO_IDENTIFICAR("Ligar como Anônimo", "SUPPRESS PUBLIC", ServiceType.SERVICO, ServiceLevel.COMPLEX),
+    SEC_ELETRONICA("Secretária Eletrônica", "CFD", ServiceType.SERVICO, ServiceLevel.COMPLEX),
+    SUSP_TEMP("Suspensão Temporária", "SUS", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_PROG_CEL("Bloqueio Programado Celular", "I976", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_PROG_0500("Bloqueio Programado 0500", "I800", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_PROG_0900("Bloqueio Programado 0900 e 0300", "I900", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_PROG_DDD("Bloqueio Programado DDD", "LDAS", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_PROG_DDI("Bloqueio Programado DDI", "TDAS", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    BLOQ_RECEB("Bloqueio Receber Chamadas", "DTM", ServiceType.BLOQUEIO, ServiceLevel.SIMPLE),
+    BLOQ_EFET("Bloqueio Realizar Chamadas", "DOR", ServiceType.BLOQUEIO, ServiceLevel.SIMPLE),
+    BLOQ_A_COBRAR("Bloqueio Receber Chamadas a Cobrar", "ACCB", ServiceType.BLOQUEIO, ServiceLevel.COMPLEX),
+    LIG_SIMULT("Ligação Simultânea", "CWT", ServiceType.SERVICO, ServiceLevel.SIMPLE);
 
     private String desc, key;
-    
+
     private ServiceType tipo;
 
-    private LineService(String desc, String key, ServiceType tipo) {
+    private ServiceLevel nivel;
+
+    private LineService(String desc, String key, ServiceType tipo, ServiceLevel nivel) {
         this.desc = desc;
         this.key = key;
         this.tipo = tipo;
+        this.nivel = nivel;
+    }
+
+    public ServiceLevel getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(ServiceLevel nivel) {
+        this.nivel = nivel;
     }
 
     public ServiceType getTipo() {
@@ -56,9 +80,9 @@ public enum LineService {
         }
         return null;
     }
-    
-    public LineServiceDTO dto(){
-        return new LineServiceDTO(desc, key, tipo, name());
+
+    public LineServiceDTO dto() {
+        return new LineServiceDTO(desc, key, tipo, name(), nivel);
     }
 
 }

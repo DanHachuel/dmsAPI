@@ -6,6 +6,7 @@
 package model.dms.dto;
 
 import model.dms.LineService;
+import model.dms.ServiceLevel;
 import model.dms.ServiceType;
 
 /**
@@ -18,14 +19,32 @@ public class LineServiceDTO {
 
     private ServiceType tipo;
 
+    private ServiceLevel nivel;
+
     public LineServiceDTO() {
     }
 
-    public LineServiceDTO(String desc, String key, ServiceType tipo, String name) {
+    public LineServiceDTO(String desc, String key, ServiceType tipo, String name, ServiceLevel nivel) {
         this.desc = desc;
         this.key = key;
         this.tipo = tipo;
-        this.nome = name;
+        this.nivel = nivel;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public ServiceLevel getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(ServiceLevel nivel) {
+        this.nivel = nivel;
     }
 
     public String getName() {

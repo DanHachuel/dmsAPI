@@ -8,12 +8,13 @@ package model.dms;
 /**
  * 
  *
- * @author G0042204
+ * @author G0041775
  */
 //@JsonSerialize(using = JsonEnumDeserializer.class)
-public enum ServiceType {
+public enum ServiceLevel {
 
-   SERVICO,
-   BLOQUEIO;
+   SIMPLE,
+   COMPLEX,
+   RMV_ONLY;
 
 }
