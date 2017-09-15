@@ -82,13 +82,15 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         in.getServices().forEach((t) -> {
             add.add(t.dto());
         });
-        manager(enu).adicionarServico(linha, add);
-
         rmv.removeIf((t) -> {
             return in.getServices().contains(t.toEnum());
         });
+        /**
+         * Importante manter a ordem abaixo (removerServico e depois adicionarServico)
+         * A remoçao de um dos bloqueios programados, acarreta na remoção de todos os bloqueios, que são re-adicionados em seguida
+         */
         manager(enu).removerServico(linha, rmv);
-
+        manager(enu).adicionarServico(linha, add);
         return manager(enu).consultarPorDn(in.getDms().getDn());
     }
 

@@ -9,7 +9,11 @@ import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.filter.Filter;
 import dao.dms.impl.filter.FilterLen;
 import dao.dms.impl.filter.FilterLensLivres;
+import dao.dms.impl.filter.FilterServiceAdd;
 import dao.dms.impl.filter.FilterServiceComplex;
+import dao.dms.impl.filter.FilterServiceRmv;
+import dao.dms.impl.filter.FilterServiceSimple;
+import dao.dms.impl.filter.FilterServiceSimpleRmv;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaConsultaFacilidades;
 import dao.dms.impl.tratativa.TratativaQdnDMS;
@@ -104,22 +108,19 @@ public class NortelImpl extends AbstractDMS {
     @Override
     public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
 
-        List<LineServiceDTO> complex = new FilterServiceComplex().filter(services);
+        List<LineServiceDTO> complex = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceComplex().filter(services));
+        List<LineServiceDTO> simple = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceSimple().filter(services));
 
-        for (ComandoDMS comandoDMS : this.addServicesComplex(linha, services)) {
+        for (ComandoDMS comandoDMS : this.addServicesComplex(linha, complex)) {
             Boolean addComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
             if (addComp) {
                 abort();
                 throw new FalhaAoExecutarComandoDeAlteracaoException();
             }
-
         }
-        services.removeIf((t) -> {
-            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE;
-        });
 
-        if (!services.isEmpty()) {
-            Boolean addSrv = !command().consulta(addServicesSimple(linha, services)).getBlob().contains("JOURNAL");
+        if (!simple.isEmpty()) {
+            Boolean addSrv = !command().consulta(addServicesSimple(linha, simple)).getBlob().contains("JOURNAL");
             if (addSrv) {
                 abort();
                 throw new FalhaAoExecutarComandoDeAlteracaoException();
@@ -130,11 +131,18 @@ public class NortelImpl extends AbstractDMS {
 
     @Override
     public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
-        services.removeIf((t) -> {
-            return !linha.getServicos().contains(t);
-        });
-        if (!services.isEmpty()) {
-            Boolean rmvSrv = !command().consulta(rmvServicesSimple(linha, services)).getBlob().contains("JOURNAL");
+        List<LineServiceDTO> complex = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceComplex().filter(services));
+        List<LineServiceDTO> simple = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceSimpleRmv().filter(services));
+        for (ComandoDMS comandoDMS : this.rmvServicesComplex(linha, complex)) {
+            Boolean rmvComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
+            if (rmvComp) {
+                abort();
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
+        }
+
+        if (!simple.isEmpty()) {
+            Boolean rmvSrv = !command().consulta(rmvServicesSimple(linha, simple)).getBlob().contains("JOURNAL");
             if (rmvSrv) {
                 abort();
                 throw new FalhaAoExecutarComandoDeAlteracaoException();
@@ -188,6 +196,10 @@ public class NortelImpl extends AbstractDMS {
 
     protected ComandoDMS rmvServicesSimple(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
         StringBuilder srvBuilder = new StringBuilder();
+
+        services.removeIf((t) -> {
+            return t.getNivel() == ServiceLevel.COMPLEX;
+        });
         services.forEach((t) -> {
             String leKey = t.getKey().contains(" ") ? t.getKey().split(" ")[0] : t.getKey();
             srvBuilder.append(" ").append(leKey);
@@ -195,6 +207,24 @@ public class NortelImpl extends AbstractDMS {
         String leServices = srvBuilder.toString();
 
         return new ComandoDMS("DEO $ " + linha.getDn() + leServices + " $ Y");
+    }
+
+    protected List<ComandoDMS> rmvServicesComplex(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+
+        List<ComandoDMS> l = new ArrayList<>();
+        services.forEach((t) -> {
+            if (t.getKey().equalsIgnoreCase("SUPPRESS PUBLIC")) {
+                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " SUPPRESS $ Y"));
+            } else if (t.getKey().equalsIgnoreCase("CFD")) {
+                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " CFD CFB CBU CDU MWT $ Y"));
+            } else if (t.getKey().equalsIgnoreCase("SUS")) {
+                l.add(new ComandoDMS("RES $ " + linha.getDn() + " " + linha.getLen().getLen() + " Y"));
+            } else {
+                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " SACB $ Y"));
+            }
+        });
+
+        return l;
     }
 
     protected ComandoDMS alterarSenha(String oldPass, String newPass) {

@@ -179,8 +179,8 @@ public class NortelImplIT {
     @Test
     public void testAdicionarServico() throws Exception {
         System.out.println("adicionarServico");
-        instance = new NortelImpl(SwitchesEnum.MGBHE_HMS01);
-        ConfiguracaoDMS linha = instance.consultarPorDn("3160090026");
+        instance = new NortelImpl(SwitchesEnum.SPGRS_TPS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("1149707585");
         System.out.println(GsonUtil.serialize(linha));
         List<LineServiceDTO> services = new ArrayList<>();
         services.add(LineService.CONV_TRES.dto());
@@ -191,7 +191,7 @@ public class NortelImplIT {
         services.add(LineService.SUSP_TEMP.dto());
         instance.adicionarServico(linha, services);
 
-        System.out.println(GsonUtil.serialize(instance.consultarPorDn("3160090026")));
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("1149707585")));
 
     }
 
@@ -201,14 +201,18 @@ public class NortelImplIT {
     @Test
     public void testRemoverServico() throws Exception {
         System.out.println("removerServico");
-        instance = new NortelImpl(SwitchesEnum.ESVTA_ASS01);
-        ConfiguracaoDMS linha = instance.consultarPorDn("2760005674");
+        instance = new NortelImpl(SwitchesEnum.SPGRS_TPS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("1149707585");
         System.out.println(GsonUtil.serialize(linha));
         List<LineServiceDTO> services = new ArrayList<>();
         services.add(LineService.CONV_TRES.dto());
-        services.add(LineService.LIG_SIMULT.dto());
+        services.add(LineService.LIG_SIMULT.dto() );
+        services.add(LineService.DIGITAL.dto());
         services.add(LineService.IDENT_CHAM.dto());
+        services.add(LineService.SEC_ELETRONICA.dto());
+        services.add(LineService.SUSP_TEMP.dto());
         instance.removerServico(linha, services);
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("1149707585")));
 
     }
 
