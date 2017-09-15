@@ -205,51 +205,6 @@ public class ServiceDMSImplIT {
     }
 
     /**
-     * Test of manobrarLinha method, of class ServiceDMSImpl.
-     */
-    @Test
-    public void testManobrarLinha() throws Exception {
-        System.out.println("manobrarLinha");
-        ManobrarLinhaIn in = null;
-        ServiceDMSImpl instance = new ServiceDMSImpl();
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.manobrarLinha(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of editarCustGrp method, of class ServiceDMSImpl.
-     */
-    @Test
-    public void testEditarCustGrp() throws Exception {
-        System.out.println("editarCustGrp");
-        EditCustGrpIn in = null;
-        ServiceDMSImpl instance = new ServiceDMSImpl();
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.editarCustGrp(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of editarNcos method, of class ServiceDMSImpl.
-     */
-    @Test
-    public void testEditarNcos() throws Exception {
-        System.out.println("editarNcos");
-        EditNcosIn in = null;
-        ServiceDMSImpl instance = new ServiceDMSImpl();
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.editarNcos(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of resetarPorta method, of class ServiceDMSImpl.
      */
     @Test

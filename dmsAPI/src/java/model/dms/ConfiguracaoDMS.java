@@ -8,7 +8,6 @@ package model.dms;
 import java.util.ArrayList;
 import java.util.List;
 import model.dms.dto.EstadoDaPortaDTO;
-import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 
 /**
@@ -18,8 +17,6 @@ import model.dms.dto.NcosDTO;
 public class ConfiguracaoDMS {
 
     private String dn;
-
-    private String instancia;
 
     private Len len;
 
@@ -94,14 +91,6 @@ public class ConfiguracaoDMS {
 
     public void add(LineService s) {
         getServicos().add(s);
-    }
-
-    public String getInstancia() {
-        return instancia;
-    }
-
-    public void setInstancia(String instancia) {
-        this.instancia = instancia;
     }
 
     public EstadoDaPortaDTO getEstado() {

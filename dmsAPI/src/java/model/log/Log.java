@@ -27,6 +27,7 @@ public abstract class Log implements Logger {
 
     public Log(ActionsEnum acao) {
         this.acao = acao;
+        dataLogIn = Calendar.getInstance();
     }
 
     public String getEntrada() {

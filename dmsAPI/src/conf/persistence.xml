@@ -3,6 +3,8 @@
   <persistence-unit name="dmsAPIPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>java:/co</jta-data-source>
+    <class>model.entity.LogEntity</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.id.new_generator_mappings" value="false"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>

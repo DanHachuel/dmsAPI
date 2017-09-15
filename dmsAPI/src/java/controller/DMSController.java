@@ -14,6 +14,7 @@ import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
 import controller.in.ManobrarLinhaIn;
 import controller.in.ResetarPortaIn;
+import dao.FactoryDAO;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -54,10 +55,13 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS consultar = serv.consultar(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(consultar);
+            in.setSaida(consultar);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+           
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -73,10 +77,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracoesShelf lst = serv.consultarConfiguracoesShelf(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(lst);
+            in.setSaida(lst);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -92,10 +98,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.criarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+            in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -111,10 +119,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.deletarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+            in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -130,10 +140,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.editarServicos(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+            in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -149,10 +161,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.manobrarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+            in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -168,10 +182,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS consultar = serv.resetarPorta(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(consultar);
+            in.setSaida(consultar);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -187,10 +203,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.editarCustGrp(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+            in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -206,10 +224,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.editarNcos(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+            in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(e);
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
