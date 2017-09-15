@@ -117,8 +117,14 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
         linha.setNcos(in.getNcos().dto());
         manager(enu).alterarNcos(linha);
-
         return manager(enu).consultarPorDn(in.getDms().getDn());
+    }
+
+    @Override
+    public ConfiguracaoDMS resetarPorta(ConsultaDMS in) throws Exception {
+        SwitchesEnum enu = SwitchesEnum.findByName(in.getCentral());
+        manager(enu).resetarPorta(in.getDn());
+        return consultar(in);
     }
 
 }

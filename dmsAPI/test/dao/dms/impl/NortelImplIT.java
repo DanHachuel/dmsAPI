@@ -13,7 +13,7 @@ import exception.LinhaNaoPertenceCentralException;
 import java.util.ArrayList;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
-import model.dms.EstadoDaPorta;
+import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -273,7 +273,7 @@ public class NortelImplIT {
         System.out.println("consultar");
         try {
             String instancia = "8560971414";
-            EstadoDaPorta result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia));
+            EstadoDaPortaEnum result = instance.consultarEstadoDaPorta(instance.consultarPorDn(instancia));
             System.out.println("Resultado: " + GsonUtil.serialize(result));
             assertTrue("consulta", result != null);
             assertTrue("ok", result.isValid());

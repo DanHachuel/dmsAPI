@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
-import model.dms.EstadoDaPorta;
+import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -44,7 +44,7 @@ public class NortelImpl extends AbstractDMS {
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
         ConfiguracaoDMS conf = t.parse(cmd.getBlob());
         conf.setDn(dn);
-        conf.setEstado(consultarEstadoDaPorta(conf));
+        conf.setEstado(consultarEstadoDaPorta(conf).adapt());
         return conf;
     }
 
@@ -213,7 +213,7 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS resetPorta(String dn) {
-        return new ComandoDMS("post d " + dn + ";frls;rts;");
+        return new ComandoDMS("post d " + dn + ";frls;rts;", 4000);
     }
 
     protected ComandoDMS estadoPorta(ConfiguracaoDMS linha) {
@@ -316,7 +316,7 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public EstadoDaPorta consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception {
+    public EstadoDaPortaEnum consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception {
         try {
             for (String string : command().consulta(estadoPorta(linha)).getRetorno()) {
                 try {

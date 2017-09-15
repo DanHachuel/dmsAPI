@@ -7,6 +7,7 @@ package model.dms;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.dms.dto.EstadoDaPortaDTO;
 import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 
@@ -28,7 +29,7 @@ public class ConfiguracaoDMS {
 
     private List<LineServiceDTO> servicos;
 
-    private EstadoDaPorta estado;
+    private EstadoDaPortaDTO estado;
 
     public ConfiguracaoDMS() {
     }
@@ -93,11 +94,11 @@ public class ConfiguracaoDMS {
         getServicos().add(s.dto());
     }
 
-    public EstadoDaPorta getEstado() {
+    public EstadoDaPortaDTO getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoDaPorta estado) {
+    public void setEstado(EstadoDaPortaDTO estado) {
         this.estado = estado;
     }
 
