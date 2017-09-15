@@ -50,6 +50,14 @@ public class TimerDMSService {
         dms.connectSwitches();
     }
 
+    @Schedule(minute = "*/30")
+    public void automaticTimeout2() {
+        this.setLastAutomaticTimeout(new Date());
+        logger.info("TimerSessionBean -> keepAlive");
+        ServiceContextDMS dms = FactoryService.createContext();
+        dms.keepAlive();
+    }
+
     public String getLastProgrammaticTimeout() {
         if (lastProgrammaticTimeout != null) {
             return lastProgrammaticTimeout.toString();
