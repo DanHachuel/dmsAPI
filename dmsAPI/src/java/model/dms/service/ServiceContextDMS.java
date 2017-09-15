@@ -20,4 +20,6 @@ public interface ServiceContextDMS {
 
     public void disconnectSwitches();
 
+    public void keepAlive();
+
 }
