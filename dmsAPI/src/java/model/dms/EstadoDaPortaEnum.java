@@ -5,7 +5,7 @@
  */
 package model.dms;
 
-import model.dms.dto.Adapter;
+import model.dms.adapter.Adapter;
 import model.dms.dto.EstadoDaPortaDTO;
 
 /**

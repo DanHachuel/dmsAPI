@@ -30,6 +30,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.LineService;
 import model.dms.Ncos;
+import model.dms.adapter.ConfiguracaoDMSAdapter;
 import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
@@ -54,13 +55,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS consultar = serv.consultar(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(consultar);
+            r = ok(ConfiguracaoDMSAdapter.adapt(consultar));
             in.setSaida(consultar);
         } catch (Exception e) {
             r = serverError(e);
             in.setSaida(e);
         } finally {
-           
+
             FactoryDAO.create().cadastrar(in.log());
         }
         return r;
@@ -97,7 +98,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.criarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
@@ -118,7 +119,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.deletarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
@@ -139,7 +140,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarServicos(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
@@ -160,7 +161,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.manobrarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
@@ -181,7 +182,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS consultar = serv.resetarPorta(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(consultar);
+            r = ok(ConfiguracaoDMSAdapter.adapt(consultar));
             in.setSaida(consultar);
         } catch (Exception e) {
             r = serverError(e);
@@ -202,7 +203,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarCustGrp(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
@@ -223,7 +224,7 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarNcos(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
