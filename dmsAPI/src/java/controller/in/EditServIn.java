@@ -19,6 +19,8 @@ public class EditServIn extends GenericLog {
 
     private ConsultaDMS dms;
 
+    private String instancia;
+
     private List<LineService> services;
 
     public EditServIn() {
@@ -44,6 +46,14 @@ public class EditServIn extends GenericLog {
     @Override
     public Object entrada() {
         return dms;
+    }
+
+    public String getInstancia() {
+        return instancia;
+    }
+
+    public void setInstancia(String instancia) {
+        this.instancia = instancia;
     }
 
 }

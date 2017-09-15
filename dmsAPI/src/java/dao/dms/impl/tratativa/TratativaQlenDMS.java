@@ -24,7 +24,7 @@ public class TratativaQlenDMS extends TratativaGeneric implements Tratativa<Conf
         String dnPattern = "(?:DIRECTORY NUMBER:\\s{0,10}(\\d{1,10}))";
         String custGrpPattern = "(?:STATIONCUSTGRP:\\s{0,20}(\\w{6,10}))";
         String ncosPattern = "(?:NCOS:\\s{0,1}(\\d{1,5}))";
-        String servPattern = "(?:OPTIONS:)(.{0,50})[^-]";
+        String servPattern = "(?:OPTIONS:)(.{0,500})[^-]";
 
         String len = Regex.capture(blob, lenPattern).trim();
         Tratativa<Len> t = new TratativaLenDMS();

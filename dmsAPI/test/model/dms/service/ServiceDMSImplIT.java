@@ -7,7 +7,10 @@ package model.dms.service;
 
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
 import controller.in.EditServIn;
+import controller.in.ManobrarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.TratativaLenDMS;
 import java.util.ArrayList;
@@ -140,18 +143,66 @@ public class ServiceDMSImplIT {
         System.out.println("editarServicos");
         EditServIn in = new EditServIn();
         ConsultaDMS dms = new ConsultaDMS();
-        dms.setCentral("ESVTA_ASS01");
-        dms.setDn("2760005674");
+        dms.setCentral("SPGRS_TPS01");
+        dms.setDn("1149707585");
         in.setDms(dms);
+        in.setInstancia("1149707585");
         List<LineService> services = new ArrayList<>();
         services.add(LineService.CONV_TRES);
         services.add(LineService.LIG_SIMULT);
         services.add(LineService.DIGITAL);
         services.add(LineService.IDENT_CHAM);
+        services.add(LineService.SEC_ELETRONICA);
+        services.add(LineService.BLOQ_PROG_0500);
+        services.add(LineService.BLOQ_PROG_0900);
         in.setServices(services);
         ConfiguracaoDMS result = instance.editarServicos(in);
         System.out.println(GsonUtil.serialize(services));
+    }
+
+    /**
+     * Test of manobrarLinha method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testManobrarLinha() throws Exception {
+        System.out.println("manobrarLinha");
+        ManobrarLinhaIn in = null;
+        ServiceDMSImpl instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.manobrarLinha(in);
+        assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of editarCustGrp method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testEditarCustGrp() throws Exception {
+        System.out.println("editarCustGrp");
+        EditCustGrpIn in = null;
+        ServiceDMSImpl instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.editarCustGrp(in);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of editarNcos method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testEditarNcos() throws Exception {
+        System.out.println("editarNcos");
+        EditNcosIn in = null;
+        ServiceDMSImpl instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.editarNcos(in);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
 }

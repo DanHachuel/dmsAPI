@@ -7,7 +7,6 @@ package model.dms;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 
 /**
@@ -18,6 +17,8 @@ public class ConfiguracaoDMS {
 
     private String dn;
 
+    private String instancia;
+
     private Len len;
 
     private String custGrp;
@@ -26,7 +27,7 @@ public class ConfiguracaoDMS {
 
     private LineStatus status;
 
-    private List<LineServiceDTO> servicos;
+    private List<LineService> servicos;
 
     public ConfiguracaoDMS() {
     }
@@ -76,19 +77,27 @@ public class ConfiguracaoDMS {
         this.status = status;
     }
 
-    public List<LineServiceDTO> getServicos() {
+    public List<LineService> getServicos() {
         if (servicos == null) {
             servicos = new ArrayList<>();
         }
         return servicos;
     }
 
-    public void setServicos(List<LineServiceDTO> servicos) {
+    public void setServicos(List<LineService> servicos) {
         this.servicos = servicos;
     }
 
     public void add(LineService s) {
-        getServicos().add(s.dto());
+        getServicos().add(s);
+    }
+
+    public String getInstancia() {
+        return instancia;
+    }
+
+    public void setInstancia(String instancia) {
+        this.instancia = instancia;
     }
 
 }

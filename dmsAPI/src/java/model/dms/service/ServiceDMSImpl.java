@@ -19,7 +19,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.FacilidadesMapci;
-import model.dms.dto.LineServiceDTO;
+import model.dms.LineService;
 
 public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
 
@@ -76,21 +76,18 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
     public ConfiguracaoDMS editarServicos(EditServIn in) throws Exception {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
         ConfiguracaoDMS linha = manager(enu).consultarPorDn(in.getDms().getDn());
-        List<LineServiceDTO> rmv = linha.getServicos();
-        List<LineServiceDTO> add = new ArrayList<>();
-
-        in.getServices().forEach((t) -> {
-            add.add(t.dto());
-        });
+        List<LineService> rmv = new ArrayList<>();
+        rmv.addAll(linha.getServicos());
         rmv.removeIf((t) -> {
-            return in.getServices().contains(t.toEnum());
+            return in.getServices().contains(t);
         });
         /**
-         * Importante manter a ordem abaixo (removerServico e depois adicionarServico)
-         * A remoçao de um dos bloqueios programados, acarreta na remoção de todos os bloqueios, que são re-adicionados em seguida
+         * Importante manter a ordem abaixo (removerServico e depois
+         * adicionarServico) A remoçao de um dos bloqueios programados, acarreta
+         * na remoção de todos os bloqueios, que são re-adicionados em seguida
          */
         manager(enu).removerServico(linha, rmv);
-        manager(enu).adicionarServico(linha, add);
+        manager(enu).adicionarServico(linha, in);
         return manager(enu).consultarPorDn(in.getDms().getDn());
     }
 

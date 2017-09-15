@@ -5,6 +5,7 @@
  */
 package dao.dms.impl;
 
+import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.filter.Filter;
 import dao.dms.impl.filter.FilterLen;
@@ -31,7 +32,6 @@ import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
 import model.dms.ServiceLevel;
-import model.dms.dto.LineServiceDTO;
 
 /**
  *
@@ -106,12 +106,18 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
+    public void adicionarServico(ConfiguracaoDMS linha, EditServIn in) throws Exception {
 
-        List<LineServiceDTO> complex = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceComplex().filter(services));
-        List<LineServiceDTO> simple = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceSimple().filter(services));
+        List<LineService> complex = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceComplex().filter(in.getServices()));
+        List<LineService> simple = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceSimple().filter(in.getServices()));
 
-        for (ComandoDMS comandoDMS : this.addServicesComplex(linha, complex)) {
+        EditServIn editComplex = new EditServIn();
+        editComplex.setInstancia(in.getInstancia());
+        editComplex.setServices(complex);
+        editComplex.setDms(in.getDms());
+
+        System.out.println("");
+        for (ComandoDMS comandoDMS : this.addServicesComplex(linha, editComplex)) {
             Boolean addComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
             if (addComp) {
                 abort();
@@ -130,9 +136,9 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
-        List<LineServiceDTO> complex = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceComplex().filter(services));
-        List<LineServiceDTO> simple = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceSimpleRmv().filter(services));
+    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
+        List<LineService> complex = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceComplex().filter(services));
+        List<LineService> simple = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceSimpleRmv().filter(services));
         for (ComandoDMS comandoDMS : this.rmvServicesComplex(linha, complex)) {
             Boolean rmvComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
             if (rmvComp) {
@@ -140,6 +146,7 @@ public class NortelImpl extends AbstractDMS {
                 throw new FalhaAoExecutarComandoDeAlteracaoException();
             }
         }
+        linha.getServicos().removeAll(complex);
 
         if (!simple.isEmpty()) {
             Boolean rmvSrv = !command().consulta(rmvServicesSimple(linha, simple)).getBlob().contains("JOURNAL");
@@ -148,6 +155,8 @@ public class NortelImpl extends AbstractDMS {
                 throw new FalhaAoExecutarComandoDeAlteracaoException();
             }
         }
+        linha.getServicos().removeAll(simple);
+
     }
 
     @Override
@@ -160,7 +169,7 @@ public class NortelImpl extends AbstractDMS {
         command().consulta(aborte()).getBlob();
     }
 
-    protected ComandoDMS addServicesSimple(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+    protected ComandoDMS addServicesSimple(ConfiguracaoDMS linha, List<LineService> services) {
         StringBuilder srvBuilder = new StringBuilder();
         services.forEach((t) -> {
             srvBuilder.append(" ").append(t.getKey());
@@ -169,11 +178,12 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("ADO $ " + linha.getDn() + leServices + " $ Y");
     }
 
-    protected List<ComandoDMS> addServicesComplex(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+    protected List<ComandoDMS> addServicesComplex(ConfiguracaoDMS linha, EditServIn in) {
 
         StringBuilder sacbBuilder = new StringBuilder();
         List<ComandoDMS> l = new ArrayList<>();
-        services.forEach((t) -> {
+        in.getServices().forEach((t) -> {
+            System.out.println("");
             if (t.getKey().equalsIgnoreCase("SUPPRESS PUBLIC")) {
                 l.add(new ComandoDMS("ADO $ " + linha.getDn() + " SUPPRESS PUBLIC Y Y $ $ Y"));
             } else if (t.getKey().equalsIgnoreCase("CFD")) {
@@ -182,19 +192,20 @@ public class NortelImpl extends AbstractDMS {
                 l.add(new ComandoDMS("SUS $ " + linha.getDn() + " " + linha.getLen().getLen() + " Y"));
             } else {
                 if (sacbBuilder.length() == 0) {
-                    sacbBuilder.append("SACB ACT ");
+                    sacbBuilder.append("ADO $ " + linha.getDn() + " SACB ACT ");
                 }
                 sacbBuilder.append(t.getKey()).append(" ");
             }
+            System.out.println("");
         });
         if (sacbBuilder.length() != 0) {
-            l.add(new ComandoDMS(sacbBuilder.toString()));
+            l.add(new ComandoDMS(sacbBuilder.toString(), in.getInstancia().substring(6, 10), "", "$ Y"));
         }
 
         return l;
     }
 
-    protected ComandoDMS rmvServicesSimple(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+    protected ComandoDMS rmvServicesSimple(ConfiguracaoDMS linha, List<LineService> services) {
         StringBuilder srvBuilder = new StringBuilder();
 
         services.removeIf((t) -> {
@@ -209,7 +220,7 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("DEO $ " + linha.getDn() + leServices + " $ Y");
     }
 
-    protected List<ComandoDMS> rmvServicesComplex(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+    protected List<ComandoDMS> rmvServicesComplex(ConfiguracaoDMS linha, List<LineService> services) {
 
         List<ComandoDMS> l = new ArrayList<>();
         services.forEach((t) -> {
@@ -370,6 +381,15 @@ public class NortelImpl extends AbstractDMS {
             return fil.filter(this.listarLens(len)).get(0);
         } catch (Exception e) {
             throw new FalhaAoConsultarEstadoException();
+        }
+    }
+
+    @Override
+    public void keepAliveCommand() {
+        try {
+            command().consulta(enter());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 

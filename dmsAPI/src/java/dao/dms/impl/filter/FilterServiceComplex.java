@@ -7,17 +7,17 @@ package dao.dms.impl.filter;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.dms.LineService;
 import model.dms.ServiceLevel;
-import model.dms.dto.LineServiceDTO;
 
-public class FilterServiceComplex implements Filter<LineServiceDTO> {
+public class FilterServiceComplex implements Filter<LineService> {
 
     public FilterServiceComplex() {
     }
 
     @Override
-    public List<LineServiceDTO> filter(List<LineServiceDTO> lst) {
-        List<LineServiceDTO> ret = new ArrayList<>();
+    public List<LineService> filter(List<LineService> lst) {
+        List<LineService> ret = new ArrayList<>();
         lst.forEach((t) -> {
             if (t.getNivel() == ServiceLevel.COMPLEX) {
                 ret.add(t);
