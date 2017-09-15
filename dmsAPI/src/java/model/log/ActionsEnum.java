@@ -18,6 +18,7 @@ public enum ActionsEnum {
     MANOBRAR_LINHA,
     EDITAR_SERVICOS,
     EDITAR_CUSTGRP,
-    EDITAR_NCOS;
+    EDITAR_NCOS, 
+    RESETAR_PORTA;
 
 }
