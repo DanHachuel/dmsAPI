@@ -25,7 +25,7 @@ public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
     PMB("Peripheral Module Busy - Falha no Periférico.", Boolean.FALSE),
     SB("System Busy - Falha de Continuidade.", Boolean.FALSE),
     LMB("Falha de energia ou falha na porta.", Boolean.FALSE),
-    PLO("Falha na porta.", Boolean.FALSE),
+    PLO("Falha na porta (Curto).", Boolean.FALSE),
     NOP("Estado não mapeado.", Boolean.FALSE);
 
     private String desc;
