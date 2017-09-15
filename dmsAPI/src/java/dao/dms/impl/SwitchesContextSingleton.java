@@ -39,7 +39,6 @@ public class SwitchesContextSingleton {
             } catch (Exception e) {
                 System.out.println("Falha ao conectar Central: " + n.getCentral().name());
             } finally {
-                System.out.println(n.getCentral().name());
                 this.adicionarCentral(n);
             }
         }

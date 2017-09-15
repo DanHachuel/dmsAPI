@@ -18,7 +18,7 @@ public enum Credencial {
     private final String pass;
 
     private Credencial(String login, String pass) {
-        this.login = login;
+        this.login = login; 
         this.pass = pass;
     }
 

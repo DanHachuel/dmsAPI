@@ -5,6 +5,7 @@
  */
 package model.dms.dto;
 
+import dao.dms.credencial.Credencial;
 import dao.dms.enums.SwitchesEnum;
 
 /**
@@ -17,13 +18,16 @@ public class DetailDTO {
 
     private Boolean connected, busy;
 
+    private Credencial credencial;
+
     public DetailDTO() {
     }
 
-    public DetailDTO(SwitchesEnum central, Boolean connected, Boolean busy) {
+    public DetailDTO(SwitchesEnum central, Boolean connected, Boolean busy, Credencial credencial) {
         this.central = central;
         this.connected = connected;
         this.busy = busy;
+        this.credencial = credencial;
     }
 
     public SwitchesEnum getCentral() {
@@ -48,6 +52,14 @@ public class DetailDTO {
 
     public void setBusy(Boolean busy) {
         this.busy = busy;
+    }
+
+    public Credencial getCredencial() {
+        return credencial;
+    }
+
+    public void setCredencial(Credencial credencial) {
+        this.credencial = credencial;
     }
 
 }

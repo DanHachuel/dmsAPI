@@ -9,15 +9,15 @@ package model.dms;
  *
  * @author G0042204
  */
-public class ConsultaFacilidades {
+public class FacilidadesMapci {
 
     private Len len;
 
     private String dn;
 
-    private String state;
+    private EstadoDaPortaEnum state;
 
-    public ConsultaFacilidades() {
+    public FacilidadesMapci() {
     }
 
     public Len getLen() {
@@ -36,11 +36,11 @@ public class ConsultaFacilidades {
         this.dn = dn;
     }
 
-    public String getState() {
+    public EstadoDaPortaEnum getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(EstadoDaPortaEnum state) {
         this.state = state;
     }
 

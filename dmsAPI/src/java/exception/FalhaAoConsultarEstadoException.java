@@ -3,22 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.log;
+package exception;
 
 /**
  *
  * @author G0042204
  */
-public enum ActionsEnum {
+public class FalhaAoConsultarEstadoException extends Exception {
 
-    CONSULTAR_DN,
-    LISTAR_LENS_LIVRES,
-    CRIAR_LINHA,
-    DELETAR_LINHA,
-    MANOBRAR_LINHA,
-    EDITAR_SERVICOS,
-    EDITAR_CUSTGRP,
-    EDITAR_NCOS, 
-    RESETAR_PORTA;
+    public FalhaAoConsultarEstadoException() {
+        super("Falha ao consultar Estado da Porta, len não encontrado.");
+    }
 
 }

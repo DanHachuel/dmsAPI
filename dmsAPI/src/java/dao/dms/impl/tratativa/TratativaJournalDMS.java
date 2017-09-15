@@ -13,7 +13,7 @@ import model.dms.LineStatus;
 import model.dms.Ncos;
 import util.Regex;
 
-public class TratativaQdnDMS extends TratativaGeneric implements Tratativa<ConfiguracaoDMS> {
+public class TratativaJournalDMS extends TratativaGeneric implements Tratativa<ConfiguracaoDMS> {
 
     @Override
     public ConfiguracaoDMS parse(String blob) throws Exception {
@@ -33,7 +33,7 @@ public class TratativaQdnDMS extends TratativaGeneric implements Tratativa<Confi
         String linePattern = "(?:LINE EQUIPMENT NUMBER:\\s{0,5}(.{10,18}))";
         String custGrpPattern = "(?:STATIONCUSTGRP:\\s{0,20}(\\w{6,10}))";
         String ncosPattern = "(?:NCOS:\\s{0,1}(\\d{1,5}))";
-        String servPattern = "(?:OPTIONS:)(.{0,500})[^-]";
+        String servPattern = "(?:OPTIONS:)(.{0,50})[^-]";
 
         String len = Regex.capture(blob, linePattern).trim();
         

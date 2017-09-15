@@ -6,7 +6,15 @@
 package controller;
 
 import controller.in.ConsultaDMSIn;
+import controller.in.CriarLinhaIn;
+import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
+import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
+import controller.in.ManobrarLinhaIn;
+import controller.in.ResetarPortaIn;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.ws.rs.Consumes;
@@ -18,7 +26,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.dms.ConfiguracaoDMS;
-import model.dms.ConsultaFacilidades;
+import model.dms.ConfiguracoesShelf;
+import model.dms.LineService;
+import model.dms.Ncos;
+import model.dms.dto.LineServiceDTO;
+import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
 import model.dms.service.ServiceContextDMS;
 import model.dms.service.ServiceContextDMSImpl;
@@ -51,16 +63,149 @@ public class DMSController extends RestJaxAbstract {
     }
 
     @POST
-    @Path("/listarLensLivres")
+    @Path("/consultarConfiguracoesShelf")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response listarLensLivres(ListarLensLivresIn in) throws Exception {
+    public Response consultarConfiguracoesShelf(ListarLensLivresIn in) throws Exception {
         Response r = null;
         try {
             ServiceDMS serv = FactoryService.create();
-            List<ConsultaFacilidades> lst = serv.listarLensLivres(in.getDms());
+            ConfiguracoesShelf lst = serv.consultarConfiguracoesShelf(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(lst);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/criarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response criarLinha(CriarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.criarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/deletarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deletarLinha(DeletarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.deletarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarServicos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response editarServicos(EditServIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarServicos(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/manobrarLinha")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(ManobrarLinhaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.manobrarLinha(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/resetarPorta")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response resetarPorta(ResetarPortaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS consultar = serv.resetarPorta(in.getDms());
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(consultar);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarCustGrp")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(EditCustGrpIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarCustGrp(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/editarNcos")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response manobrarLinha(EditNcosIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS linha = serv.editarNcos(in);
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(linha);
         } catch (Exception e) {
             r = serverError(e);
         } finally {
@@ -86,12 +231,37 @@ public class DMSController extends RestJaxAbstract {
         Response r = null;
         ServiceContextDMS serv = new ServiceContextDMSImpl();
         if (state) {
-            serv.connect();
+            serv.connectSwitches();
         } else {
-            serv.disconnect();
+            serv.disconnectSwitches();
         }
         r = ok(serv.contextDetail());
         return r;
     }
 
+    @GET
+    @Path("/servicos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response servicos() throws Exception {
+        Response r = null;
+        List<LineServiceDTO> dtos = new ArrayList<>();
+        for (LineService v : LineService.values()) {
+            dtos.add(v.dto());
+        }
+        r = ok(dtos);
+        return r;
+    }
+
+    @GET
+    @Path("/ncos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response ncos() throws Exception {
+        Response r = null;
+        List<NcosDTO> dtos = new ArrayList<>();
+        for (Ncos v : Ncos.values()) {
+            dtos.add(v.dto());
+        }
+        r = ok(dtos);
+        return r;
+    }
 }

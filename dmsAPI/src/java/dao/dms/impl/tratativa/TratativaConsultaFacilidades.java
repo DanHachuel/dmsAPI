@@ -5,13 +5,14 @@
  */
 package dao.dms.impl.tratativa;
 
-import model.dms.ConsultaFacilidades;
+import model.dms.FacilidadesMapci;
+import model.dms.FactoryEstadoDaPorta;
 import util.Regex;
 
-public class TratativaConsultaFacilidades extends TratativaGeneric implements Tratativa<ConsultaFacilidades> {
+public class TratativaConsultaFacilidades extends TratativaGeneric implements Tratativa<FacilidadesMapci> {
 
     @Override
-    public ConsultaFacilidades parse(String blob) throws Exception {
+    public FacilidadesMapci parse(String blob) throws Exception {
         validar(blob);
 
         String regex = "(?:\\s{1})(\\w{4}.{3,14})(?:\\s{1,50})(\\d{3}(?:\\s)\\d{3}\\s\\d{4}|NO DIRN)(?:\\s{5,20})(\\w{3,4})";
@@ -19,10 +20,10 @@ public class TratativaConsultaFacilidades extends TratativaGeneric implements Tr
         String dn = Regex.capture(blob, regex, 2).replace(" ", "");
         String state = Regex.capture(blob, regex, 3);
         TratativaLenDMS trat = new TratativaLenDMS();
-        ConsultaFacilidades c = new ConsultaFacilidades();
+        FacilidadesMapci c = new FacilidadesMapci();
         c.setDn(dn);
         c.setLen(trat.parse(len));
-        c.setState(state);
+        c.setState(FactoryEstadoDaPorta.find(state));
 
         return c;
     }

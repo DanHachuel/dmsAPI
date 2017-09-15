@@ -17,16 +17,21 @@ import exception.SwitchNaoEncontradaException;
  */
 public abstract class GenericDMSService {
 
+    private ManagerDMS manager;
+
     public ManagerDMS manager(SwitchesEnum central) throws SwitchNaoEncontradaException {
-        return this.managerContexto(central);
+        if (manager == null) {
+            manager = this.managerContexto(central);
+        }
+        return manager;
 //        return this.debugger(central);
     }
 
     public ManagerDMS managerContexto(SwitchesEnum central) throws SwitchNaoEncontradaException {
         return context().getSwitchBySwitch(central);
     }
-    
-    public SwitchesContextSingleton context(){
+
+    public SwitchesContextSingleton context() {
         return SwitchesContextSingleton.getInstance();
     }
 
