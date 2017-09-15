@@ -9,6 +9,7 @@
       <property name="hibernate.id.new_generator_mappings" value="false"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
       <property name="hibernate.show_sql" value="true"/>
+      <!--<property name="javax.persistence.schema-generation.database.action" value="create"/>-->
     </properties>
   </persistence-unit>
 </persistence>

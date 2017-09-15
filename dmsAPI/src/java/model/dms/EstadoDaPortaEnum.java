@@ -7,11 +7,14 @@ package model.dms;
 
 import model.dms.adapter.Adapter;
 import model.dms.dto.EstadoDaPortaDTO;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import util.JsonEnumDeserializer;
 
 /**
  *
  * @author G0042204
  */
+@JsonSerialize(using = JsonEnumDeserializer.class)
 public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
 
     CPB("Call Process Busy - Chamada em Curso, Linha Ocupada.", Boolean.TRUE),

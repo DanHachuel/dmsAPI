@@ -31,6 +31,7 @@ import model.dms.ConfiguracoesShelf;
 import model.dms.LineService;
 import model.dms.Ncos;
 import model.dms.adapter.ConfiguracaoDMSAdapter;
+import model.dms.dto.ConfiguracaoDMSDTO;
 import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
@@ -55,7 +56,8 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS consultar = serv.consultar(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(ConfiguracaoDMSAdapter.adapt(consultar));
+            ConfiguracaoDMSDTO leR = ConfiguracaoDMSAdapter.adapt(consultar);
+            r = ok(leR);
             in.setSaida(consultar);
         } catch (Exception e) {
             r = serverError(e);
