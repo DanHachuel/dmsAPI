@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
-import model.dms.EstadoDaPorta;
+import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -44,7 +44,7 @@ public class NortelImpl extends AbstractDMS {
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
         ConfiguracaoDMS conf = t.parse(cmd.getBlob());
         conf.setDn(dn);
-        conf.setEstado(consultarEstadoDaPorta(conf));
+        conf.setEstado(consultarEstadoDaPorta(conf).adapt());
         return conf;
     }
 
@@ -81,7 +81,7 @@ public class NortelImpl extends AbstractDMS {
             throw new FalhaAoExecutarComandoDeAlteracaoException();
         }
         alterarCustGroup(linha);
-        
+
         return consultarPorDn(linha.getDn());
     }
 
@@ -102,12 +102,17 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
+    public void resetarPorta(String instancia) throws Exception {
+        System.out.println(command().consulta(resetPorta(instancia)).getBlob());
+    }
+
+    @Override
     public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
 
         services.removeIf((t) -> {
-            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE; 
+            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE;
         });
-        
+
         services.forEach((t) -> {
             System.out.println(t.getNivel().toString());
         });
@@ -171,7 +176,7 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected ComandoDMS cmdAlterarNcos(ConfiguracaoDMS conf) {
-        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS "+conf.getNcos().getNcos()+" Y");
+        return new ComandoDMS("CHG $ LINE " + conf.getDn() + " NCOS " + conf.getNcos().getNcos() + " Y");
     }
 
     protected ComandoDMS cmdAlterarCustGroup(ConfiguracaoDMS conf) {
@@ -205,6 +210,10 @@ public class NortelImpl extends AbstractDMS {
 
     protected ComandoDMS delete(ConfiguracaoDMS linha) {
         return new ComandoDMS("post d " + linha.getDn() + ";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
+    }
+
+    protected ComandoDMS resetPorta(String dn) {
+        return new ComandoDMS("post d " + dn + ";frls;rts;", 4000);
     }
 
     protected ComandoDMS estadoPorta(ConfiguracaoDMS linha) {
@@ -307,7 +316,7 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public EstadoDaPorta consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception {
+    public EstadoDaPortaEnum consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception {
         try {
             for (String string : command().consulta(estadoPorta(linha)).getRetorno()) {
                 try {

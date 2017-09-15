@@ -7,7 +7,10 @@ package model.dms.service;
 
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
+import controller.in.EditCustGrpIn;
+import controller.in.EditNcosIn;
 import controller.in.EditServIn;
+import controller.in.ManobrarLinhaIn;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.tratativa.TratativaLenDMS;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.ConsultaDMS;
+import model.dms.EstadoDaPortaEnum;
 import model.dms.Len;
 import model.dms.LineService;
 import model.dms.LineStatus;
@@ -64,7 +68,6 @@ public class ServiceDMSImplIT {
             in.setDn("8560971414");
             in.setCentral(SwitchesEnum.CEFLA_JBS01.name());
 
-            
             ConfiguracaoDMS result = instance.consultar(in);
             ConfiguracaoDMS result1 = instance.consultar(in);
             System.out.println("Result:" + GsonUtil.serialize(result));
@@ -88,7 +91,6 @@ public class ServiceDMSImplIT {
         System.out.println("criarLinha");
         CriarLinhaIn in = new CriarLinhaIn();
 
-        
         ConfiguracaoDMS expResult = null;
         ConfiguracaoDMS result = instance.criarLinha(in);
         assertEquals(expResult, result);
@@ -110,7 +112,7 @@ public class ServiceDMSImplIT {
         TratativaLenDMS trat = new TratativaLenDMS();
         Len len = trat.parse("VTAA  02 5 00 26");
         in.setLen(len);
-        
+
 //        ConfiguracaoDMS expResult = null;
         ConfiguracaoDMS result = instance.deletarLinha(in);
 //        assertEquals(expResult, result);
@@ -152,6 +154,76 @@ public class ServiceDMSImplIT {
         ConfiguracaoDMS result = instance.editarServicos(in);
         System.out.println(GsonUtil.serialize(services));
         // TODO review the generated test code and remove the default call to fail.
+    }
+
+    /**
+     * Test of manobrarLinha method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testManobrarLinha() throws Exception {
+        System.out.println("manobrarLinha");
+        ManobrarLinhaIn in = null;
+        ServiceDMSImpl instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.manobrarLinha(in);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of editarCustGrp method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testEditarCustGrp() throws Exception {
+        System.out.println("editarCustGrp");
+        EditCustGrpIn in = null;
+        ServiceDMSImpl instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.editarCustGrp(in);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of editarNcos method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testEditarNcos() throws Exception {
+        System.out.println("editarNcos");
+        EditNcosIn in = null;
+        ServiceDMSImpl instance = new ServiceDMSImpl();
+        ConfiguracaoDMS expResult = null;
+        ConfiguracaoDMS result = instance.editarNcos(in);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of resetarPorta method, of class ServiceDMSImpl.
+     */
+    @Test
+    public void testResetarPorta() throws Exception {
+        System.out.println("resetarPorta");
+
+        System.out.println("consultar");
+        try {
+            ConsultaDMS in = new ConsultaDMS();
+            in.setDn("8560971414");
+            in.setCentral(SwitchesEnum.CEFLA_JBS01.name());
+
+            ConfiguracaoDMS result = instance.resetarPorta(in);
+            System.out.println("Result:" + GsonUtil.serialize(result));
+            System.out.println("end");
+            assertTrue(result.getEstado().getKey().equalsIgnoreCase(EstadoDaPortaEnum.IDL.name()));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
     }
 
 }

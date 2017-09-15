@@ -13,6 +13,7 @@ import controller.in.EditNcosIn;
 import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
 import controller.in.ManobrarLinhaIn;
+import controller.in.ResetarPortaIn;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -148,6 +149,25 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracaoDMS linha = serv.manobrarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
             r = ok(linha);
+        } catch (Exception e) {
+            r = serverError(e);
+        } finally {
+
+        }
+        return r;
+    }
+
+    @POST
+    @Path("/resetarPorta")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response resetarPorta(ResetarPortaIn in) throws Exception {
+        Response r = null;
+        try {
+            ServiceDMS serv = FactoryService.create();
+            ConfiguracaoDMS consultar = serv.resetarPorta(in.getDms());
+            in.setDataLogOut(Calendar.getInstance());
+            r = ok(consultar);
         } catch (Exception e) {
             r = serverError(e);
         } finally {

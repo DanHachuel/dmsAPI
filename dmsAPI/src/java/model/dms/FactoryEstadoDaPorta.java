@@ -11,26 +11,15 @@ package model.dms;
  */
 public class FactoryEstadoDaPorta {
 
-    public static EstadoDaPorta find(String state) {
+    public static EstadoDaPortaEnum find(String state) {
 
-        if (compare(EstadoDaPorta.IDL, state)) {
-            return EstadoDaPorta.IDL;
-        }
-        if (compare(EstadoDaPorta.LMB, state)) {
-            return EstadoDaPorta.LMB;
-        }
-        if (compare(EstadoDaPorta.PLO, state)) {
-            return EstadoDaPorta.PLO;
+        for (EstadoDaPortaEnum e : EstadoDaPortaEnum.values()) {
+            if (e.name().equalsIgnoreCase(state)) {
+                return e;
+            }
         }
 
-        if (compare(EstadoDaPorta.INB, state)) {
-            return EstadoDaPorta.INB;
-        }
-
-        return new EstadoDaPorta(state, "Estado de Porta não mapeado.", Boolean.TRUE);
+        return null;
     }
 
-    public static Boolean compare(EstadoDaPorta state, String stat) {
-        return stat.equalsIgnoreCase(state.getNome());
-    }
 }
