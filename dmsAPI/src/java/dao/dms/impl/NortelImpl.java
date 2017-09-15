@@ -5,9 +5,15 @@
  */
 package dao.dms.impl;
 
+import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.filter.Filter;
 import dao.dms.impl.filter.FilterLensLivres;
+import dao.dms.impl.filter.FilterServiceAdd;
+import dao.dms.impl.filter.FilterServiceComplex;
+import dao.dms.impl.filter.FilterServiceRmv;
+import dao.dms.impl.filter.FilterServiceSimple;
+import dao.dms.impl.filter.FilterServiceSimpleRmv;
 import dao.dms.impl.tratativa.Tratativa;
 import dao.dms.impl.tratativa.TratativaConsultaFacilidades;
 import dao.dms.impl.tratativa.TratativaQdnDMS;
@@ -26,7 +32,6 @@ import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
 import model.dms.ServiceLevel;
-import model.dms.dto.LineServiceDTO;
 
 /**
  *
@@ -102,43 +107,63 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
+    public void adicionarServico(ConfiguracaoDMS linha, EditServIn in) throws Exception {
+
+        List<LineService> complex = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceComplex().filter(in.getServices()));
+        List<LineService> simple = new FilterServiceAdd(linha.getServicos()).filter(new FilterServiceSimple().filter(in.getServices()));
+
+        EditServIn editComplex = new EditServIn();
+        editComplex.setInstancia(in.getInstancia());
+        editComplex.setServices(complex);
+        editComplex.setDms(in.getDms());
+
+      for (ComandoDMS comandoDMS : this.addServicesComplex(linha, editComplex)) {
+            Boolean addComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
+            if (addComp) {
+                abort();
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
+        }
+
+        if (!simple.isEmpty()) {
+            Boolean addSrv = !command().consulta(addServicesSimple(linha, simple)).getBlob().contains("JOURNAL");
+            if (addSrv) {
+                abort();
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
+        }
+
+    }
+      
+      
+      
     public void resetarPorta(String instancia) throws Exception {
         System.out.println(command().consulta(resetPorta(instancia)).getBlob());
     }
 
+
     @Override
-    public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
-
-        services.removeIf((t) -> {
-            return linha.getServicos().contains(t) || t.getNivel() != ServiceLevel.SIMPLE;
-        });
-
-        services.forEach((t) -> {
-            System.out.println(t.getNivel().toString());
-        });
-
-        if (!services.isEmpty()) {
-//            Boolean addSrv = !command().consulta(addServices(linha, services)).getBlob().contains("JOURNAL");
-//            if (addSrv) {
-//                abort();
-//                throw new FalhaAoExecutarComandoDeAlteracaoException();
-//            }
+    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
+        List<LineService> complex = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceComplex().filter(services));
+        List<LineService> simple = new FilterServiceRmv(linha.getServicos()).filter(new FilterServiceSimpleRmv().filter(services));
+        for (ComandoDMS comandoDMS : this.rmvServicesComplex(linha, complex)) {
+            Boolean rmvComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
+            if (rmvComp) {
+                abort();
+                throw new FalhaAoExecutarComandoDeAlteracaoException();
+            }
         }
+        linha.getServicos().removeAll(complex);
 
-    }
-
-    @Override
-    public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception {
-        services.removeIf((t) -> {
-            return !linha.getServicos().contains(t);
-        });
-        if (!services.isEmpty()) {
-            Boolean rmvSrv = !command().consulta(rmvServices(linha, services)).getBlob().contains("JOURNAL");
+        if (!simple.isEmpty()) {
+            Boolean rmvSrv = !command().consulta(rmvServicesSimple(linha, simple)).getBlob().contains("JOURNAL");
             if (rmvSrv) {
                 abort();
                 throw new FalhaAoExecutarComandoDeAlteracaoException();
             }
         }
+        linha.getServicos().removeAll(simple);
+
     }
 
     @Override
@@ -151,7 +176,7 @@ public class NortelImpl extends AbstractDMS {
         command().consulta(aborte()).getBlob();
     }
 
-    protected ComandoDMS addServices(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+    protected ComandoDMS addServicesSimple(ConfiguracaoDMS linha, List<LineService> services) {
         StringBuilder srvBuilder = new StringBuilder();
         services.forEach((t) -> {
             srvBuilder.append(" ").append(t.getKey());
@@ -160,8 +185,39 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("ADO $ " + linha.getDn() + leServices + " $ Y");
     }
 
-    protected ComandoDMS rmvServices(ConfiguracaoDMS linha, List<LineServiceDTO> services) {
+    protected List<ComandoDMS> addServicesComplex(ConfiguracaoDMS linha, EditServIn in) {
+
+        StringBuilder sacbBuilder = new StringBuilder();
+        List<ComandoDMS> l = new ArrayList<>();
+        in.getServices().forEach((t) -> {
+            System.out.println("");
+            if (t.getKey().equalsIgnoreCase("SUPPRESS PUBLIC")) {
+                l.add(new ComandoDMS("ADO $ " + linha.getDn() + " SUPPRESS PUBLIC Y Y $ $ Y"));
+            } else if (t.getKey().equalsIgnoreCase("CFD")) {
+                l.add(new ComandoDMS("ADO $ " + linha.getDn() + " CFD N 11199 CFB N 11199 CBU CDU MWT STD Y Y ALL N $ Y"));
+            } else if (t.getKey().equalsIgnoreCase("SUS")) {
+                l.add(new ComandoDMS("SUS $ " + linha.getDn() + " " + linha.getLen().getLen() + " Y"));
+            } else {
+                if (sacbBuilder.length() == 0) {
+                    sacbBuilder.append("ADO $ " + linha.getDn() + " SACB ACT ");
+                }
+                sacbBuilder.append(t.getKey()).append(" ");
+            }
+            System.out.println("");
+        });
+        if (sacbBuilder.length() != 0) {
+            l.add(new ComandoDMS(sacbBuilder.toString(), in.getInstancia().substring(6, 10), "", "$ Y"));
+        }
+
+        return l;
+    }
+
+    protected ComandoDMS rmvServicesSimple(ConfiguracaoDMS linha, List<LineService> services) {
         StringBuilder srvBuilder = new StringBuilder();
+
+        services.removeIf((t) -> {
+            return t.getNivel() == ServiceLevel.COMPLEX;
+        });
         services.forEach((t) -> {
             String leKey = t.getKey().contains(" ") ? t.getKey().split(" ")[0] : t.getKey();
             srvBuilder.append(" ").append(leKey);
@@ -169,6 +225,24 @@ public class NortelImpl extends AbstractDMS {
         String leServices = srvBuilder.toString();
 
         return new ComandoDMS("DEO $ " + linha.getDn() + leServices + " $ Y");
+    }
+
+    protected List<ComandoDMS> rmvServicesComplex(ConfiguracaoDMS linha, List<LineService> services) {
+
+        List<ComandoDMS> l = new ArrayList<>();
+        services.forEach((t) -> {
+            if (t.getKey().equalsIgnoreCase("SUPPRESS PUBLIC")) {
+                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " SUPPRESS $ Y"));
+            } else if (t.getKey().equalsIgnoreCase("CFD")) {
+                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " CFD CFB CBU CDU MWT $ Y"));
+            } else if (t.getKey().equalsIgnoreCase("SUS")) {
+                l.add(new ComandoDMS("RES $ " + linha.getDn() + " " + linha.getLen().getLen() + " Y"));
+            } else {
+                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " SACB $ Y"));
+            }
+        });
+
+        return l;
     }
 
     protected ComandoDMS alterarSenha(String oldPass, String newPass) {
@@ -330,6 +404,15 @@ public class NortelImpl extends AbstractDMS {
         }
 
         return null;
+    }
+
+    @Override
+    public void keepAliveCommand() {
+        try {
+            command().consulta(enter());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

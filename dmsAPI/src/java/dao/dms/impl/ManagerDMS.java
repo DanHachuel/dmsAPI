@@ -5,14 +5,15 @@
  */
 package dao.dms.impl;
 
+import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
+import model.dms.LineService;
 import model.dms.dto.DetailDTO;
-import model.dms.dto.LineServiceDTO;
 
 /**
  *
@@ -50,14 +51,16 @@ public interface ManagerDMS {
 
     public void alterarCustGroup(ConfiguracaoDMS linha) throws Exception;
 
-    public void adicionarServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception;
+    public void adicionarServico(ConfiguracaoDMS linha, EditServIn in) throws Exception;
 
-    public void removerServico(ConfiguracaoDMS linha, List<LineServiceDTO> services) throws Exception;
+    public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception;
 
     public void disconnect();
 
     public void connect();
 
     public void alteraSenha(String oldPass, String newPass) throws Exception;
+    
+    public void keepAliveCommand();
 
 }

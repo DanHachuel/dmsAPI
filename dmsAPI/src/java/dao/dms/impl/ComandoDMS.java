@@ -64,6 +64,13 @@ public class ComandoDMS {
         this.sintaxAux3 = sintaxAux3;
     }
 
+    public ComandoDMS(List<String> sintaxs) {
+        this.sintax = sintaxs.size()>0 ? sintaxs.get(0) : "";
+        this.sintaxAux = sintaxs.size()>1 ? sintaxs.get(1) : "";
+        this.sintaxAux2 = sintaxs.size()>2 ? sintaxs.get(2) : "";
+        this.sintaxAux3 = sintaxs.size()>3 ? sintaxs.get(3) : "";
+    }
+
     public String getSintaxAux3() {
         return sintaxAux3;
     }

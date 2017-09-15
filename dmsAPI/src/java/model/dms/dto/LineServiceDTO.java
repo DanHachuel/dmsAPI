@@ -28,6 +28,7 @@ public class LineServiceDTO {
         this.desc = desc;
         this.key = key;
         this.tipo = tipo;
+        this.nome = name;
         this.nivel = nivel;
     }
 
@@ -45,14 +46,6 @@ public class LineServiceDTO {
 
     public void setNivel(ServiceLevel nivel) {
         this.nivel = nivel;
-    }
-
-    public String getName() {
-        return nome;
-    }
-
-    public void setName(String name) {
-        this.nome = name;
     }
 
     public ServiceType getTipo() {
