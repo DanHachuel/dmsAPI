@@ -15,7 +15,7 @@ public class FacilidadesMapci {
 
     private String dn;
 
-    private EstadoDaPorta state;
+    private EstadoDaPortaEnum state;
 
     public FacilidadesMapci() {
     }
@@ -36,11 +36,11 @@ public class FacilidadesMapci {
         this.dn = dn;
     }
 
-    public EstadoDaPorta getState() {
+    public EstadoDaPortaEnum getState() {
         return state;
     }
 
-    public void setState(EstadoDaPorta state) {
+    public void setState(EstadoDaPortaEnum state) {
         this.state = state;
     }
 

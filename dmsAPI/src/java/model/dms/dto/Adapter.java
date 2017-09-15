@@ -3,22 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.log;
+package model.dms.dto;
 
 /**
  *
  * @author G0042204
+ * @param <Q>
  */
-public enum ActionsEnum {
+public interface Adapter<Q> {
 
-    CONSULTAR_DN,
-    LISTAR_LENS_LIVRES,
-    CRIAR_LINHA,
-    DELETAR_LINHA,
-    MANOBRAR_LINHA,
-    EDITAR_SERVICOS,
-    EDITAR_CUSTGRP,
-    EDITAR_NCOS, 
-    RESETAR_PORTA;
+    public Q adapt();
 
 }

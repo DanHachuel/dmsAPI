@@ -7,6 +7,8 @@ package model.dms;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.dms.dto.EstadoDaPortaDTO;
+import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 
 /**
@@ -28,6 +30,8 @@ public class ConfiguracaoDMS {
     private LineStatus status;
 
     private List<LineService> servicos;
+
+    private EstadoDaPortaDTO estado;
 
     public ConfiguracaoDMS() {
     }
@@ -98,6 +102,14 @@ public class ConfiguracaoDMS {
 
     public void setInstancia(String instancia) {
         this.instancia = instancia;
+    }
+
+    public EstadoDaPortaDTO getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoDaPortaDTO estado) {
+        this.estado = estado;
     }
 
 }

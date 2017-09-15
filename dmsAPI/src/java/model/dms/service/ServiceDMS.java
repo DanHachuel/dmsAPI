@@ -22,19 +22,21 @@ import model.dms.ConfiguracoesShelf;
 public interface ServiceDMS {
 
     public ConfiguracaoDMS consultar(ConsultaDMS in) throws Exception;
-    
+
     public ConfiguracaoDMS criarLinha(CriarLinhaIn in) throws Exception;
-    
+
     public ConfiguracaoDMS deletarLinha(DeletarLinhaIn in) throws Exception;
-    
+
     public ConfiguracaoDMS editarServicos(EditServIn in) throws Exception;
-    
+
     public ConfiguracaoDMS editarCustGrp(EditCustGrpIn in) throws Exception;
-    
+
     public ConfiguracaoDMS editarNcos(EditNcosIn in) throws Exception;
-    
+
     public ConfiguracaoDMS manobrarLinha(ManobrarLinhaIn in) throws Exception;
 
     public ConfiguracoesShelf consultarConfiguracoesShelf(ConsultaDMS in) throws Exception;
+
+    public ConfiguracaoDMS resetarPorta(ConsultaDMS in) throws Exception;
 
 }

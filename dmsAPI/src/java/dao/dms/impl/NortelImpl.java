@@ -8,7 +8,6 @@ package dao.dms.impl;
 import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.filter.Filter;
-import dao.dms.impl.filter.FilterLen;
 import dao.dms.impl.filter.FilterLensLivres;
 import dao.dms.impl.filter.FilterServiceAdd;
 import dao.dms.impl.filter.FilterServiceComplex;
@@ -28,6 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.dms.ConfiguracaoDMS;
+import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -49,6 +49,7 @@ public class NortelImpl extends AbstractDMS {
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
         ConfiguracaoDMS conf = t.parse(cmd.getBlob());
         conf.setDn(dn);
+        conf.setEstado(consultarEstadoDaPorta(conf).adapt());
         return conf;
     }
 
@@ -116,8 +117,7 @@ public class NortelImpl extends AbstractDMS {
         editComplex.setServices(complex);
         editComplex.setDms(in.getDms());
 
-        System.out.println("");
-        for (ComandoDMS comandoDMS : this.addServicesComplex(linha, editComplex)) {
+      for (ComandoDMS comandoDMS : this.addServicesComplex(linha, editComplex)) {
             Boolean addComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
             if (addComp) {
                 abort();
@@ -134,6 +134,13 @@ public class NortelImpl extends AbstractDMS {
         }
 
     }
+      
+      
+      
+    public void resetarPorta(String instancia) throws Exception {
+        System.out.println(command().consulta(resetPorta(instancia)).getBlob());
+    }
+
 
     @Override
     public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {
@@ -279,6 +286,14 @@ public class NortelImpl extends AbstractDMS {
         return new ComandoDMS("post d " + linha.getDn() + ";frls;bsy inb;", 1000, "OUT $ " + linha.getDn() + " " + linha.getLen() + " BLDN Y");
     }
 
+    protected ComandoDMS resetPorta(String dn) {
+        return new ComandoDMS("post d " + dn + ";frls;rts;", 4000);
+    }
+
+    protected ComandoDMS estadoPorta(ConfiguracaoDMS linha) {
+        return new ComandoDMS("post d " + linha.getDn() + " display");
+    }
+
     protected ComandoDMS createLinha(ConfiguracaoDMS linha) {
         return new ComandoDMS("NEW $ " + linha.getDn() + " ibn " + linha.getCustGrp() + " 0 115 " + linha.getLen().getLen() + " DGT $ Y");
     }
@@ -375,13 +390,20 @@ public class NortelImpl extends AbstractDMS {
     }
 
     @Override
-    public FacilidadesMapci consultarEstadoDaPorta(Len len) throws Exception {
+    public EstadoDaPortaEnum consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception {
         try {
-            Filter<FacilidadesMapci> fil = new FilterLen(len);
-            return fil.filter(this.listarLens(len)).get(0);
+            for (String string : command().consulta(estadoPorta(linha)).getRetorno()) {
+                try {
+                    Tratativa<FacilidadesMapci> trat = new TratativaConsultaFacilidades();
+                    return trat.parse(string).getState();
+                } catch (Exception e) {
+                }
+            }
         } catch (Exception e) {
             throw new FalhaAoConsultarEstadoException();
         }
+
+        return null;
     }
 
     @Override

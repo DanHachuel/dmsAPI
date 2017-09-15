@@ -9,6 +9,7 @@ import controller.in.EditServIn;
 import dao.dms.enums.SwitchesEnum;
 import java.util.List;
 import model.dms.ConfiguracaoDMS;
+import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
@@ -28,13 +29,15 @@ public interface ManagerDMS {
 
     public ConfiguracaoDMS manobrarLinha(ConfiguracaoDMS linha, Len lenDestino) throws Exception;
 
+    public void resetarPorta(String instancia) throws Exception;
+
     public Boolean isSameSwitch(SwitchesEnum sw);
 
     public SwitchesEnum getCentral();
 
     public DetailDTO getDetail();
 
-    public FacilidadesMapci consultarEstadoDaPorta(Len len) throws Exception;
+    public EstadoDaPortaEnum consultarEstadoDaPorta(ConfiguracaoDMS linha) throws Exception;
 
     public List<FacilidadesMapci> listarLens(Len len) throws Exception;
 
