@@ -5,10 +5,9 @@
  */
 package model.dms.dto;
 
+import java.util.ArrayList;
 import java.util.List;
-import model.dms.ConfiguracaoDMS;
 import model.dms.Len;
-import model.dms.LineService;
 import model.dms.LineStatus;
 
 /**
@@ -75,6 +74,9 @@ public class ConfiguracaoDMSDTO {
     }
 
     public List<LineServiceDTO> getServicos() {
+        if (servicos == null) {
+            servicos = new ArrayList<>();
+        }
         return servicos;
     }
 
