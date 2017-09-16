@@ -5,31 +5,37 @@
  */
 package model.dms.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.dto.ConfiguracaoDMSDTO;
+import model.dms.dto.LineServiceDTO;
 
 /**
  *
  * @author G0042204
  */
 public class ConfiguracaoDMSAdapter {
-
+    
     public static ConfiguracaoDMSDTO adapt(ConfiguracaoDMS conf) {
         ConfiguracaoDMSDTO ret = new ConfiguracaoDMSDTO();
-
+        
         ret.setDn(conf.getDn());
         ret.setLen(conf.getLen());
         ret.setCustGrp(conf.getCustGrp());
         ret.setNcos(conf.getNcos());
         ret.setStatus(conf.getStatus());
-
+        
+        List<LineServiceDTO> dtos = new ArrayList<>();
+        
         conf.getServicos().forEach((t) -> {
-            ret.getServicos().add(t.dto());
+            dtos.add(t.dto());
         });
         
+        ret.setServicos(dtos);
         ret.setEstado(conf.getEstado());
-
+        
         return ret;
     }
-
+    
 }
