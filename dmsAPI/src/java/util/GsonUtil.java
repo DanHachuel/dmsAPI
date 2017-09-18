@@ -16,7 +16,11 @@ public class GsonUtil {
     private static final Gson GSON = new Gson();
 
     public static String serialize(Object ob) {
-        return GSON.toJson(ob, ob.getClass());
+        try {
+            return GSON.toJson(ob, ob.getClass());
+        } catch (Exception e) {
+            return "Falha ao serializar";
+        }
     }
 
 }

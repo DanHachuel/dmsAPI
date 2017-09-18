@@ -63,7 +63,6 @@ public class DMSController extends RestJaxAbstract {
             r = serverError(e);
             in.setSaida(e);
         } finally {
-
             FactoryDAO.create().cadastrar(in.log());
         }
         return r;
