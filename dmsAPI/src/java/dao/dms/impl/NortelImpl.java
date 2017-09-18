@@ -31,6 +31,7 @@ import model.dms.EstadoDaPortaEnum;
 import model.dms.FacilidadesMapci;
 import model.dms.Len;
 import model.dms.LineService;
+import model.dms.LineStatus;
 import model.dms.ServiceLevel;
 
 /**
@@ -49,7 +50,9 @@ public class NortelImpl extends AbstractDMS {
         Tratativa<ConfiguracaoDMS> t = new TratativaQdnDMS();
         ConfiguracaoDMS conf = t.parse(cmd.getBlob());
         conf.setDn(dn);
-        conf.setEstado(consultarEstadoDaPorta(conf).adapt());
+        if (conf.getStatus() == LineStatus.CREATED) {
+            conf.setEstado(consultarEstadoDaPorta(conf).adapt());
+        }
         return conf;
     }
 
@@ -117,7 +120,7 @@ public class NortelImpl extends AbstractDMS {
         editComplex.setServices(complex);
         editComplex.setDms(in.getDms());
 
-      for (ComandoDMS comandoDMS : this.addServicesComplex(linha, editComplex)) {
+        for (ComandoDMS comandoDMS : this.addServicesComplex(linha, editComplex)) {
             Boolean addComp = !command().consulta(comandoDMS).getBlob().contains("JOURNAL");
             if (addComp) {
                 abort();
@@ -134,13 +137,10 @@ public class NortelImpl extends AbstractDMS {
         }
 
     }
-      
-      
-      
+
     public void resetarPorta(String instancia) throws Exception {
         System.out.println(command().consulta(resetPorta(instancia)).getBlob());
     }
-
 
     @Override
     public void removerServico(ConfiguracaoDMS linha, List<LineService> services) throws Exception {

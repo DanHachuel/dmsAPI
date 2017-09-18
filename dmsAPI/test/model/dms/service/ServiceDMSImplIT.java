@@ -65,8 +65,8 @@ public class ServiceDMSImplIT {
         System.out.println("consultar");
         try {
             ConsultaDMS in = new ConsultaDMS();
-            in.setDn("8560971414");
-            in.setCentral(SwitchesEnum.CEFLA_JBS01.name());
+            in.setDn("8160098017");
+            in.setCentral(SwitchesEnum.PERCE_LNS01.name());
 
             ConfiguracaoDMS result = instance.consultar(in);
             ConfiguracaoDMS result1 = instance.consultar(in);

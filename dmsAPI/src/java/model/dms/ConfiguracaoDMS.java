@@ -31,6 +31,7 @@ public class ConfiguracaoDMS {
     private EstadoDaPortaDTO estado;
 
     public ConfiguracaoDMS() {
+        status = LineStatus.NOT_CREATED;
     }
 
     public String getDn() {
@@ -49,8 +50,6 @@ public class ConfiguracaoDMS {
         this.len = len;
         if (len != null) {
             this.setStatus(LineStatus.CREATED);
-        } else {
-            this.setStatus(LineStatus.NOT_CREATED);
         }
     }
 
