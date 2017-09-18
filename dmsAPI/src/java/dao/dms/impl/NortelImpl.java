@@ -51,7 +51,7 @@ public class NortelImpl extends AbstractDMS {
         ConfiguracaoDMS conf = t.parse(cmd.getBlob());
         conf.setDn(dn);
         if (conf.getStatus() == LineStatus.CREATED) {
-            conf.setEstado(consultarEstadoDaPorta(conf).adapt());
+            conf.setEstado(consultarEstadoDaPorta(conf));
         }
         return conf;
     }

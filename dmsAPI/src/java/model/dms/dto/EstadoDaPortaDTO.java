@@ -49,5 +49,7 @@ public class EstadoDaPortaDTO {
     public void setValid(Boolean valid) {
         this.valid = valid;
     }
+    
+    
 
 }

@@ -220,7 +220,7 @@ public class ServiceDMSImplIT {
             ConfiguracaoDMS result = instance.resetarPorta(in);
             System.out.println("Result:" + GsonUtil.serialize(result));
             System.out.println("end");
-            assertTrue(result.getEstado().getKey().equalsIgnoreCase(EstadoDaPortaEnum.IDL.name()));
+            assertTrue(result.getEstado().getDesc().equalsIgnoreCase(EstadoDaPortaEnum.IDL.name()));
 
         } catch (Exception e) {
             e.printStackTrace();

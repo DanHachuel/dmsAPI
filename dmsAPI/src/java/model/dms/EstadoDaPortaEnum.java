@@ -14,7 +14,6 @@ import util.JsonEnumDeserializer;
  *
  * @author G0042204
  */
-@JsonSerialize(using = JsonEnumDeserializer.class)
 public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
 
     CPB("Call Process Busy - Chamada em Curso, Linha Ocupada.", Boolean.TRUE),
@@ -42,14 +41,16 @@ public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
 
     @Override
     public EstadoDaPortaDTO adapt() {
-        EstadoDaPortaDTO dto = new EstadoDaPortaDTO();
-
-        dto.setKey(name());
-        dto.setDesc(desc);
-        dto.setValid(valid);
-        dto.setNome(name());
-
-        return dto;
+        try {
+            EstadoDaPortaDTO dto = new EstadoDaPortaDTO();
+            dto.setKey(name());
+            dto.setDesc(desc);
+            dto.setValid(valid);
+            dto.setNome(name());
+            return dto;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getDesc() {
@@ -68,6 +69,4 @@ public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
         this.valid = valid;
     }
 
-    
-    
 }

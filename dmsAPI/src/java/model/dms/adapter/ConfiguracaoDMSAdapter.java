@@ -27,17 +27,11 @@ public class ConfiguracaoDMSAdapter {
         ret.setNcos(conf.getNcos());
         ret.setStatus(conf.getStatus());
 
-        List<LineServiceDTO> dtos = new ArrayList<>();
-
         for (LineService servico : conf.getServicos()) {
-            dtos.add(servico.dto());
+            ret.getServicos().add(servico.dto());
         }
 
-        ret.setServicos(dtos);
-        
-        if (conf.getEstado() != null) {
-            ret.setEstado(conf.getEstado());
-        }
+        ret.setEstado(conf.getEstado().adapt());
 
         return ret;
     }

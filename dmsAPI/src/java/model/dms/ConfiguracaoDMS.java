@@ -28,7 +28,7 @@ public class ConfiguracaoDMS {
 
     private List<LineService> servicos;
 
-    private EstadoDaPortaDTO estado;
+    private EstadoDaPortaEnum estado;
 
     public ConfiguracaoDMS() {
         status = LineStatus.NOT_CREATED;
@@ -92,11 +92,11 @@ public class ConfiguracaoDMS {
         getServicos().add(s);
     }
 
-    public EstadoDaPortaDTO getEstado() {
+    public EstadoDaPortaEnum getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoDaPortaDTO estado) {
+    public void setEstado(EstadoDaPortaEnum estado) {
         this.estado = estado;
     }
 
