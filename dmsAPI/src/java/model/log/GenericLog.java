@@ -6,7 +6,6 @@
 package model.log;
 
 import model.entity.LogEntity;
-import util.GsonUtil;
 
 /**
  *
