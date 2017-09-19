@@ -30,6 +30,7 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.LineService;
 import model.dms.Ncos;
+import model.dms.ServiceType;
 import model.dms.adapter.ConfiguracaoDMSAdapter;
 import model.dms.dto.ConfiguracaoDMSDTO;
 import model.dms.dto.LineServiceDTO;
@@ -269,7 +270,9 @@ public class DMSController extends RestJaxAbstract {
         Response r = null;
         List<LineServiceDTO> dtos = new ArrayList<>();
         for (LineService v : LineService.values()) {
-            dtos.add(v.dto());
+            if (v.getTipo() != ServiceType.LEITURA_ONLY) {
+                dtos.add(v.dto());
+            }
         }
         r = ok(dtos);
         return r;

@@ -36,23 +36,18 @@ public class TratativaQdnDMS extends TratativaGeneric implements Tratativa<Confi
         String servPattern = "(?:OPTIONS:)(.{0,500})[^-]";
 
         String len = Regex.capture(blob, linePattern).trim();
-        
+
         Tratativa<Len> t = new TratativaLenDMS();
         conf.setLen(t.parse(len));
-        
+
         conf.setCustGrp(Regex.capture(blob, custGrpPattern).trim());
         conf.setNcos(Ncos.findByInt(new Integer(Regex.capture(blob, ncosPattern))).dto());
 
         String servs = Regex.capture(blob, servPattern).trim();
 
-        if (servs.contains(LineService.IDENT_CHAM.getKey())) {
-            conf.add(LineService.IDENT_CHAM);
-        }
-
-        for (String key : servs.split(" ")) {
-            LineService serv = LineService.findByKey(key);
-            if (serv != null) {
-                conf.add(serv);
+        for (LineService value : LineService.values()) {
+            if (servs.contains(value.getKey())) {
+                conf.add(value);
             }
         }
 

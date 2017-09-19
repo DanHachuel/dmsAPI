@@ -17,6 +17,7 @@ import util.JsonEnumDeserializer;
 public enum ServiceType {
 
    SERVICO,
-   BLOQUEIO;
+   BLOQUEIO,
+   LEITURA_ONLY;
 
 }

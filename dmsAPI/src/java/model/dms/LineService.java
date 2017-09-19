@@ -21,6 +21,7 @@ public enum LineService {
     DIGITAL("Digital (TOM / TONE)", "DGT", ServiceType.SERVICO, ServiceLevel.SIMPLE),
     IDENT_CHAM("Identificador de Chamadas", "DDN NOAMA", ServiceType.SERVICO, ServiceLevel.SIMPLE),
     SIGA_ME("Siga-me", "CFU N", ServiceType.SERVICO, ServiceLevel.SIMPLE),
+    SIGA_ME_Y("Siga-me", "CFU Y", ServiceType.LEITURA_ONLY, ServiceLevel.SIMPLE),
     SIGA_ME_FORCED("Siga-me (Forçado)", "CFF", ServiceType.SERVICO, ServiceLevel.RMV_ONLY),
     NAO_IDENTIFICAR("Ligar como Anônimo", "SUPPRESS PUBLIC", ServiceType.SERVICO, ServiceLevel.COMPLEX),
     SEC_ELETRONICA("Secretária Eletrônica", "CFD", ServiceType.SERVICO, ServiceLevel.COMPLEX),
