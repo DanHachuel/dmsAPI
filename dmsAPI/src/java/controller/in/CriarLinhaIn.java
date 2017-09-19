@@ -5,9 +5,9 @@
  */
 package controller.in;
 
+import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.Len;
-import model.dms.dto.ConfiguracaoDMSDTO;
 import model.log.ActionsEnum;
 import model.log.GenericLog;
 
@@ -21,7 +21,7 @@ public class CriarLinhaIn extends GenericLog {
     
     private Len len;
     
-    private ConfiguracaoDMSDTO confBinada;
+    private ConfiguracaoDMS confBinada;
 
     public CriarLinhaIn() {
         super(ActionsEnum.CRIAR_LINHA);
@@ -43,11 +43,11 @@ public class CriarLinhaIn extends GenericLog {
         this.len = len;
     }
 
-    public ConfiguracaoDMSDTO getConfBinada() {
+    public ConfiguracaoDMS getConfBinada() {
         return confBinada;
     }
 
-    public void setConfBinada(ConfiguracaoDMSDTO confBinada) {
+    public void setConfBinada(ConfiguracaoDMS confBinada) {
         this.confBinada = confBinada;
     }
 
