@@ -5,8 +5,10 @@
  */
 package model.dms;
 
-import model.dms.dto.Adapter;
+import model.dms.adapter.Adapter;
 import model.dms.dto.EstadoDaPortaDTO;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import util.JsonEnumDeserializer;
 
 /**
  *
@@ -39,14 +41,16 @@ public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
 
     @Override
     public EstadoDaPortaDTO adapt() {
-        EstadoDaPortaDTO dto = new EstadoDaPortaDTO();
-
-        dto.setKey(name());
-        dto.setDesc(desc);
-        dto.setValid(valid);
-        dto.setNome(name());
-
-        return dto;
+        try {
+            EstadoDaPortaDTO dto = new EstadoDaPortaDTO();
+            dto.setKey(name());
+            dto.setDesc(desc);
+            dto.setValid(valid);
+            dto.setNome(name());
+            return dto;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public String getDesc() {
@@ -65,6 +69,4 @@ public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
         this.valid = valid;
     }
 
-    
-    
 }

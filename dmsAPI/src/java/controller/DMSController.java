@@ -14,6 +14,7 @@ import controller.in.EditServIn;
 import controller.in.ListarLensLivresIn;
 import controller.in.ManobrarLinhaIn;
 import controller.in.ResetarPortaIn;
+import dao.FactoryDAO;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -29,12 +30,16 @@ import model.dms.ConfiguracaoDMS;
 import model.dms.ConfiguracoesShelf;
 import model.dms.LineService;
 import model.dms.Ncos;
+import model.dms.ServiceType;
+import model.dms.adapter.ConfiguracaoDMSAdapter;
+import model.dms.dto.ConfiguracaoDMSDTO;
 import model.dms.dto.LineServiceDTO;
 import model.dms.dto.NcosDTO;
 import model.dms.service.FactoryService;
 import model.dms.service.ServiceContextDMS;
 import model.dms.service.ServiceContextDMSImpl;
 import model.dms.service.ServiceDMS;
+import util.GsonUtil;
 
 /**
  *
@@ -53,11 +58,14 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS consultar = serv.consultar(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(consultar);
+            ConfiguracaoDMSDTO leR = ConfiguracaoDMSAdapter.adapt(consultar);
+            r = ok(leR);
+            in.setSaida(GsonUtil.serialize(consultar));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -73,10 +81,12 @@ public class DMSController extends RestJaxAbstract {
             ConfiguracoesShelf lst = serv.consultarConfiguracoesShelf(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
             r = ok(lst);
+            in.setSaida(GsonUtil.serialize(lst));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -91,11 +101,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.criarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
+            in.setSaida(GsonUtil.serialize(linha));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -110,11 +122,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.deletarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
+            in.setSaida(GsonUtil.serialize(linha));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -129,11 +143,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarServicos(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
+            in.setSaida(GsonUtil.serialize(linha));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -148,11 +164,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.manobrarLinha(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
+            in.setSaida(GsonUtil.serialize(linha));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -167,11 +185,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS consultar = serv.resetarPorta(in.getDms());
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(consultar);
+            r = ok(ConfiguracaoDMSAdapter.adapt(consultar));
+            in.setSaida(GsonUtil.serialize(consultar));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -186,11 +206,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarCustGrp(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
+            in.setSaida(GsonUtil.serialize(linha));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -205,11 +227,13 @@ public class DMSController extends RestJaxAbstract {
             ServiceDMS serv = FactoryService.create();
             ConfiguracaoDMS linha = serv.editarNcos(in);
             in.setDataLogOut(Calendar.getInstance());
-            r = ok(linha);
+            r = ok(ConfiguracaoDMSAdapter.adapt(linha));
+            in.setSaida(GsonUtil.serialize(linha));
         } catch (Exception e) {
             r = serverError(e);
+            in.setSaida(GsonUtil.serialize(e.getMessage()));
         } finally {
-
+            FactoryDAO.create().cadastrar(in.log());
         }
         return r;
     }
@@ -246,7 +270,9 @@ public class DMSController extends RestJaxAbstract {
         Response r = null;
         List<LineServiceDTO> dtos = new ArrayList<>();
         for (LineService v : LineService.values()) {
-            dtos.add(v.dto());
+            if (v.getTipo() != ServiceType.LEITURA_ONLY) {
+                dtos.add(v.dto());
+            }
         }
         r = ok(dtos);
         return r;

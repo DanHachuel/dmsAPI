@@ -11,12 +11,14 @@ import com.google.gson.Gson;
  *
  * @author G0042204
  */
-public class GsonUtil {
-
-    private static final Gson GSON = new Gson();
+public final class GsonUtil {
 
     public static String serialize(Object ob) {
-        return GSON.toJson(ob, ob.getClass());
+        try {
+            return new Gson().toJson(ob, ob.getClass());
+        } catch (Exception e) {
+            return "Falha ao serializar";
+        }
     }
 
 }

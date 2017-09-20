@@ -39,14 +39,9 @@ public class TratativaQlenDMS extends TratativaGeneric implements Tratativa<Conf
 
         String servs = Regex.capture(blob, servPattern).trim();
 
-        if (servs.contains(LineService.IDENT_CHAM.getKey())) {
-            conf.add(LineService.IDENT_CHAM);
-        }
-
-        for (String key : servs.split(" ")) {
-            LineService serv = LineService.findByKey(key);
-            if (serv != null) {
-                conf.add(serv);
+        for (LineService value : LineService.values()) {
+            if (servs.contains(value.getKey())) {
+                conf.add(value);
             }
         }
 

@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dms;
+package model.dms.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.dms.dto.EstadoDaPortaDTO;
-import model.dms.dto.NcosDTO;
+import model.dms.Len;
+import model.dms.LineStatus;
 
 /**
  *
  * @author G0042204
  */
-public class ConfiguracaoDMS {
+public class ConfiguracaoDMSDTO {
 
     private String dn;
 
@@ -26,12 +26,11 @@ public class ConfiguracaoDMS {
 
     private LineStatus status;
 
-    private List<LineService> servicos;
+    private List<LineServiceDTO> servicos;
 
-    private EstadoDaPortaEnum estado;
+    private EstadoDaPortaDTO estado;
 
-    public ConfiguracaoDMS() {
-        status = LineStatus.NOT_CREATED;
+    public ConfiguracaoDMSDTO() {
     }
 
     public String getDn() {
@@ -48,9 +47,6 @@ public class ConfiguracaoDMS {
 
     public void setLen(Len len) {
         this.len = len;
-        if (len != null) {
-            this.setStatus(LineStatus.CREATED);
-        }
     }
 
     public String getCustGrp() {
@@ -77,26 +73,22 @@ public class ConfiguracaoDMS {
         this.status = status;
     }
 
-    public List<LineService> getServicos() {
+    public List<LineServiceDTO> getServicos() {
         if (servicos == null) {
             servicos = new ArrayList<>();
         }
         return servicos;
     }
 
-    public void setServicos(List<LineService> servicos) {
+    public void setServicos(List<LineServiceDTO> servicos) {
         this.servicos = servicos;
     }
 
-    public void add(LineService s) {
-        getServicos().add(s);
-    }
-
-    public EstadoDaPortaEnum getEstado() {
+    public EstadoDaPortaDTO getEstado() {
         return estado;
     }
 
-    public void setEstado(EstadoDaPortaEnum estado) {
+    public void setEstado(EstadoDaPortaDTO estado) {
         this.estado = estado;
     }
 

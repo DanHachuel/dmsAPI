@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.dms;
+package dao;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import util.JsonEnumDeserializer;
+import dao.log.LogDAO;
+import model.entity.LogEntity;
 
 /**
  *
  * @author G0042204
  */
-@JsonSerialize(using = JsonEnumDeserializer.class)
-public enum LineStatus {
-    
-    CREATED, NOT_CREATED;
-    
+public class FactoryDAO {
+
+    public static InterfaceDAO<LogEntity> create() {
+        return new LogDAO();
+    }
+
 }

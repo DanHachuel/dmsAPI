@@ -6,11 +6,14 @@
 package model.dms;
 
 import model.dms.dto.NcosDTO;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import util.JsonEnumDeserializer;
 
 /**
  *
  * @author G0042204
  */
+@JsonSerialize(using = JsonEnumDeserializer.class)
 public enum Ncos {
 
     NCOS_1(1, "Liberado TOTAL"),

@@ -56,8 +56,8 @@ public class LogEntity extends AbstractEntity {
         return entrada;
     }
 
-    public void setEntrada(String entrada) {
-        this.entrada = entrada;
+    public void setEntrada(Object entrada) {
+        this.entrada = GsonUtil.serialize(entrada);
     }
 
     public String getSaida() {

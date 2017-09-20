@@ -65,8 +65,8 @@ public class ServiceDMSImplIT {
         System.out.println("consultar");
         try {
             ConsultaDMS in = new ConsultaDMS();
-            in.setDn("8560971414");
-            in.setCentral(SwitchesEnum.CEFLA_JBS01.name());
+            in.setDn("8160098017");
+            in.setCentral(SwitchesEnum.PERCE_LNS01.name());
 
             ConfiguracaoDMS result = instance.consultar(in);
             ConfiguracaoDMS result1 = instance.consultar(in);
@@ -205,51 +205,6 @@ public class ServiceDMSImplIT {
     }
 
     /**
-     * Test of manobrarLinha method, of class ServiceDMSImpl.
-     */
-    @Test
-    public void testManobrarLinha() throws Exception {
-        System.out.println("manobrarLinha");
-        ManobrarLinhaIn in = null;
-        ServiceDMSImpl instance = new ServiceDMSImpl();
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.manobrarLinha(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of editarCustGrp method, of class ServiceDMSImpl.
-     */
-    @Test
-    public void testEditarCustGrp() throws Exception {
-        System.out.println("editarCustGrp");
-        EditCustGrpIn in = null;
-        ServiceDMSImpl instance = new ServiceDMSImpl();
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.editarCustGrp(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of editarNcos method, of class ServiceDMSImpl.
-     */
-    @Test
-    public void testEditarNcos() throws Exception {
-        System.out.println("editarNcos");
-        EditNcosIn in = null;
-        ServiceDMSImpl instance = new ServiceDMSImpl();
-        ConfiguracaoDMS expResult = null;
-        ConfiguracaoDMS result = instance.editarNcos(in);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of resetarPorta method, of class ServiceDMSImpl.
      */
     @Test
@@ -265,7 +220,7 @@ public class ServiceDMSImplIT {
             ConfiguracaoDMS result = instance.resetarPorta(in);
             System.out.println("Result:" + GsonUtil.serialize(result));
             System.out.println("end");
-            assertTrue(result.getEstado().getKey().equalsIgnoreCase(EstadoDaPortaEnum.IDL.name()));
+            assertTrue(result.getEstado().getDesc().equalsIgnoreCase(EstadoDaPortaEnum.IDL.name()));
 
         } catch (Exception e) {
             e.printStackTrace();

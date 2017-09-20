@@ -6,7 +6,6 @@
 package model.log;
 
 import model.entity.LogEntity;
-import util.GsonUtil;
 
 /**
  *
@@ -20,14 +19,21 @@ public abstract class GenericLog extends Log {
 
     @Override
     public LogEntity log() {
-        LogEntity l = new LogEntity();
-        l.setAcao(getAcao());
-        l.setEntrada(GsonUtil.serialize(entrada()));
-        l.setExecutor(getExecutor());
-        l.setSaida(getSaida());
-        l.setDataLogIn(getDataLogIn());
-        l.setDataLogOut(getDataLogOut());
-        return l;
+
+        try {
+            LogEntity l = new LogEntity();
+            l.setAcao(getAcao());
+            l.setEntrada(entrada());
+            l.setSaida(getSaida());
+            l.setExecutor(getExecutor());
+            l.setDataLogIn(getDataLogIn());
+            l.setDataLogOut(getDataLogOut());
+            return l;
+
+        } catch (Exception e) {
+            System.out.println("erro");
+            return null;
+        }
     }
 
     public abstract Object entrada();

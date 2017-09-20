@@ -33,7 +33,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.SPGRS_TPS01);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.DFBSA_CBS01);
 
     public NortelImplIT() {
     }
@@ -61,7 +61,7 @@ public class NortelImplIT {
     public void testConsultar() {
         System.out.println("consultar");
         try {
-            String instancia = "1149707585";
+            String instancia = "6130474067";
 
             ConfiguracaoDMS result = instance.consultarPorDn(instancia);
             System.out.println("Resultado: " + GsonUtil.serialize(result));
@@ -183,8 +183,8 @@ public class NortelImplIT {
     @Test
     public void testAdicionarServico() throws Exception {
         System.out.println("adicionarServico");
-        instance = new NortelImpl(SwitchesEnum.SPGRS_TPS01);
-        ConfiguracaoDMS linha = instance.consultarPorDn("1149707585");
+        instance = new NortelImpl(SwitchesEnum.DFBSA_CBS01);
+        ConfiguracaoDMS linha = instance.consultarPorDn("6130474067");
         System.out.println(GsonUtil.serialize(linha));
 
         EditServIn in = new EditServIn();
@@ -193,17 +193,18 @@ public class NortelImplIT {
         services.add(LineService.LIG_SIMULT);
         services.add(LineService.DIGITAL);
         services.add(LineService.IDENT_CHAM);
-        services.add(LineService.SEC_ELETRONICA);
+//        services.add(LineService.SIGA_ME);
+//        services.add(LineService.SEC_ELETRONICA);
 //        services.add(LineService.SUSP_TEMP);
-        services.add(LineService.BLOQ_PROG_0500);
-        services.add(LineService.BLOQ_PROG_0900);
+//        services.add(LineService.BLOQ_PROG_0500);
+//        services.add(LineService.BLOQ_PROG_0900);
 
         in.setServices(services);
-        in.setInstancia("1149707585");
+        in.setInstancia("6130474067");
 
         instance.adicionarServico(linha, in);
 
-        System.out.println(GsonUtil.serialize(instance.consultarPorDn("1149707585")));
+        System.out.println(GsonUtil.serialize(instance.consultarPorDn("6130474067")));
     }
 
     /**
@@ -216,12 +217,12 @@ public class NortelImplIT {
         ConfiguracaoDMS linha = instance.consultarPorDn("1149707585");
         System.out.println(GsonUtil.serialize(linha));
         List<LineService> services = new ArrayList<>();
-        services.add(LineService.CONV_TRES);
-        services.add(LineService.LIG_SIMULT);
-        services.add(LineService.DIGITAL);
-        services.add(LineService.IDENT_CHAM);
-        services.add(LineService.SEC_ELETRONICA);
-        services.add(LineService.SUSP_TEMP);
+//        services.add(LineService.CONV_TRES);
+//        services.add(LineService.LIG_SIMULT);
+//        services.add(LineService.DIGITAL);
+//        services.add(LineService.IDENT_CHAM);
+        services.add(LineService.SIGA_ME);
+//        services.add(LineService.SUSP_TEMP);
         instance.removerServico(linha, services);
         System.out.println(GsonUtil.serialize(instance.consultarPorDn("1149707585")));
 

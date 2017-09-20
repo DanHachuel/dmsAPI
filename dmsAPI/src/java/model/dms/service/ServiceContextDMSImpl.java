@@ -37,7 +37,9 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
     @Override
     public void keepAlive() {
         context().getSwitchs().forEach((t) -> {
-            t.keepAliveCommand();
+            if (t.getDetail().getConnected() == true) {
+                t.keepAliveCommand();
+            }
         });
     }
 

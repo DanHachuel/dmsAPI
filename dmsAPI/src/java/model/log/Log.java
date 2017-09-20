@@ -15,7 +15,7 @@ public abstract class Log implements Logger {
 
     private String entrada;
 
-    private Object saida;
+    private String saida;
 
     private String executor;
 
@@ -27,6 +27,7 @@ public abstract class Log implements Logger {
 
     public Log(ActionsEnum acao) {
         this.acao = acao;
+        dataLogIn = Calendar.getInstance();
     }
 
     public String getEntrada() {
@@ -41,7 +42,7 @@ public abstract class Log implements Logger {
         return saida;
     }
 
-    public void setSaida(Object saida) {
+    public void setSaida(String saida) {
         this.saida = saida;
     }
 
