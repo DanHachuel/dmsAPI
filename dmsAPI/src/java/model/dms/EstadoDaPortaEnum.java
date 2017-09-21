@@ -7,8 +7,6 @@ package model.dms;
 
 import model.dms.adapter.Adapter;
 import model.dms.dto.EstadoDaPortaDTO;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import util.JsonEnumDeserializer;
 
 /**
  *
