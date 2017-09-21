@@ -325,6 +325,10 @@ public class NortelImpl extends AbstractDMS {
         return param.contains(">SO:");
     }
 
+    protected boolean isMapci(String param) {
+        return !param.contains("No storage for directory");
+    }
+
     protected ComandoDMS enter() {
         return new ComandoDMS("");
     }
@@ -336,7 +340,10 @@ public class NortelImpl extends AbstractDMS {
         if (!isLogged(cmd.getBlob())) {
             throw new LoginSwitchException();
         }
-        command().consulta(mapciContext());
+        if (!isMapci(command().consulta(mapciContext()).getBlob())) {
+            throw new LoginSwitchException();
+        }
+        Thread.sleep(1500);
     }
 
     @Override
@@ -344,8 +351,10 @@ public class NortelImpl extends AbstractDMS {
         try {
             command().consulta(logout());
             super.desconectar(); //To change body of generated methods, choose Tools | Templates.
+
         } catch (Exception ex) {
-            Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NortelImpl.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
