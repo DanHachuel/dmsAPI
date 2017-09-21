@@ -91,7 +91,7 @@ public enum SwitchesEnum {
     SPSOC_DSS01("10.211.32.97"),
     SPSPO_JUS01("10.210.80.16"),
     SPSTS_CRS01("10.211.32.97"),
-    SPOCO_FBS01("10.210.78.7");
+    SPOCO_FBS01("10.210.76.16");
 
     private final String ip;
 
