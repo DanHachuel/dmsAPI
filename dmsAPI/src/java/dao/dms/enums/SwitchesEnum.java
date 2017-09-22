@@ -80,6 +80,7 @@ public enum SwitchesEnum {
     SCFNS_POS02("10.151.0.99"),
     //    SCJVE_ADS01("10.141.88.98"),
     //    SCJVE_ADS03("10.141.88.114"),
+    SPPAA_SJS01("10.210.68.16"),
     SCJVE_ADS04("10.150.129.117"),
     SCSOO_LLS01("10.241.32.98"),
     SEAJU_AMS01("10.180.77.117"),
