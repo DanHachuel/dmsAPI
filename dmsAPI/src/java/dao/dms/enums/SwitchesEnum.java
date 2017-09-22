@@ -86,6 +86,7 @@ public enum SwitchesEnum {
     SEAJU_AMS01("10.180.77.117"),
     SPCAS_DAS01("10.210.68.16"),
     SPGRS_TPS01("10.210.76.16"),
+    SPGRS_TPS02("10.210.76.16"),
     SPJAI_FAS01("10.211.32.97"),
     SPSBO_JBS01("10.210.72.16"),
     SPSNE_DCS01("10.210.76.16"),
