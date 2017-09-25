@@ -34,7 +34,7 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
 
     @Override
     public DetailDTO getDetail() {
-        return new DetailDTO(this.getCentral(), command().isConnected(), command().isBusy(), getCredencial());
+        return new DetailDTO(this.getCentral(), command().isConnected(), command().isBusy(), getCredencial(), getIpDslam());
     }
 
     @Override

@@ -20,14 +20,17 @@ public class DetailDTO {
 
     private Credencial credencial;
 
+    private String ip;
+
     public DetailDTO() {
     }
 
-    public DetailDTO(SwitchesEnum central, Boolean connected, Boolean busy, Credencial credencial) {
+    public DetailDTO(SwitchesEnum central, Boolean connected, Boolean busy, Credencial credencial, String ip) {
         this.central = central;
         this.connected = connected;
         this.busy = busy;
         this.credencial = credencial;
+        this.ip = ip;
     }
 
     public SwitchesEnum getCentral() {
@@ -60,6 +63,14 @@ public class DetailDTO {
 
     public void setCredencial(Credencial credencial) {
         this.credencial = credencial;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
 }
