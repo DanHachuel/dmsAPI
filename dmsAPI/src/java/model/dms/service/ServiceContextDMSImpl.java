@@ -8,7 +8,6 @@ package model.dms.service;
 import dao.dms.impl.ManagerDMS;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import model.dms.dto.DetailDTO;
 
 public class ServiceContextDMSImpl extends GenericDMSService implements ServiceContextDMS {
