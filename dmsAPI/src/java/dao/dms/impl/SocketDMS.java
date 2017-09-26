@@ -75,7 +75,12 @@ public class SocketDMS implements Conector {
 
         try {
             if (!this.connected) {
-                this.conectar();
+                try {
+                    this.conectar();
+                } catch (Exception e) {
+                    this.close();
+                    throw e;
+                }
             }
 
             int i = 0;
@@ -108,16 +113,15 @@ public class SocketDMS implements Conector {
                 if (comando.getSintaxAux2() != null) {
 //                    Thread.sleep(comando.getSleepAux());
                     pingSocket.setSoTimeout(comando.getSleep());
-                    out.println(comando.getSintaxAux2());
                     if (OSValidator.isWindows()) {
                         out.println(comando.getSintaxAux2());
                     } else {
                         out.println(comando.getSintaxAux2() + "\n\r");
                     }
+                    
                     if (comando.getSintaxAux3() != null) {
 //                    Thread.sleep(comando.getSleepAux());
                         pingSocket.setSoTimeout(comando.getSleep());
-                        out.println(comando.getSintaxAux3());
                         if (OSValidator.isWindows()) {
                             out.println(comando.getSintaxAux3());
                         } else {

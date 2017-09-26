@@ -28,6 +28,7 @@ public class LoginUnixCustomDMS implements LoginTelnetStrategy {
             this.cs = cs;
             this.cs.pingSocket = new Socket();
             this.cs.pingSocket.connect(new InetSocketAddress(this.cs.dslam.getIpDslam(), 23), 10000);
+            this.cs.pingSocket.setKeepAlive(true);
             this.cs.out = new PrintWriter(this.cs.pingSocket.getOutputStream(), true);
             this.cs.in = new BufferedReader(new InputStreamReader(this.cs.pingSocket.getInputStream()));
             this.cs.out.println(this.cs.dslam.getCredencial().getLogin() + "\n\r");
