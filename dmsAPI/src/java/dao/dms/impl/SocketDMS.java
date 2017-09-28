@@ -12,6 +12,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import dao.dms.impl.login.LoginTelnetStrategy;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.OSValidator;
 
 /**
@@ -37,12 +39,14 @@ public class SocketDMS implements Conector {
     public void conectar() throws Exception {
         try {
             this.connected = true;
+            this.busy = true;
             this.dslam.conectar();
         } catch (Exception e) {
             this.connected = false;
             throw e;
+        } finally {
+            this.busy = false;
         }
-
     }
 
     public List<String> getRetorno() {
@@ -63,11 +67,18 @@ public class SocketDMS implements Conector {
 
     @Override
     public void close() throws IOException {
-        if (out != null) {
-            this.connected = false;
+        try {
+            pingSocket.close();
             out.close();
             in.close();
-            pingSocket.close();
+
+            pingSocket = null;
+            out = null;
+            in = null;
+
+            this.connected = false;
+        } catch (Exception e) {
+            Logger.getLogger(SocketDMS.class.getName()).log(Level.WARNING, e.getMessage());
         }
     }
 
@@ -118,7 +129,7 @@ public class SocketDMS implements Conector {
                     } else {
                         out.println(comando.getSintaxAux2() + "\n\r");
                     }
-                    
+
                     if (comando.getSintaxAux3() != null) {
 //                    Thread.sleep(comando.getSleepAux());
                         pingSocket.setSoTimeout(comando.getSleep());
