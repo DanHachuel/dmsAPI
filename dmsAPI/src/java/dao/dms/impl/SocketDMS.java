@@ -38,8 +38,8 @@ public class SocketDMS implements Conector {
     @Override
     public void conectar() throws Exception {
         try {
-            this.connected = true;
             this.busy = true;
+            this.connected = true;
             this.dslam.conectar();
         } catch (Exception e) {
             this.connected = false;
