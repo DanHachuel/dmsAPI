@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import dao.dms.impl.ManagerDMS;
 import java.util.ArrayList;
 import java.util.List;
 import model.dms.dto.DetailDTO;
@@ -22,8 +23,10 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
 
     @Override
     public void connectSwitches() {
-        context().getSwitchs().forEach((t) -> {
-            t.connect();
+        context().getSwitchs().forEach((ManagerDMS t) -> {
+            if (!t.getDetail().getConnected()) {
+                t.connect();
+            }
         });
     }
 

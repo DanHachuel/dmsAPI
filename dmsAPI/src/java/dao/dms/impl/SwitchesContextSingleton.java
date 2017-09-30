@@ -67,19 +67,4 @@ public class SwitchesContextSingleton {
         throw new SwitchNaoEncontradaException();
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        System.out.println("SwitchesContextSingleton -> finalize");
-        
-        
-        
-        
-        super.finalize(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-
-    
-    
-
 }

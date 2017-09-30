@@ -33,7 +33,7 @@ import util.GsonUtil;
  */
 public class NortelImplIT {
 
-    private NortelImpl instance = new NortelImpl(SwitchesEnum.PRCTA_LPS01);
+    private NortelImpl instance = new NortelImpl(SwitchesEnum.PERCE_LNS01);
 
     public NortelImplIT() {
     }
@@ -61,7 +61,7 @@ public class NortelImplIT {
     public void testConsultar() {
         System.out.println("consultar");
         try {
-            String instancia = "4131543457";
+            String instancia = "8160097925";
 
             ConfiguracaoDMS result = instance.consultarPorDn(instancia);
             System.out.println("Resultado: " + GsonUtil.serialize(result));

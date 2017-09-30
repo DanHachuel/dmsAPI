@@ -22,6 +22,7 @@ import exception.FalhaAoConsultarEstadoException;
 import exception.FalhaAoConsultarLensException;
 import exception.FalhaAoExecutarComandoDeAlteracaoException;
 import exception.LoginSwitchException;
+import exception.MapciLotadoException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -322,7 +323,8 @@ public class NortelImpl extends AbstractDMS {
     }
 
     protected boolean isLogged(String param) {
-        return param.contains(">SO:");
+        System.out.println("isLogged:" + param);
+        return param.contains("SO");
     }
 
     protected boolean isMapci(String param) {
@@ -336,14 +338,13 @@ public class NortelImpl extends AbstractDMS {
     @Override
     public void conectar() throws Exception {
         super.conectar();
-        ComandoDMS cmd = command().consulta(servord());
-        if (!isLogged(cmd.getBlob())) {
+        Thread.sleep(8000);
+        if (!isLogged(command().consulta(servord()).getBlob())) {
             throw new LoginSwitchException();
         }
         if (!isMapci(command().consulta(mapciContext()).getBlob())) {
-            throw new LoginSwitchException();
+            throw new MapciLotadoException();
         }
-        Thread.sleep(1500);
     }
 
     @Override
