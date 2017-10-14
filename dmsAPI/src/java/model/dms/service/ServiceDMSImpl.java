@@ -37,7 +37,7 @@ public class ServiceDMSImpl extends GenericDMSService implements ServiceDMS {
         SwitchesEnum enu = SwitchesEnum.findByName(in.getDms().getCentral());
         ConfiguracaoDMS linha = new ConfiguracaoDMS();
         linha.setDn(in.getDms().getDn());
-        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\.{3}", "_POS"));
+        linha.setCustGrp(in.getConfBinada().getCustGrp().replaceFirst("_\\w{3}", "_POS"));
         linha.setLen(in.getLen());
         try {
             return manager(enu).criarLinha(linha);
