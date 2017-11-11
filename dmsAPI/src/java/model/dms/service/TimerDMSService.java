@@ -41,16 +41,18 @@ public class TimerDMSService {
         logger.info("Programmatic timeout occurred.");
     }
 
-//    @Schedule(hour = "6")
-//    public void automaticTimeout() {
-//        this.setLastAutomaticTimeout(new Date());
-//        logger.info("TimerSessionBean -> conectar centrais");
-//        ServiceContextDMS dms = FactoryService.createContext();
-//        dms.disconnectSwitches();
-//        dms.connectSwitches();
-//    }
+    @Schedule(hour = "6")
+    public void automaticTimeout() {
+        this.setLastAutomaticTimeout(new Date());
+        logger.info("TimerSessionBean -> Reconectar Centrais");
+        ServiceContextDMS dms = FactoryService.createContext();
+        dms.disconnectSwitches();
+        dms.connectSwitches();
+    }
+
     @Schedule(minute = "*/30")
     public void automaticTimeout2() {
+        logger.info("TimerSessionBean -> conectar centrais [30 minutos]");
         this.setLastAutomaticTimeout(new Date());
         ServiceContextDMS dms = FactoryService.createContext();
         dms.connectSwitches();
