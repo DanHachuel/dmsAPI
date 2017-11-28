@@ -25,7 +25,11 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
     public void connectSwitches() {
         context().getSwitchs().forEach((ManagerDMS t) -> {
             if (!t.getDetail().getConnected()) {
-                t.connect();
+                try {
+                    t.connect();
+                } catch (Exception e) {
+                    System.out.println("Falha ao Conectar Central: " + t.getDetail().getCentral());
+                }
             }
         });
     }
