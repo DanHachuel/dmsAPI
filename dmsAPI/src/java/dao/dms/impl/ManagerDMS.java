@@ -57,10 +57,10 @@ public interface ManagerDMS {
 
     public void disconnect();
 
-    public void connect();
+    public void connect() throws Exception;
 
     public void alteraSenha(String oldPass, String newPass) throws Exception;
-    
+
     public void keepAliveCommand();
 
 }

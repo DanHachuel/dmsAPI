@@ -47,12 +47,8 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
     }
 
     @Override
-    public void connect() {
-        try {
-            this.command().conectar();
-        } catch (Exception ex) {
-            Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void connect() throws Exception {
+        this.command().conectar();
     }
 
     @Override
