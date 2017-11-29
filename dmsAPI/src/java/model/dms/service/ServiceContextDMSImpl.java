@@ -28,6 +28,7 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
                 try {
                     t.connect();
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println("Falha ao Conectar Central: " + t.getDetail().getCentral());
                 }
             }
@@ -37,7 +38,12 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
     @Override
     public void disconnectSwitches() {
         context().getSwitchs().forEach((t) -> {
-            t.disconnect();
+            try {
+                t.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Falha ao desconectar Central: " + t.getDetail().getCentral());
+            }
         });
     }
 
@@ -48,6 +54,30 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
                 t.keepAliveCommand();
             }
         });
+    }
+
+    @Override
+    public DetailDTO connectSwitch(String ip) throws Exception {
+        ManagerDMS dms = findInContext(ip);
+        dms.connect();
+        return dms.getDetail();
+    }
+
+    @Override
+    public DetailDTO disconnectSwitch(String ip) throws Exception {
+        ManagerDMS dms = findInContext(ip);
+        dms.disconnect();
+        return dms.getDetail();
+    }
+
+    @Override
+    public ManagerDMS findInContext(String ip) throws Exception {
+        for (ManagerDMS t : context().getSwitchs()) {
+            if (t.getDetail().getIp().equalsIgnoreCase(ip)) {
+                return t;
+            }
+        }
+        throw new Exception("Central não encontrada.");
     }
 
 }

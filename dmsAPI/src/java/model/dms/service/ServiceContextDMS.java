@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import dao.dms.impl.ManagerDMS;
 import java.util.List;
 import model.dms.dto.DetailDTO;
 
@@ -18,8 +19,14 @@ public interface ServiceContextDMS {
 
     public void connectSwitches();
 
+    public DetailDTO connectSwitch(String ip) throws Exception;
+
+    public DetailDTO disconnectSwitch(String ip) throws Exception;
+
     public void disconnectSwitches();
 
     public void keepAlive();
+
+    public ManagerDMS findInContext(String ip) throws Exception;
 
 }
