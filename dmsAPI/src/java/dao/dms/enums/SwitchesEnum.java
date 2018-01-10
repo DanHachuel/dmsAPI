@@ -23,6 +23,7 @@ public enum SwitchesEnum {
     DFBSA_CBS01("10.161.0.98"),
     DFBSA_SIS01("10.164.0.101"),
     ESVTA_ASS01("10.227.0.98"),
+    ESLNS_ASS01("10.227.0.98"),
     GOGNA_DOS01("10.161.88.100"),
     GOGNA_DOS03("10.160.129.117"),
     MGBHE_HMS01("10.131.32.97"),
