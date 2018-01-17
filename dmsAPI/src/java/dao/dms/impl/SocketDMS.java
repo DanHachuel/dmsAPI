@@ -38,8 +38,8 @@ public class SocketDMS implements Conector {
     @Override
     public void conectar() throws Exception {
         try {
-            this.connected = true;
             this.busy = true;
+            this.connected = true;
             this.dslam.conectar();
         } catch (Exception e) {
             this.connected = false;
@@ -71,14 +71,14 @@ public class SocketDMS implements Conector {
             pingSocket.close();
             out.close();
             in.close();
-
-            pingSocket = null;
-            out = null;
-            in = null;
-
-            this.connected = false;
-        } catch (Exception e) {
+        } catch (IOException e) {
             Logger.getLogger(SocketDMS.class.getName()).log(Level.WARNING, e.getMessage());
+        } finally {
+            this.pingSocket = null;
+            this.out = null;
+            this.in = null;
+            this.busy = false;
+            this.connected = false;
         }
     }
 

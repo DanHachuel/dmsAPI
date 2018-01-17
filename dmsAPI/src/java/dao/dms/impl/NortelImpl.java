@@ -339,6 +339,7 @@ public class NortelImpl extends AbstractDMS {
     public void conectar() throws Exception {
         super.conectar();
         Thread.sleep(8000);
+        command().setBusy(Boolean.FALSE);
         if (!isLogged(command().consulta(servord()).getBlob())) {
             throw new LoginSwitchException();
         }

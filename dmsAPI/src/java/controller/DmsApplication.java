@@ -21,6 +21,7 @@ public class DmsApplication extends Application {
 
     public DmsApplication() {
         singletons.add(new DMSController());
+        singletons.add(new ContextDMSController());
     }
 
     public Set<Object> getSingletons() {
