@@ -27,31 +27,35 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
     public void connectSwitches() {
         context().getSwitchs().forEach((ManagerDMS t) -> {
             if (!t.getDetail().getConnected()) {
-                try {
-                    t.connect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Falha ao Conectar Central: " + t.getDetail().getCentral());
-                }
+                new EfikaThread(() -> {
+                    try {
+                        t.connect();
+                    } catch (Exception e) {
+                    }
+                });
             }
         });
+        try {
+            Thread.sleep(10000);
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void disconnectSwitches() {
         context().getSwitchs().forEach((t) -> {
-            try {
+            new EfikaThread(() -> {
                 t.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.out.println("Falha ao desconectar Central: " + t.getDetail().getCentral());
-            }
+            });
         });
+        try {
+            Thread.sleep(3000);
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void keepAlive() {
-
         List<ManagerDMS> con = new FilterConnectedSwitches(Boolean.TRUE).filter(context().getSwitchs());
         con.forEach((ManagerDMS t) -> {
             new EfikaThread(() -> {
