@@ -23,6 +23,7 @@ import exception.FalhaAoConsultarLensException;
 import exception.FalhaAoExecutarComandoDeAlteracaoException;
 import exception.LoginSwitchException;
 import exception.MapciLotadoException;
+import exception.RetornoDMSException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -420,9 +421,17 @@ public class NortelImpl extends AbstractDMS {
     @Override
     public void keepAliveCommand() {
         try {
-            command().consulta(enter());
+            consultarPorDn("4130886762");
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex);
+            if (ex instanceof RetornoDMSException) {
+                this.desconectar();
+                try {
+                    this.conectar();
+                } catch (Exception ex1) {
+                    Logger.getLogger(NortelImpl.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+            }
         }
     }
 

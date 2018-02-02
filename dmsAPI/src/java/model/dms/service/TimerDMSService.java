@@ -50,12 +50,20 @@ public class TimerDMSService {
         dms.connectSwitches();
     }
 
-    @Schedule(minute = "*/30")
+    @Schedule(minute = "*/15")
     public void automaticTimeout2() {
-        logger.info("TimerSessionBean -> conectar centrais [30 minutos]");
+        logger.info("TimerSessionBean -> conectar centrais [15 minutos]");
         this.setLastAutomaticTimeout(new Date());
         ServiceContextDMS dms = FactoryService.createContext();
         dms.connectSwitches();
+    }
+
+    @Schedule(minute = "*/30")
+    public void automaticTimeout3() {
+        logger.info("TimerSessionBean -> Keep Alive QDN [30 minutos]");
+        this.setLastAutomaticTimeout(new Date());
+        ServiceContextDMS dms = FactoryService.createContext();
+        dms.keepAlive();
     }
 
     public String getLastProgrammaticTimeout() {

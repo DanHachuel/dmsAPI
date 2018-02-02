@@ -5,7 +5,9 @@
  */
 package model.dms.service;
 
+import br.net.gvt.efika.util.util.thread.EfikaThread;
 import dao.dms.impl.ManagerDMS;
+import dao.dms.impl.filter.FilterConnectedSwitches;
 import java.util.ArrayList;
 import java.util.List;
 import model.dms.dto.DetailDTO;
@@ -49,11 +51,14 @@ public class ServiceContextDMSImpl extends GenericDMSService implements ServiceC
 
     @Override
     public void keepAlive() {
-        context().getSwitchs().forEach((t) -> {
-            if (t.getDetail().getConnected() == true) {
+
+        List<ManagerDMS> con = new FilterConnectedSwitches(Boolean.TRUE).filter(context().getSwitchs());
+        con.forEach((ManagerDMS t) -> {
+            new EfikaThread(() -> {
                 t.keepAliveCommand();
-            }
+            });
         });
+
     }
 
     @Override
