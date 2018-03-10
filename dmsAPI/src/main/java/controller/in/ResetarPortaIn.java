@@ -6,14 +6,14 @@
 package controller.in;
 
 import model.dms.ConsultaDMS;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0042204
  */
-public class ResetarPortaIn extends GenericLog {
+public class ResetarPortaIn extends LogEntity {
 
     private ConsultaDMS dms;
 
@@ -27,11 +27,6 @@ public class ResetarPortaIn extends GenericLog {
 
     public void setDms(ConsultaDMS dms) {
         this.dms = dms;
-    }
-
-    @Override
-    public Object entrada() {
-        return dms;
     }
 
 }

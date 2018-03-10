@@ -8,14 +8,14 @@ package controller.in;
 import java.util.List;
 import model.dms.ConsultaDMS;
 import model.dms.LineService;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0041775
  */
-public class EditServIn extends GenericLog {
+public class EditServIn extends LogEntity {
 
     private ConsultaDMS dms;
 
@@ -41,11 +41,6 @@ public class EditServIn extends GenericLog {
 
     public void setServices(List<LineService> services) {
         this.services = services;
-    }
-
-    @Override
-    public Object entrada() {
-        return dms;
     }
 
     public String getInstancia() {

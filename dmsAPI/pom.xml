@@ -43,7 +43,7 @@
                 
                 <configuration>
                     <properties>
-                        <swarm.http.port>7172</swarm.http.port>
+                        <swarm.http.port>7176</swarm.http.port>
                     </properties>
                 </configuration>
             </plugin>
@@ -52,7 +52,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12.4</version>
                 <configuration>
-                    <!--<skipTests>true</skipTests>-->
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>

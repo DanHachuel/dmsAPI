@@ -7,19 +7,19 @@ package controller.in;
 
 import model.dms.ConsultaDMS;
 import model.dms.Len;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0042204
  */
-public class DeletarLinhaIn extends GenericLog {
+public class DeletarLinhaIn extends LogEntity {
 
     private ConsultaDMS dms;
-    
+
     private Len len;
-    
+
     public DeletarLinhaIn() {
         super(ActionsEnum.DELETAR_LINHA);
     }
@@ -38,11 +38,6 @@ public class DeletarLinhaIn extends GenericLog {
 
     public void setLen(Len len) throws Exception {
         this.len = len;
-    }
-
-    @Override
-    public Object entrada() {
-        return dms;
     }
 
 }

@@ -5,15 +5,11 @@
  */
 package model.dms;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import util.JsonEnumDeserializer;
-
 /**
  * 
  *
  * @author G0041775
  */
-@JsonSerialize(using = JsonEnumDeserializer.class)
 public enum ServiceLevel {
 
    SIMPLE,

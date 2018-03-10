@@ -6,7 +6,6 @@
 package dao;
 
 import dao.log.LogDAO;
-import model.entity.LogEntity;
 
 /**
  *
@@ -14,7 +13,7 @@ import model.entity.LogEntity;
  */
 public class FactoryDAO {
 
-    public static InterfaceDAO<LogEntity> create() {
+    public static LogDAO createLogDAO() {
         return new LogDAO();
     }
 

@@ -5,15 +5,14 @@
  */
 package model.dms;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import model.dms.dto.NcosDTO;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import util.JsonEnumDeserializer;
 
 /**
  *
  * @author G0042204
  */
-@JsonSerialize(using = JsonEnumDeserializer.class)
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Ncos {
 
     NCOS_1(1, "Liberado TOTAL"),

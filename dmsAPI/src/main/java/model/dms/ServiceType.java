@@ -5,15 +5,11 @@
  */
 package model.dms;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import util.JsonEnumDeserializer;
-
 /**
  * 
  *
  * @author G0042204
  */
-@JsonSerialize(using = JsonEnumDeserializer.class)
 public enum ServiceType {
 
    SERVICO,

@@ -5,7 +5,7 @@
  */
 package model.dms.service;
 
-import br.net.gvt.efika.util.util.thread.EfikaThread;
+import br.net.gvt.efika.util.thread.EfikaThread;
 import dao.dms.impl.ManagerDMS;
 import dao.dms.impl.filter.FilterConnectedSwitches;
 import java.util.ArrayList;

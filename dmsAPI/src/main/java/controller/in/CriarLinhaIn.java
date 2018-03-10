@@ -8,14 +8,14 @@ package controller.in;
 import model.dms.ConfiguracaoDMS;
 import model.dms.ConsultaDMS;
 import model.dms.Len;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0042204
  */
-public class CriarLinhaIn extends GenericLog {
+public class CriarLinhaIn extends LogEntity {
 
     private ConsultaDMS dms;
     
@@ -51,9 +51,6 @@ public class CriarLinhaIn extends GenericLog {
         this.confBinada = confBinada;
     }
 
-    @Override
-    public Object entrada() {
-        return dms;
-    }
+
 
 }

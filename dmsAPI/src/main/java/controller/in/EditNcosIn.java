@@ -7,14 +7,14 @@ package controller.in;
 
 import model.dms.ConsultaDMS;
 import model.dms.Ncos;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0041775
  */
-public class EditNcosIn extends GenericLog {
+public class EditNcosIn extends LogEntity {
 
     private ConsultaDMS dms;
 
@@ -38,13 +38,6 @@ public class EditNcosIn extends GenericLog {
 
     public void setNcos(Ncos ncos) {
         this.ncos = ncos;
-    }
-
-    
-
-    @Override
-    public Object entrada() {
-        return dms;
     }
 
 }

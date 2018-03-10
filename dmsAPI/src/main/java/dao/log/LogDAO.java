@@ -5,30 +5,18 @@
  */
 package dao.log;
 
-import dao.AbstractHibernateDAO;
-import dao.InterfaceDAO;
+import br.net.gvt.efika.mongo.dao.AbstractMongoDAO;
+import br.net.gvt.efika.mongo.dao.MongoEndpointEnum;
 import model.entity.LogEntity;
 
 /**
  *
  * @author G0042204
  */
-public class LogDAO extends AbstractHibernateDAO implements InterfaceDAO<LogEntity>{
+public class LogDAO extends AbstractMongoDAO<LogEntity> {
 
-    @Override
-    public void cadastrar(LogEntity t) throws Exception {
-        super.persist(t);
-        this.close();
+    public LogDAO() {
+        super(MongoEndpointEnum.MONGO.getIp(), "dmsAPI", LogEntity.class);
     }
 
-    @Override
-    public LogEntity buscarPorId(LogEntity t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void close() {
-        super.close();
-    }
-    
 }

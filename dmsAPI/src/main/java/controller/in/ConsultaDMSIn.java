@@ -6,32 +6,27 @@
 package controller.in;
 
 import model.dms.ConsultaDMS;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0042204
  */
-public class ConsultaDMSIn extends GenericLog {
-
+public class ConsultaDMSIn extends LogEntity {
+    
     private ConsultaDMS dms;
-
+    
     public ConsultaDMSIn() {
         super(ActionsEnum.CONSULTAR_DN);
     }
-
+    
     public ConsultaDMS getDms() {
         return dms;
     }
-
-    public void setDms(ConsultaDMS dms) {
-        this.dms = dms;
+    
+    public void setDms(ConsultaDMS param) {
+        this.dms = param;
     }
-
-    @Override
-    public Object entrada() {
-        return dms;
-    }
-
+    
 }

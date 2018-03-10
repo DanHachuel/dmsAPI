@@ -6,14 +6,14 @@
 package controller.in;
 
 import model.dms.ConsultaDMS;
+import model.entity.LogEntity;
 import model.log.ActionsEnum;
-import model.log.GenericLog;
 
 /**
  *
  * @author G0041775
  */
-public class EditCustGrpIn extends GenericLog {
+public class EditCustGrpIn extends LogEntity {
 
     private ConsultaDMS dms;
 
@@ -37,11 +37,6 @@ public class EditCustGrpIn extends GenericLog {
 
     public void setCustGrp(String custGrp) {
         this.custGrp = custGrp;
-    }
-
-    @Override
-    public Object entrada() {
-        return dms;
     }
 
 }

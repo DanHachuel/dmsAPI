@@ -5,82 +5,55 @@
  */
 package model.entity;
 
+import br.net.gvt.efika.mongo.model.entity.AbstractMongoEntity;
 import model.log.ActionsEnum;
 import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import util.GsonUtil;
+import java.util.Date;
+import org.mongodb.morphia.annotations.Entity;
 
 /**
  *
  * @author G0034481
  */
-@Entity
-@Table(name = "dms_log")
-public class LogEntity extends AbstractEntity {
+@Entity(value = "dms", noClassnameStored = true)
+public class LogEntity extends AbstractMongoEntity {
 
-    @Lob
-    @Column(columnDefinition = "LONGVARCHAR")
-    private String entrada;
+    private Object saida;
 
-    @Lob
-    @Column(columnDefinition = "LONGVARCHAR")
-    private String saida;
-
-    @NotNull(message = "Campo obrigatório")
-    @Size(min = 1)
     private String executor;
 
-    @NotNull(message = "Campo obrigatório")
-    @Enumerated(EnumType.STRING)
     private ActionsEnum acao;
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Calendar dataLogIn;
+    private Date dataLogIn;
 
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Calendar dataLogOut;
+    private Date dataLogOut;
 
-    public LogEntity() {
-        dataLogIn = Calendar.getInstance();
+    public LogEntity(ActionsEnum acao) {
+        this.acao = acao;
+        dataLogIn = Calendar.getInstance().getTime();
     }
 
-    public String getEntrada() {
-        return entrada;
-    }
-
-    public void setEntrada(Object entrada) {
-        this.entrada = GsonUtil.serialize(entrada);
-    }
-
-    public String getSaida() {
+    public Object getSaida() {
         return saida;
     }
 
     public void setSaida(Object saida) {
-        this.saida = GsonUtil.serialize(saida);
+        this.saida = saida;
     }
 
-    public Calendar getDataLogIn() {
+    public Date getDataLogIn() {
         return dataLogIn;
     }
 
-    public void setDataLogIn(Calendar dataLogIn) {
+    public void setDataLogIn(Date dataLogIn) {
         this.dataLogIn = dataLogIn;
     }
 
-    public Calendar getDataLogOut() {
+    public Date getDataLogOut() {
         return dataLogOut;
     }
 
-    public void setDataLogOut(Calendar dataLogOut) {
+    public void setDataLogOut(Date dataLogOut) {
         this.dataLogOut = dataLogOut;
     }
 
