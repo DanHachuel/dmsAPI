@@ -6,6 +6,7 @@
 package dao.dms.impl;
 
 import dao.dms.credencial.Credencial;
+import dao.dms.credencial.CredencialFinder;
 import dao.dms.enums.SwitchesEnum;
 import dao.dms.impl.login.FactoryLoginStrategy;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public abstract class AbstractDMS extends AbstractHost implements ManagerDMS {
     private final SwitchesEnum central;
 
     public AbstractDMS(SwitchesEnum central) {
-        super(central.getIp(), Credencial.DOIS, FactoryLoginStrategy.create());
+        super(central.getIp(), CredencialFinder.getLogin(), FactoryLoginStrategy.create());
         this.central = central;
 
     }
