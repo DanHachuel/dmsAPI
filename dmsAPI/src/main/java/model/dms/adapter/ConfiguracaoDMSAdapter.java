@@ -5,12 +5,9 @@
  */
 package model.dms.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
 import model.dms.ConfiguracaoDMS;
 import model.dms.LineService;
 import model.dms.dto.ConfiguracaoDMSDTO;
-import model.dms.dto.LineServiceDTO;
 
 /**
  *

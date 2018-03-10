@@ -127,7 +127,12 @@ public class DMSController extends RestJaxAbstract {
             r = serverError(e);
             in.setSaida(e);
         } finally {
-            FactoryDAO.createLogDAO().save(in);
+            try {
+                FactoryDAO.createLogDAO().save(in);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
         return r;
     }
