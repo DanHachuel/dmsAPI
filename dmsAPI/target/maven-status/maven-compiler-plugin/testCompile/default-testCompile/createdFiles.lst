@@ -1,0 +1,9 @@
+util\RegexIT.class
+model\dms\service\ServiceContextDMSImplIT.class
+model\dms\service\ServiceDMSImplIT.class
+util\OSValidatorIT.class
+dao\dms\impl\NortelImplIT.class
+model\dms\service\ServiceContextDMSIT.class
+model\dms\NewEmptyJUnitTest.class
+dao\dms\impl\tratativa\TratativaLenDMSIT.class
+model\dms\service\ServiceDMSIT.class
