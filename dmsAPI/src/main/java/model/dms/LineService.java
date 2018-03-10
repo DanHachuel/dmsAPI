@@ -5,7 +5,9 @@
  */
 package model.dms;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.JsonNode;
 import model.dms.dto.LineServiceDTO;
 
 /**
@@ -83,6 +85,17 @@ public enum LineService {
 
     public LineServiceDTO dto() {
         return new LineServiceDTO(desc, key, tipo, name(), nivel);
+    }
+
+    @JsonCreator
+    public static LineService fromNode(JsonNode node) {
+        if (!node.has("name")) {
+            return null;
+        }
+
+        String name = node.get("name").asText();
+
+        return LineService.valueOf(name);
     }
 
 }

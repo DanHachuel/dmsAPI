@@ -5,6 +5,9 @@
  */
 package model.dms;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.JsonNode;
 import model.dms.adapter.Adapter;
 import model.dms.dto.EstadoDaPortaDTO;
 
@@ -12,6 +15,8 @@ import model.dms.dto.EstadoDaPortaDTO;
  *
  * @author G0042204
  */
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
 
     CPB("Call Process Busy - Chamada em Curso, Linha Ocupada.", Boolean.TRUE),
@@ -36,6 +41,18 @@ public enum EstadoDaPortaEnum implements Adapter<EstadoDaPortaDTO> {
         this.desc = desc;
         this.valid = valid;
     }
+    
+    @JsonCreator
+    public static EstadoDaPortaEnum fromNode(JsonNode node) {
+        if (!node.has("name")) {
+            return null;
+        }
+
+        String name = node.get("name").asText();
+
+        return EstadoDaPortaEnum.valueOf(name);
+    }
+
 
     @Override
     public EstadoDaPortaDTO adapt() {

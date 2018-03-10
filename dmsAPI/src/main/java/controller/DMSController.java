@@ -128,7 +128,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(e);
         } finally {
             try {
-                FactoryDAO.createLogDAO().save(in);
+//                FactoryDAO.createLogDAO().save(in);
             } catch (Exception e) {
                 e.printStackTrace();
             }

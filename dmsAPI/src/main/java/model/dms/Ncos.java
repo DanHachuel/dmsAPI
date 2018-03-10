@@ -5,7 +5,9 @@
  */
 package model.dms;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.JsonNode;
 import model.dms.dto.NcosDTO;
 
 /**
@@ -85,9 +87,20 @@ public enum Ncos {
     public void setDesc(String desc) {
         this.desc = desc;
     }
-    
-    public NcosDTO dto(){
+
+    public NcosDTO dto() {
         return new NcosDTO(ncos, desc, name());
+    }
+
+    @JsonCreator
+    public static Ncos fromNode(JsonNode node) {
+        if (!node.has("name")) {
+            return null;
+        }
+
+        String name = node.get("name").asText();
+
+        return Ncos.valueOf(name);
     }
 
 }
