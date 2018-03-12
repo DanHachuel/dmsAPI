@@ -232,6 +232,7 @@ public class NortelImpl extends AbstractDMS {
     protected List<ComandoDMS> rmvServicesComplex(ConfiguracaoDMS linha, List<LineService> services) {
 
         List<ComandoDMS> l = new ArrayList<>();
+        ComandoDMS rmvSacb = new ComandoDMS("DEO $ " + linha.getDn() + " SACB $ Y");
         services.forEach((t) -> {
             if (t.getKey().equalsIgnoreCase("SUPPRESS PUBLIC")) {
                 l.add(new ComandoDMS("DEO $ " + linha.getDn() + " SUPPRESS $ Y"));
@@ -240,7 +241,9 @@ public class NortelImpl extends AbstractDMS {
             } else if (t.getKey().equalsIgnoreCase("SUS")) {
                 l.add(new ComandoDMS("RES $ " + linha.getDn() + " " + linha.getLen().getLen() + " Y"));
             } else {
-                l.add(new ComandoDMS("DEO $ " + linha.getDn() + " SACB $ Y"));
+                if (!l.contains(rmvSacb)) {
+                    l.add(rmvSacb);
+                }
             }
         });
 

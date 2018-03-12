@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
 import controller.in.EditCustGrpIn;
@@ -141,21 +142,21 @@ public class ServiceDMSImplIT {
         System.out.println("editarServicos");
         EditServIn in = new EditServIn();
         ConsultaDMS dms = new ConsultaDMS();
-        dms.setCentral("SPGRS_TPS01");
-        dms.setDn("1149707585");
+        dms.setCentral("PRCTA_LPS01");
+        dms.setDn("4130157784");
         in.setDms(dms);
-        in.setInstancia("1149707585");
+        in.setInstancia("4130157784");
         List<LineService> services = new ArrayList<>();
-        services.add(LineService.CONV_TRES);
-        services.add(LineService.LIG_SIMULT);
+//        services.add(LineService.CONV_TRES);
+//        services.add(LineService.LIG_SIMULT);
         services.add(LineService.DIGITAL);
-        services.add(LineService.IDENT_CHAM);
-        services.add(LineService.SEC_ELETRONICA);
-        services.add(LineService.BLOQ_PROG_0500);
-        services.add(LineService.BLOQ_PROG_0900);
+//        services.add(LineService.IDENT_CHAM);
+//        services.add(LineService.SEC_ELETRONICA);
+//        services.add(LineService.BLOQ_PROG_0500);
+//        services.add(LineService.BLOQ_PROG_0900);
         in.setServices(services);
         ConfiguracaoDMS result = instance.editarServicos(in);
-//        System.out.println(GsonUtil.serialize(services));
+        System.out.println(new JacksonMapper(ConfiguracaoDMS.class).serialize(result));
     }
 
     /**
