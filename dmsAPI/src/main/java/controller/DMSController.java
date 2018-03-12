@@ -61,8 +61,9 @@ public class DMSController extends RestJaxAbstract {
             r = ok(leR);
             in.setSaida(consultar);
         } catch (Exception e) {
+//            e.printStackTrace();
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -83,7 +84,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(lst);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -104,7 +105,7 @@ public class DMSController extends RestJaxAbstract {
             r = ok(ConfiguracaoDMSAdapter.adapt(linha));
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -125,7 +126,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             try {
 //                FactoryDAO.createLogDAO().save(in);
@@ -151,7 +152,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -172,7 +173,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -193,7 +194,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(consultar);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -214,7 +215,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
@@ -235,7 +236,7 @@ public class DMSController extends RestJaxAbstract {
             in.setSaida(linha);
         } catch (Exception e) {
             r = serverError(e);
-            in.setSaida(e);
+            in.setSaida(e.getMessage());
         } finally {
             FactoryDAO.createLogDAO().save(in);
         }
