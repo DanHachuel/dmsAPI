@@ -5,6 +5,7 @@
  */
 package model.dms.service;
 
+import br.net.gvt.efika.util.json.JacksonMapper;
 import controller.in.CriarLinhaIn;
 import controller.in.DeletarLinhaIn;
 import controller.in.EditCustGrpIn;
@@ -34,24 +35,24 @@ import static org.junit.Assert.*;
  * @author G0042204
  */
 public class ServiceDMSImplIT {
-
+    
     private ServiceDMSImpl instance = new ServiceDMSImpl();
-
+    
     public ServiceDMSImplIT() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() {
     }
-
+    
     @AfterClass
     public static void tearDownClass() {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
@@ -66,14 +67,14 @@ public class ServiceDMSImplIT {
             ConsultaDMS in = new ConsultaDMS();
             in.setDn("8160098017");
             in.setCentral(SwitchesEnum.PERCE_LNS01.name());
-
+            
             ConfiguracaoDMS result = instance.consultar(in);
             ConfiguracaoDMS result1 = instance.consultar(in);
 //            System.out.println("Result:" + GsonUtil.serialize(result));
 //            System.out.println("Result:" + GsonUtil.serialize(result1));
             System.out.println("end");
             assertTrue(result.getStatus() == LineStatus.CREATED);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
@@ -89,7 +90,7 @@ public class ServiceDMSImplIT {
     public void testCriarLinha() throws Exception {
         System.out.println("criarLinha");
         CriarLinhaIn in = new CriarLinhaIn();
-
+        
         ConfiguracaoDMS expResult = null;
         ConfiguracaoDMS result = instance.criarLinha(in);
         assertEquals(expResult, result);
@@ -139,23 +140,41 @@ public class ServiceDMSImplIT {
     @Test
     public void testEditarServicos() throws Exception {
         System.out.println("editarServicos");
-        EditServIn in = new EditServIn();
-        ConsultaDMS dms = new ConsultaDMS();
-        dms.setCentral("SPGRS_TPS01");
-        dms.setDn("1149707585");
-        in.setDms(dms);
-        in.setInstancia("1149707585");
-        List<LineService> services = new ArrayList<>();
-        services.add(LineService.CONV_TRES);
-        services.add(LineService.LIG_SIMULT);
-        services.add(LineService.DIGITAL);
-        services.add(LineService.IDENT_CHAM);
-        services.add(LineService.SEC_ELETRONICA);
-        services.add(LineService.BLOQ_PROG_0500);
-        services.add(LineService.BLOQ_PROG_0900);
-        in.setServices(services);
+        
+        String obj = "{"
+                + "  \"dms\": {"
+                + "    \"dn\": \"4130157784\","
+                + "    \"central\": \"PRCTA_LPS01\""
+                + "  },"
+                + "  \"instancia\":\"4130157784\","
+                + "  \"services\":[{"
+                + "\"desc\": \"Digital (TOM / TONE)\","
+                + "\"key\": \"DGT\","
+                + "\"nome\": \"DIGITAL\","
+                + "\"tipo\": \"SERVICO\","
+                + "\"nivel\": \"SIMPLE\""
+                + "}],"
+                + "  \"executor\": \"G0041775\""
+                + "}";
+        
+        EditServIn in = (EditServIn) new JacksonMapper(EditServIn.class).deserialize(obj);
+//        ConsultaDMS dms = new ConsultaDMS();
+//        dms.setCentral("PRCTA_LPS01");
+//        dms.setDn("4130157784");
+//        in.setDms(dms);
+//        in.setInstancia("4130157784");
+//        List<LineService> services = new ArrayList<>();
+//        services.add(LineService.CONV_TRES);
+//        services.add(LineService.LIG_SIMULT);
+//        services.add(LineService.DIGITAL);
+//        services.add(LineService.IDENT_CHAM);
+//        services.add(LineService.SEC_ELETRONICA);
+//        services.add(LineService.BLOQ_PROG_0500);
+//        services.add(LineService.BLOQ_PROG_0900);
+//        in.setServices(services);
+        System.out.println("IN->" + new JacksonMapper(EditServIn.class).serialize(in));
         ConfiguracaoDMS result = instance.editarServicos(in);
-//        System.out.println(GsonUtil.serialize(services));
+        System.out.println("OUT->" + new JacksonMapper(ConfiguracaoDMS.class).serialize(result));
     }
 
     /**
@@ -209,23 +228,23 @@ public class ServiceDMSImplIT {
     @Test
     public void testResetarPorta() throws Exception {
         System.out.println("resetarPorta");
-
+        
         System.out.println("consultar");
         try {
             ConsultaDMS in = new ConsultaDMS();
             in.setDn("8560971414");
             in.setCentral(SwitchesEnum.CEFLA_JBS01.name());
-
+            
             ConfiguracaoDMS result = instance.resetarPorta(in);
 //            System.out.println("Result:" + GsonUtil.serialize(result));
             System.out.println("end");
             assertTrue(result.getEstado().getDesc().equalsIgnoreCase(EstadoDaPortaEnum.IDL.name()));
-
+            
         } catch (Exception e) {
             e.printStackTrace();
             fail(e.getMessage());
         }
-
+        
     }
-
+    
 }

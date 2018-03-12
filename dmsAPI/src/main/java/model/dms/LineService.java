@@ -89,11 +89,11 @@ public enum LineService {
 
     @JsonCreator
     public static LineService fromNode(JsonNode node) {
-        if (!node.has("name")) {
+        if (!node.has("nome")) {
             return null;
         }
 
-        String name = node.get("name").asText();
+        String name = node.get("nome").asText();
 
         return LineService.valueOf(name);
     }
