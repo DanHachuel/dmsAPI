@@ -8,7 +8,6 @@ package model.dms;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
-import model.dms.dto.LineServiceDTO;
 
 /**
  * CWT 3WC DGT DDN NOAMA
@@ -83,9 +82,9 @@ public enum LineService {
         return null;
     }
 
-    public LineServiceDTO dto() {
-        return new LineServiceDTO(desc, key, tipo, name(), nivel);
-    }
+//    public LineServiceDTO dto() {
+//        return new LineServiceDTO(desc, key, tipo, name(), nivel);
+//    }
 
     @JsonCreator
     public static LineService fromNode(JsonNode node) {

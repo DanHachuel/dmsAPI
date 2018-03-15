@@ -25,7 +25,7 @@ public class ConfiguracaoDMSAdapter {
         ret.setStatus(conf.getStatus());
 
         for (LineService servico : conf.getServicos()) {
-            ret.getServicos().add(servico.dto());
+            ret.getServicos().add(servico);
         }
         if (conf.getEstado() != null) {
             ret.setEstado(conf.getEstado().adapt());

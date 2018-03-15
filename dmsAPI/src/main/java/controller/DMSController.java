@@ -273,10 +273,10 @@ public class DMSController extends RestJaxAbstract {
     @Produces(MediaType.APPLICATION_JSON)
     public Response servicos() throws Exception {
         Response r = null;
-        List<LineServiceDTO> dtos = new ArrayList<>();
+        List<LineService> dtos = new ArrayList<>();
         for (LineService v : LineService.values()) {
             if (v.getTipo() != ServiceType.LEITURA_ONLY) {
-                dtos.add(v.dto());
+                dtos.add(v);
             }
         }
         r = ok(dtos);

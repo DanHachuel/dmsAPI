@@ -8,6 +8,7 @@ package model.dms.dto;
 import java.util.ArrayList;
 import java.util.List;
 import model.dms.Len;
+import model.dms.LineService;
 import model.dms.LineStatus;
 
 /**
@@ -26,7 +27,7 @@ public class ConfiguracaoDMSDTO {
 
     private LineStatus status;
 
-    private List<LineServiceDTO> servicos;
+    private List<LineService> servicos;
 
     private EstadoDaPortaDTO estado;
 
@@ -73,14 +74,14 @@ public class ConfiguracaoDMSDTO {
         this.status = status;
     }
 
-    public List<LineServiceDTO> getServicos() {
+    public List<LineService> getServicos() {
         if (servicos == null) {
             servicos = new ArrayList<>();
         }
         return servicos;
     }
 
-    public void setServicos(List<LineServiceDTO> servicos) {
+    public void setServicos(List<LineService> servicos) {
         this.servicos = servicos;
     }
 
